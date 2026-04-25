@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v5-0-pin-corregido';
+const CACHE_NAME = 'red-pluviometros-medellin-v5-1-pin-autocorregido';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];

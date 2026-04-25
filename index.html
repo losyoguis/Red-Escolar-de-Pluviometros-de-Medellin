@@ -280,7 +280,7 @@
             <div class="alert security-note"><strong>Importante:</strong> el PIN se valida en el backend de Google Apps Script. No se guardan claves dentro del HTML público.</div>
             <label for="registroSede">Sede que reporta</label><select id="registroSede"></select><div class="selected-sede" id="selectedSedeBox">Selecciona una sede para iniciar el registro.</div>
             <form id="registroForm">
-              <label for="sedePin">PIN privado de la sede</label><input id="sedePin" name="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="12" placeholder="PIN entregado a la institución" autocomplete="off" required><p class="help">Escribe solo los números del PIN. El sistema ignora espacios o guiones accidentales.</p>
+              <label for="sedePin">PIN privado de la sede</label><input id="sedePin" name="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="12" placeholder="PIN entregado a la institución" autocomplete="off" required><p class="help">Escribe solo los números del PIN. El sistema ignora espacios o guiones accidentales.</p><div class="buttons two"><button id="verifyPinBtn" class="ghost" type="button">Verificar PIN</button><span class="help" id="pinCheckMsg">Verifica que el PIN corresponda a la sede seleccionada.</span></div>
               <div class="form-grid"><div><label for="fecha">Fecha de medición</label><input id="fecha" name="fecha" type="date" required></div><div><label for="hora">Hora de medición</label><input id="hora" name="hora" type="time" required></div></div>
               <div class="form-grid"><div><label for="precipitacion">Precipitación en mm</label><input id="precipitacion" name="precipitacion_mm" type="number" step="0.1" min="0" placeholder="Ejemplo: 12.5" required><div id="qualityPreview" class="quality-box good">Ingresa la precipitación para ver el semáforo de calidad.</div></div><div><label for="condicion">Condición observada</label><select id="condicion" name="condicion" required><option value="Cielo despejado">Cielo despejado</option><option value="Nublado sin lluvia">Nublado sin lluvia</option><option value="Llovizna">Llovizna</option><option value="Lluvia moderada">Lluvia moderada</option><option value="Lluvia intensa">Lluvia intensa</option><option value="Tormenta">Tormenta</option></select></div></div>
               <div class="form-grid"><div><label for="estadoPluviometro">Estado del pluviómetro</label><select id="estadoPluviometro" name="estado_pluviometro"><option value="Limpio y nivelado">Limpio y nivelado</option><option value="Requiere limpieza">Requiere limpieza</option><option value="Inclinado o movido">Inclinado o movido</option><option value="Dañado o incompleto">Dañado o incompleto</option></select></div><div><label for="eventoClimatico">Evento observado</label><select id="eventoClimatico" name="evento_climatico"><option value="Sin evento adicional">Sin evento adicional</option><option value="Tormenta eléctrica">Tormenta eléctrica</option><option value="Granizo">Granizo</option><option value="Inundación cercana">Inundación cercana</option><option value="Viento fuerte">Viento fuerte</option><option value="Movimiento en masa cercano">Movimiento en masa cercano</option></select></div></div>
@@ -320,7 +320,7 @@
             <p>Esta zona administra la URL del backend, acceso privado y sincronización completa con datos internos. Las descargas públicas se realizan desde la sección Reportes sin autenticación.</p>
             <div id="adminLoggedBox" class="admin-bar admin-hidden"><strong>Sesión administradora activa</strong><button id="logoutAdminBtn" class="ghost" type="button" style="max-width:190px">Cerrar sesión</button></div>
             <div id="adminLoginBox" class="lock-card">
-              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbyi2CaVs5GGesXZMiTAmVXlOsVT2cAhCnz0_5vhXceF22-rPY3y39aMu6uXKOQJFuw/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"><p class="help">Este backend ya queda preconfigurado. Solo cambia esta URL si publicas una nueva implementación de Apps Script.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
+              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbweJUHWPw6eTE1sypnr3daEqCGtNTNxzxCb2tB5-txU0kuA1aW6Z_12z8wHWXVqD-4i/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"><p class="help">Este backend ya queda preconfigurado. Solo cambia esta URL si publicas una nueva implementación de Apps Script.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
               <div class="buttons two"><button id="saveBackendBtn" class="primary" type="button">Guardar URL</button><button id="testBackendBtn" class="ghost" type="button">Probar backend</button></div>
               <div class="form-grid"><div><label for="adminUser">Usuario administrador</label><input id="adminUser" type="text" placeholder="admin" autocomplete="username"></div><div><label for="adminPass">Contraseña</label><input id="adminPass" type="password" placeholder="Contraseña administradora" autocomplete="current-password"></div></div>
               <div class="buttons two"><button id="loginAdminBtn" class="gold" type="button">Ingresar como administrador</button><button id="syncPrivateBtn" class="secondary admin-protected" type="button">Sincronizar datos privados</button></div>
@@ -329,7 +329,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.0</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.1</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -345,7 +345,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.0 · PIN corregido · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.1 · PIN autocorregido · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -418,7 +418,9 @@
       $('filterSearch').addEventListener('input',()=>{refreshDependentFilters();renderAll();});
       $('clearFilterSearchBtn').addEventListener('click',()=>{$('filterSearch').value='';refreshDependentFilters();renderAll();});
       $('searchSede').addEventListener('input',renderDirectorio);
-      $('registroSede').addEventListener('change',()=>{updateSelectedSede(); renderSedeFicha();});
+      $('registroSede').addEventListener('change',()=>{updateSelectedSede(); renderSedeFicha(); if($('pinCheckMsg')){$('pinCheckMsg').textContent='Verifica que el PIN corresponda a la sede seleccionada.';$('pinCheckMsg').style.color='';}});
+      if($('verifyPinBtn')) $('verifyPinBtn').addEventListener('click',verifyPinBeforeSubmit);
+      if($('sedePin')) $('sedePin').addEventListener('input',()=>{if($('pinCheckMsg')){$('pinCheckMsg').textContent='PIN escrito. Puedes verificarlo antes de guardar.';$('pinCheckMsg').style.color='';}});
       $('precipitacion').addEventListener('input',updateQualityPreview); $('estadoPluviometro').addEventListener('change',updateQualityPreview);
       $('fotoFile').addEventListener('change',handlePhotoInput);
       $('clearPhotoBtn').addEventListener('click',clearSelectedPhoto);
@@ -957,6 +959,35 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       setStatus('Guardado',msg||'Registro guardado en la base central.');
     }
 
+    async function verifyPinBeforeSubmit(){
+      const sede=sedeById($('registroSede').value);
+      const pin=cleanPin($('sedePin').value);
+      if(!sede){ alert('Selecciona una sede para verificar el PIN.'); return; }
+      if(!pin){ alert('Escribe el PIN antes de verificar.'); return; }
+      if(!APP.backendUrl){ alert('No hay backend configurado.'); return; }
+      try{
+        setStatus('Verificando PIN','Consultando credencial de la sede...');
+        const res=await apiJsonp('checkpin',{sede_id:sede.sede_id,pin});
+        const msg=$('pinCheckMsg');
+        if(res&&res.valido){
+          msg.textContent=res.mensaje||'PIN válido.';
+          msg.style.color='var(--ok)';
+          if(res.sede_id && res.sede_id!==sede.sede_id && sedeById(res.sede_id)){
+            $('registroSede').value=res.sede_id;
+            updateSelectedSede();
+          }
+          setStatus('PIN válido',res.mensaje||'La credencial fue verificada.');
+        } else {
+          msg.textContent=(res&&res.error)?res.error:'PIN no válido.';
+          msg.style.color='var(--danger)';
+          setStatus('PIN no válido',msg.textContent);
+        }
+      }catch(err){
+        alert('No se pudo verificar el PIN. Revisa que el backend esté actualizado a v5.1.');
+        setStatus('Error','No se pudo verificar el PIN.');
+      }
+    }
+
     async function saveRegistro(e){
       e.preventDefault();
       const sede=sedeById($('registroSede').value);
@@ -1018,7 +1049,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
           finishRegistroGuardado(finalRes,sede,photoMsg);
         }catch(err){
           setStatus('Error',err.message||'No se pudo guardar. Verifica PIN, backend y permisos.');
-          alert('No se pudo guardar oficialmente: '+(err.message||'revisa el PIN o el backend.'));
+          alert('No se pudo guardar oficialmente: '+(err.message||'revisa el PIN o el backend.')+'\n\nRecomendación: verifica el PIN con el botón “Verificar PIN” y confirma que Apps Script fue reimplementado con la versión v5.1.');
         }
       } else {
         const rec=enrichRecord({
