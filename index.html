@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Red Escolar de Pluviómetros de Medellín | Educación ambiental y ciencia escolar</title>
+  <meta name="description" content="Sistema educativo ambiental para registrar, analizar y transformar la medición escolar de precipitación en ciencia ciudadana, gestión del agua y aprendizaje climático en Medellín." />
+  <meta name="theme-color" content="#07110b" />
+  <link rel="icon" type="image/png" href="assets/logo_losyoguis.png">
+  <link rel="apple-touch-icon" href="assets/logo_losyoguis.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <script src="data/instituciones.js"></script>
+  <style>
+    :root{
+      --bg:#06110a;--bg2:#0c2314;--card:rgba(15,28,19,.91);--card2:rgba(246,240,222,.07);--line:rgba(246,240,222,.14);
+      --ink:#f7f8f3;--muted:#d8d7cb;--paper:#f6f0de;--green:#006636;--green2:#129257;--red:#9b0000;--gold:#ffd817;--gold2:#d4af37;
+      --ok:#7ddf8a;--warn:#ffd56a;--danger:#ff8787;--blue:#7cc7ff;--shadow:0 18px 45px rgba(0,0,0,.35);--radius:24px;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 12% 10%,rgba(255,216,23,.17),transparent 22%),radial-gradient(circle at 90% 17%,rgba(155,0,0,.18),transparent 26%),radial-gradient(circle at 48% 92%,rgba(0,102,54,.25),transparent 32%),linear-gradient(145deg,#050806,#12301c 56%,#07110b);overflow-x:hidden}
+    #rainLayer .drop{position:fixed;top:-28px;width:2px;height:18px;background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,.75));animation:fall linear infinite;opacity:.15;pointer-events:none;z-index:0}@keyframes fall{to{transform:translateY(112vh)}}
+    .container{width:min(1480px,94vw);margin:0 auto;padding:24px 0 52px;position:relative;z-index:1}.hero,.panel,.module,.card,.chart,.table-wrap,.alert,.territory-card,.lock-card,.flow-step{border:1px solid var(--line);background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+    .hero{padding:28px;background:linear-gradient(130deg,rgba(0,102,54,.27),rgba(155,0,0,.14),rgba(255,216,23,.07))}.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:center}.brand{display:flex;gap:16px;align-items:center}.logo{width:108px;height:128px;border-radius:22px;background:#000;display:flex;align-items:center;justify-content:center;padding:6px;border:1px solid rgba(255,216,23,.38);box-shadow:0 0 35px rgba(255,216,23,.16);flex:0 0 auto}.logo img{max-width:100%;max-height:100%;object-fit:contain}.eyebrow{display:inline-flex;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,216,23,.30);color:#fff0a7;font-weight:950;font-size:.75rem;text-transform:uppercase;letter-spacing:.04em}h1{font-size:clamp(2rem,3vw,3.5rem);margin:12px 0 10px;line-height:1.05}h2,h3{margin:0 0 12px}p{color:var(--muted);font-size:1rem;line-height:1.48}.project-meta{margin-top:12px;color:var(--paper);font-weight:650;line-height:1.45;font-size:1rem;background:rgba(246,240,222,.055);border:1px solid var(--line);border-radius:16px;padding:12px 14px;max-width:940px}.hero-actions{display:grid;gap:10px;margin-top:16px;grid-template-columns:repeat(3,1fr)}
+    .top-status{display:grid;gap:12px}.stat-chip{padding:14px 15px;border-radius:18px;background:rgba(15,28,19,.9);border:1px solid var(--line);box-shadow:var(--shadow)}.stat-chip .label{color:#fff0a7;font-weight:950;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}.stat-chip .value{font-size:1.55rem;font-weight:950;margin-top:5px}.stat-chip .small{font-size:.82rem;color:var(--muted);margin-top:4px}
+    .main{display:grid;grid-template-columns:390px 1fr;gap:22px;margin-top:24px;align-items:start}.panel,.module,.lock-card{padding:20px}label{display:block;margin:12px 0 7px;font-weight:850;color:var(--paper)}select,input,textarea,button,a.btn{width:100%;background:rgba(246,240,222,.06);color:var(--ink);border:1px solid rgba(246,240,222,.16);border-radius:14px;padding:12px 13px;text-decoration:none;display:flex;justify-content:center;align-items:center;font-weight:850;font-family:inherit;min-height:46px}textarea{display:block;min-height:90px;resize:vertical;font-weight:650}select option{background:#0d1e12;color:#fff}button,.btn{cursor:pointer;transition:.18s}button:hover,.btn:hover{transform:translateY(-1px);filter:brightness(1.06)}button:disabled{cursor:not-allowed;opacity:.45;transform:none}.primary{background:linear-gradient(135deg,var(--green),#1f7a49)!important}.secondary{background:linear-gradient(135deg,var(--red),#7b0909)!important}.gold{background:linear-gradient(135deg,#ffcf19,#d4af37)!important;color:#101405!important}.ghost{background:rgba(246,240,222,.07)!important}.danger{background:linear-gradient(135deg,#8b1616,#c83737)!important}.buttons{display:grid;gap:10px;margin-top:14px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.four{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.tab-btn{width:auto;min-height:auto;padding:10px 14px;border-radius:999px;font-size:.88rem}.tab-btn.active{background:linear-gradient(135deg,var(--green),#1f7a49)!important;border-color:rgba(255,216,23,.45)}.tab-section{display:none}.tab-section.active{display:block}.dashboard{display:grid;gap:18px}.cards{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}.card{padding:16px}.card .k{color:#fff0a7;font-weight:950;font-size:.81rem;text-transform:uppercase;letter-spacing:.025em}.card .v{font-size:1.63rem;font-weight:950;margin-top:8px;line-height:1.1}.card .s{color:var(--muted);font-size:.82rem;margin-top:6px}
+    .alert{padding:16px;border-left:5px solid var(--gold)}.alert.ok{border-left-color:var(--ok)}.alert.warn{border-left-color:var(--warn)}.alert.bad{border-left-color:var(--danger)}.security-note{border-left:5px solid var(--gold);background:rgba(255,216,23,.06)}.charts{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.chart{padding:14px}.chart-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.mini{padding:8px 10px;border-radius:999px;background:rgba(246,240,222,.05);border:1px solid var(--line);color:var(--muted);font-size:.8rem}canvas{width:100%;display:block}.chart canvas{cursor:crosshair}.chart-tooltip{position:fixed;z-index:9999;min-width:245px;max-width:min(360px,92vw);padding:12px 13px;border-radius:16px;background:rgba(7,17,11,.97);border:1px solid rgba(255,216,23,.52);box-shadow:0 18px 42px rgba(0,0,0,.42);color:var(--ink);pointer-events:none;opacity:0;transform:translate(12px,12px);transition:opacity .12s ease}.chart-tooltip.active{opacity:1}.chart-tooltip .tt-title{font-weight:950;color:#fff0a7;margin-bottom:8px;line-height:1.2}.chart-tooltip .tt-row{display:flex;justify-content:space-between;gap:16px;border-top:1px solid rgba(246,240,222,.09);padding:6px 0;font-size:.86rem}.chart-tooltip .tt-row span{color:var(--muted)}.chart-tooltip .tt-row b{text-align:right}.chart-tooltip .tt-note{margin-top:7px;color:var(--muted);font-size:.78rem;line-height:1.35}.table-wrap{padding:14px;overflow:auto}table{width:100%;border-collapse:collapse;min-width:960px}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid rgba(246,240,222,.075);font-size:.88rem;vertical-align:top}th{color:#fff0a7;background:rgba(246,240,222,.055);position:sticky;top:0;z-index:2}
+    .tag{display:inline-flex;padding:6px 10px;border-radius:999px;font-weight:950;font-size:.76rem;white-space:nowrap}.tag.ie{background:rgba(125,223,138,.14);color:var(--ok)}.tag.sec{background:rgba(124,199,255,.14);color:var(--blue)}.tag.ce{background:rgba(255,213,106,.14);color:var(--warn)}.tag.otro{background:rgba(255,255,255,.12);color:#fff}.tag.rural{background:rgba(255,213,106,.15);color:var(--warn)}.tag.urbano{background:rgba(125,223,138,.14);color:var(--ok)}.tag.alta,.tag.validado,.tag.sync,.tag.ligera,.tag.sin-lluvia{background:rgba(125,223,138,.14);color:var(--ok)}.tag.media,.tag.moderada,.tag.pendiente,.tag.local{background:rgba(255,213,106,.15);color:var(--warn)}.tag.baja,.tag.fuerte,.tag.muy-fuerte,.tag.revisar{background:rgba(255,135,135,.14);color:var(--danger)}.tag.private{background:rgba(255,216,23,.13);color:#fff0a7}.help{font-size:.85rem;color:var(--muted);margin-top:8px;line-height:1.4}.selected-sede{background:rgba(246,240,222,.06);border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0}.selected-sede strong{color:#fff0a7}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .map-grid{display:grid;grid-template-columns:1fr;gap:16px}.map{height:clamp(580px,72vh,840px);border-radius:18px;position:relative;overflow:hidden;background:radial-gradient(circle at 35% 45%,rgba(255,216,23,.14),transparent 22%),linear-gradient(180deg,#102315,#08110b);border:1px solid var(--line)}.city-shape{position:absolute;left:8%;top:5%;width:84%;height:89%;opacity:.55}.city-shape:before{content:"";position:absolute;inset:0;background:rgba(0,102,54,.18);border:2px dashed rgba(255,216,23,.38);clip-path:polygon(42% 2%,53% 10%,59% 23%,76% 24%,87% 38%,82% 52%,91% 66%,80% 83%,61% 92%,43% 98%,26% 92%,13% 80%,18% 62%,7% 45%,18% 27%,33% 24%);filter:drop-shadow(0 0 22px rgba(255,216,23,.08))}.map-title{position:absolute;left:14px;top:14px;right:14px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;z-index:4}.map-note{position:absolute;left:14px;bottom:14px;right:14px;color:var(--muted);font-size:.82rem;background:rgba(7,17,11,.78);border:1px solid var(--line);border-radius:14px;padding:10px;z-index:4}.territory-marker{position:absolute;display:flex;flex-direction:column;align-items:center;gap:5px;transform:translate(-50%,-50%);cursor:pointer;z-index:5}.pin{width:18px;height:18px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 8px rgba(255,216,23,.14);border:1px solid rgba(0,0,0,.35)}.pin.rain0{background:#f1f0df}.pin.rain1{background:var(--ok)}.pin.rain2{background:var(--warn)}.pin.rain3{background:var(--danger);box-shadow:0 0 0 10px rgba(255,135,135,.18)}.territory-marker span{white-space:nowrap;background:rgba(7,17,11,.92);border:1px solid var(--line);padding:5px 7px;border-radius:10px;font-size:.72rem}.marker-tooltip{position:absolute;left:50%;bottom:calc(100% + 14px);transform:translateX(-50%) translateY(8px);min-width:255px;max-width:330px;background:rgba(7,17,11,.97);border:1px solid rgba(255,216,23,.45);box-shadow:0 16px 34px rgba(0,0,0,.38);border-radius:16px;padding:12px 13px;opacity:0;visibility:hidden;pointer-events:none;transition:.18s ease;z-index:20;text-align:left}.territory-marker:hover .marker-tooltip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}.tooltip-title{font-weight:950;color:#fff0a7;margin-bottom:7px}.tooltip-row{display:flex;justify-content:space-between;gap:10px;border-top:1px solid rgba(246,240,222,.08);padding-top:6px;margin-top:6px;font-size:.86rem}.territory-list-wrap{padding:14px;border-radius:20px;background:rgba(15,28,19,.72);border:1px solid var(--line);box-shadow:var(--shadow)}.territory-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;max-height:none;overflow:visible;padding-right:0}.territory-card{padding:15px;border-radius:18px;cursor:pointer;transition:.18s}.territory-card:hover{transform:translateY(-1px);border-color:rgba(255,216,23,.35)}.territory-card b{color:#fff0a7}.territory-card small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.flow-step{padding:14px;border-radius:18px}.flow-step b{color:#fff0a7}.flow-step p{font-size:.86rem;margin:8px 0 0}.admin-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,216,23,.08);border:1px solid rgba(255,216,23,.22);border-radius:16px;padding:12px;margin:12px 0}.admin-hidden{display:none!important}.lock-card{background:rgba(5,8,6,.62);border-color:rgba(255,216,23,.24)}.footer{color:var(--muted);text-align:center;margin-top:26px;font-size:.9rem}.yoguis-footer{margin-top:28px;border:1px solid var(--line);background:#000;border-radius:24px;box-shadow:var(--shadow);overflow:hidden;text-align:center}.yoguis-footer img{display:block;width:100%;height:auto;max-height:360px;object-fit:contain;background:#000}.yoguis-footer-link{display:flex;justify-content:center;align-items:center;padding:14px 16px 18px;background:#000;border-top:1px solid rgba(246,240,222,.08)}.yoguis-footer-link a{color:#ffef3c;text-decoration:none;font-weight:950;letter-spacing:.02em;font-size:1rem}.print-only{display:none}.mobile-actionbar{display:none}
+    @media print{body{background:#fff;color:#111}.container{width:100%;padding:0}.hero,.panel,.tabs,.mobile-actionbar,.yoguis-footer,.footer button,.buttons,.admin-hidden,#rainLayer{display:none!important}.main{display:block}.tab-section{display:block}.tab-section:not(#reportes){display:none}.module,.table-wrap,.card{box-shadow:none;border:1px solid #ccc;background:#fff;color:#111}.print-only{display:block}.card .k,.card .v,.card .s,p,.help{color:#111}}
+    @media(max-width:1160px){.main{grid-template-columns:1fr}.cards{grid-template-columns:repeat(3,1fr)}.map-grid,.charts,.grid2,.sede-ficha{grid-template-columns:1fr}.territory-panel{max-height:none}.panel{position:relative}.impact-strip{grid-template-columns:1fr}}
+    @media(max-width:820px){body{background:#06110a}.container{width:100%;padding:0 0 96px}.hero{border-radius:0 0 28px 28px;border-left:0;border-right:0;border-top:0;padding:18px 16px 20px}.hero-grid{grid-template-columns:1fr;gap:14px}.brand{align-items:flex-start;gap:12px}.logo{width:72px;height:86px;border-radius:16px}.eyebrow{font-size:.62rem;padding:6px 9px;line-height:1.2}.project-meta{font-size:.78rem;padding:9px 10px;border-radius:13px;margin-top:8px}h1{font-size:1.85rem;margin:10px 0 8px}p{font-size:.9rem}.hero-actions,.three,.two,.four,.form-grid,.flow,.sede-ficha,.impact-strip{grid-template-columns:1fr}.main{display:block;margin-top:12px}.panel{margin:0 10px 12px;padding:14px;border-radius:20px;background:rgba(10,28,17,.96)}.tabs{padding:0 10px}.tab-btn{flex:1}.dashboard,.tab-section{padding:0 10px}.cards{grid-template-columns:1fr 1fr;gap:10px}.card{padding:13px;border-radius:18px}.card .v{font-size:1.22rem}.chart,.table-wrap,.module,.lock-card{border-radius:20px;padding:12px}.map{height:520px}.territory-marker span{font-size:.64rem}.marker-tooltip{min-width:225px}.table-wrap{margin-left:-10px;margin-right:-10px;border-radius:0;border-left:0;border-right:0}.mobile-actionbar{position:fixed;left:0;right:0;bottom:0;background:rgba(5,8,6,.94);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:9px;z-index:30;backdrop-filter:blur(10px)}.mobile-actionbar .btn{min-height:44px;font-size:.84rem;padding:9px}.yoguis-footer{border-radius:18px;margin:20px 10px 0}.yoguis-footer img{max-height:240px}}
+  
+
+
+    /* ===== v4.0 · Capa educativa y ambiental ===== */
+    .edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.edu-card{border:1px solid var(--line);background:rgba(246,240,222,.055);border-radius:20px;padding:16px;min-height:100%;position:relative;overflow:hidden}.edu-card:before{content:"";position:absolute;inset:auto -30px -45px auto;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,216,23,.12),transparent 65%)}.edu-card h3{color:#fff0a7}.edu-card .num{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,216,23,.15);border:1px solid rgba(255,216,23,.35);font-weight:950;color:#fff0a7;margin-bottom:10px}.big-quote{font-size:clamp(1.2rem,2vw,2rem);line-height:1.2;font-weight:950;color:#fff0a7;padding:20px;border-radius:22px;background:linear-gradient(135deg,rgba(255,216,23,.10),rgba(0,102,54,.16));border:1px solid rgba(255,216,23,.18)}.protocol-list{display:grid;gap:10px;counter-reset:step;padding-left:0}.protocol-list li{list-style:none;padding:12px 12px 12px 48px;border:1px solid var(--line);background:rgba(246,240,222,.05);border-radius:16px;position:relative;color:var(--muted)}.protocol-list li:before{counter-increment:step;content:counter(step);position:absolute;left:12px;top:10px;width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--gold);color:#111;font-weight:950}.mission-card{cursor:pointer;transition:.18s}.mission-card.done{border-color:rgba(125,223,138,.55);background:rgba(125,223,138,.08)}.mission-card.done .mission-state{color:var(--ok)}.mission-state{font-weight:950;color:var(--warn);margin-top:8px}.formula-box{padding:14px;border-radius:16px;background:rgba(0,0,0,.23);border:1px dashed rgba(255,216,23,.32);font-weight:850;color:#fff0a7}.calc-result{padding:18px;border-radius:22px;background:linear-gradient(135deg,rgba(0,102,54,.24),rgba(255,216,23,.12));border:1px solid rgba(255,216,23,.22)}.calc-result .big{font-size:clamp(1.6rem,3vw,3.4rem);font-weight:950;color:#fff0a7}.quality-box{margin-top:12px;padding:14px;border-radius:16px;border:1px solid var(--line);background:rgba(246,240,222,.06)}.quality-box.good{border-left:5px solid var(--ok)}.quality-box.warn{border-left:5px solid var(--warn)}.quality-box.bad{border-left:5px solid var(--danger)}.quality-score{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.role-chip{display:inline-flex;margin:4px 6px 4px 0;padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(246,240,222,.06);font-size:.84rem;font-weight:850}.sede-ficha{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.sede-hero{padding:20px;border-radius:22px;background:linear-gradient(135deg,rgba(255,216,23,.11),rgba(0,102,54,.22));border:1px solid rgba(255,216,23,.20)}.activity-table{min-width:760px}.badge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.badge{padding:13px;border-radius:18px;border:1px solid rgba(255,216,23,.20);background:rgba(255,216,23,.06)}.badge b{color:#fff0a7}.impact-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.impact-strip .impact{padding:14px;border-radius:18px;background:rgba(0,102,54,.15);border:1px solid var(--line);font-weight:850}.mini-map-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.legend-dot{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted)}.legend-dot:before{content:"";width:12px;height:12px;border-radius:50%;background:var(--ok);display:inline-block}.legend-dot.warn:before{background:var(--warn)}.legend-dot.bad:before{background:var(--danger)}.legend-dot.neutral:before{background:#f1f0df}.callout-action{padding:16px;border-radius:20px;background:rgba(255,216,23,.08);border:1px solid rgba(255,216,23,.25)}.ficha-chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.ficha-chart-grid .chart{min-height:100%}.sede-mini-table table{min-width:640px}.stat-line{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:12px}.stat-chip{padding:12px 14px;border-radius:16px;background:rgba(246,240,222,.05);border:1px solid var(--line)}.stat-chip b{display:block;font-size:1.02rem;color:#fff0a7;margin-bottom:4px}.ficha-story{padding:14px;border-radius:18px;border:1px solid rgba(255,216,23,.18);background:linear-gradient(135deg,rgba(255,216,23,.08),rgba(0,102,54,.12));margin-top:14px}.ficha-story strong{color:#fff0a7} @media(max-width:1160px){.ficha-chart-grid{grid-template-columns:1fr}}
+
+    /* ===== v4.0 · Responsive total: TV, pantallas grandes, tablets y móviles ===== */
+    :root{--page-max:1480px;--page-pad-y:24px;--chart-h:260px;--map-h:clamp(580px,72vh,840px);--fluid-gap:clamp(12px,1.2vw,24px)}
+    img,svg,canvas,video{max-width:100%}.container{width:min(var(--page-max),94vw);padding:var(--page-pad-y) 0 clamp(56px,4vw,86px)}
+    .hero,.panel,.module,.card,.chart,.table-wrap,.territory-card,.lock-card,.flow-step{overflow-wrap:anywhere}.main{gap:var(--fluid-gap)}
+    .chart canvas{height:var(--chart-h);touch-action:manipulation}.map{height:var(--map-h)}
+    .tabs{position:sticky;top:10px;z-index:20;padding:8px;border:1px solid rgba(246,240,222,.08);border-radius:999px;background:rgba(7,17,11,.72);backdrop-filter:blur(10px)}
+    .tab-btn{white-space:nowrap}.territory-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.territory-card{height:100%}
+    @media (min-width:1600px){
+      :root{--page-max:1760px;--chart-h:320px;--map-h:clamp(720px,74vh,980px)}
+      body{font-size:17px}.container{width:min(var(--page-max),95vw)}.main{grid-template-columns:minmax(390px,430px) 1fr}.hero{padding:clamp(30px,2vw,42px)}
+      h1{font-size:clamp(3rem,2.8vw,4.6rem)}.cards{gap:18px}.card{padding:20px}.chart,.module,.table-wrap{padding:20px}.logo{width:124px;height:148px}.stat-chip .value{font-size:2rem}
+      .territory-marker span{font-size:.84rem}.pin{width:22px;height:22px}.pin:after{inset:-10px}.marker-tooltip{font-size:.9rem}
+    }
+    @media (min-width:2100px){
+      :root{--page-max:2240px;--chart-h:390px;--map-h:clamp(860px,76vh,1120px)}
+      body{font-size:18px}.container{width:min(var(--page-max),96vw)}.main{grid-template-columns:minmax(420px,500px) 1fr;gap:28px}.hero-grid{grid-template-columns:1.3fr .7fr;gap:30px}.top-status{grid-template-columns:1fr;gap:16px}
+      .cards{grid-template-columns:repeat(6,1fr)}.charts,.grid2{gap:22px}.chart-head h2{font-size:1.9rem}.chart-head h3{font-size:1.45rem}.map-title .mini,.mini{font-size:.95rem;padding:10px 14px}.territory-panel{grid-template-columns:repeat(4,1fr)}
+    }
+    @media (min-width:2600px){
+      :root{--page-max:2520px;--chart-h:430px;--map-h:1180px}.container{width:min(var(--page-max),96vw)}.cards{grid-template-columns:repeat(6,1fr)}.territory-panel{grid-template-columns:repeat(5,1fr)}
+    }
+    @media (min-width:1161px) and (max-width:1399px){
+      :root{--chart-h:245px;--map-h:clamp(560px,68vh,780px)}.main{grid-template-columns:340px 1fr}.panel{padding:16px}.cards{grid-template-columns:repeat(3,1fr)}.hero-actions{grid-template-columns:repeat(3,minmax(0,1fr))}.tab-btn{font-size:.82rem;padding:9px 12px}
+    }
+    @media (min-width:821px) and (max-width:1160px){
+      :root{--chart-h:300px;--map-h:clamp(560px,66vh,760px)}.container{width:min(1000px,94vw)}.hero-grid{grid-template-columns:1fr}.top-status{grid-template-columns:repeat(3,1fr)}.main{grid-template-columns:1fr}.panel{position:relative}.tabs{overflow-x:auto;flex-wrap:nowrap;justify-content:flex-start;border-radius:20px}.tab-btn{flex:0 0 auto}.cards{grid-template-columns:repeat(3,1fr)}.charts,.grid2,.form-grid,.four{grid-template-columns:1fr 1fr}.hero-actions{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (min-width:641px) and (max-width:820px){
+      :root{--chart-h:300px;--map-h:clamp(560px,68vh,740px)}.container{width:100%;padding:0 0 94px}.hero{border-radius:0 0 28px 28px}.top-status{grid-template-columns:repeat(3,1fr)}.cards{grid-template-columns:repeat(3,1fr)}.charts,.grid2,.form-grid{grid-template-columns:1fr}.two,.three,.four{grid-template-columns:1fr 1fr}.tabs{overflow-x:auto;flex-wrap:nowrap;border-radius:18px;margin:0 10px 16px}.tab-btn{flex:0 0 auto}.map-title{align-items:flex-start}.territory-panel{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      :root{--chart-h:260px;--map-h:560px;--radius:20px}.container{width:100%;padding:0 0 104px}.hero{padding:16px 12px 18px}.brand{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start}.logo{width:72px;height:86px}.eyebrow{font-size:.58rem;line-height:1.2}.project-meta{font-size:.82rem}.hero-actions{grid-template-columns:1fr;gap:8px}.top-status{grid-template-columns:1fr}.main{display:block;margin-top:10px}.panel{margin:0 8px 12px;padding:12px;border-radius:18px}.tabs{margin:0 8px 12px;overflow-x:auto;flex-wrap:nowrap;border-radius:18px;padding:6px}.tab-btn{flex:0 0 auto;font-size:.78rem;padding:9px 11px}.dashboard,.tab-section{padding:0 8px}.cards{grid-template-columns:1fr 1fr;gap:9px}.card{padding:12px}.card .v{font-size:1.12rem}.chart-head{align-items:flex-start;flex-direction:column}.chart-head .mini{align-self:flex-start}.chart,.table-wrap,.module,.lock-card{padding:11px;border-radius:18px}.charts,.grid2,.two,.three,.four,.form-grid,.flow{grid-template-columns:1fr}.map{height:var(--map-h);border-radius:18px}.map-title{left:10px;right:10px;top:10px;flex-direction:column;align-items:flex-start}.map-title .mini{font-size:.72rem}.territory-marker span{font-size:.58rem;max-width:110px;white-space:normal;text-align:center;line-height:1.05}.pin{width:16px;height:16px}.marker-tooltip{min-width:210px;max-width:88vw}.territory-panel{grid-template-columns:1fr}.table-wrap{margin-left:-8px;margin-right:-8px;border-radius:0;border-left:0;border-right:0}table{min-width:820px}.mobile-actionbar{grid-template-columns:repeat(3,1fr)}.mobile-actionbar .btn{font-size:.76rem;padding:8px 6px}.yoguis-footer img{max-height:210px}.footer{padding:14px 8px;font-size:.82rem}
+    }
+    @media (max-width:420px){
+      :root{--chart-h:235px;--map-h:520px}.brand{grid-template-columns:58px 1fr}.logo{width:58px;height:70px;border-radius:14px}h1{font-size:1.58rem}.cards{grid-template-columns:1fr}.card .v{font-size:1.28rem}.btn,button,select,input,textarea,a.btn{min-height:44px;font-size:.86rem}.chart-tooltip{min-width:210px}.map{height:500px}.territory-marker span{font-size:.54rem}.pin{width:14px;height:14px}.mobile-actionbar{gap:5px;padding:7px}.mobile-actionbar .btn{font-size:.7rem}.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}table{min-width:760px;font-size:.78rem}th,td{padding:8px 9px}
+    }
+    @media (orientation:landscape) and (max-height:520px){
+      :root{--chart-h:220px;--map-h:430px}.hero{padding:12px}.logo{width:58px;height:68px}.project-meta{display:none}.panel{max-height:none}.mobile-actionbar{position:static;margin:12px 8px;border-radius:16px;border:1px solid var(--line)}
+    }
+    @media (hover:none) and (pointer:coarse){
+      button:hover,.btn:hover{transform:none}.chart canvas{cursor:pointer}.chart-tooltip{transition:none}.tabs{scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}#rainLayer{display:none!important}
+    }
+
+  </style>
+</head>
+<body>
+  <div id="rainLayer" aria-hidden="true"></div>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="brand">
+            <div class="logo"><img src="assets/logo_losyoguis.png" alt="Logo Los Yoguis"></div>
+            <div>
+              <span class="eyebrow">Ciencia escolar · Agua · Clima · Territorio</span>
+              <h1>Red Escolar de Pluviómetros de Medellín</h1>
+              <p>Sistema de ciencia escolar ciudadana para medir lluvia, analizar patrones climáticos locales y activar proyectos educativos de adaptación ambiental.</p>
+              <div class="project-meta"><strong>Propósito:</strong> convertir cada sede educativa en una estación de observación climática escolar: mide, aprende, analiza, reporta y propone acciones para el cuidado del agua y la adaptación climática de Medellín.</div>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <a class="btn primary" href="#registro" data-tab-link="registro">Ingresar datos</a>
+            <a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Ver mapa</a>
+            <a class="btn secondary" href="#admin" data-tab-link="admin">Acceso privado</a>
+          </div>
+        </div>
+        <div class="top-status">
+          <div class="stat-chip"><div class="label">Sedes cargadas</div><div class="value" id="heroSedes">0</div><div class="small">Directorio territorial</div></div>
+          <div class="stat-chip"><div class="label">Territorios</div><div class="value" id="heroTerritorios">0</div><div class="small">Comunas y corregimientos</div></div>
+          <div class="stat-chip"><div class="label">Estado</div><div class="value" id="heroStatus">Local</div><div class="small" id="heroStatusSmall">Sistema listo.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="main">
+      <aside class="panel">
+        <h2>Filtros territoriales</h2>
+        <p class="help">El mapa y los reportes se pueden consultar por zona, comuna/corregimiento, barrio/vereda, núcleo y sede.</p>
+        <label for="filterZona">Zona territorial</label><select id="filterZona"><option value="">Todas</option></select>
+        <label for="filterTipoTerritorio">Tipo de territorio</label><select id="filterTipoTerritorio"><option value="">Todos</option></select>
+        <label for="filterTerritorio">Comuna o corregimiento</label><select id="filterTerritorio"><option value="">Todos</option></select>
+        <label for="filterBarrio">Barrio o vereda probable</label><select id="filterBarrio"><option value="">Todos</option></select>
+        <label for="filterNucleo">Núcleo educativo</label><select id="filterNucleo"><option value="">Todos</option></select>
+        <label for="filterTipo">Tipo de sede</label><select id="filterTipo"><option value="">Todos</option></select>
+        <label for="filterSede">Sede</label><select id="filterSede"><option value="">Todas</option></select>
+        <div class="two"><div><label for="dateFrom">Desde</label><input id="dateFrom" type="date"></div><div><label for="dateTo">Hasta</label><input id="dateTo" type="date"></div></div>
+        <div class="buttons">
+          <button id="syncPublicBtn" class="primary" type="button">Actualizar datos públicos</button>
+          <button id="demoBtn" class="gold" type="button">Cargar datos demo</button>
+          <button id="clearLocalBtn" class="danger" type="button">Limpiar datos locales</button>
+        </div>
+        <div class="module" style="margin-top:14px;padding:14px 16px">
+          <h3 style="margin:0 0 10px">Ayuda rápida de esta sección</h3>
+          <p class="help" style="margin:0 0 10px">Estos botones sirven para gestionar la información que ves en pantalla. Están pensados para facilitar la consulta pública, las pruebas del sistema y el mantenimiento local del navegador.</p>
+          <ul class="help" style="margin:0;padding-left:18px;display:grid;gap:8px">
+            <li><strong>Actualizar datos públicos:</strong> consulta y refresca los registros públicos más recientes desde la base central para que el dashboard, el mapa y las fichas muestren información actualizada.</li>
+            <li><strong>Cargar datos demo:</strong> agrega datos de demostración solo en este navegador. Sirve para hacer pruebas pedagógicas, ensayar filtros, validar gráficas y mostrar el funcionamiento del sistema cuando aún no hay suficientes registros reales.</li>
+            <li><strong>Limpiar datos locales:</strong> borra únicamente los datos de prueba o temporales guardados en este navegador. No elimina la información oficial de la base central ni afecta los datos públicos del proyecto.</li>
+          </ul>
+        </div>
+        <div class="alert security-note" style="margin-top:14px"><strong>Acceso público:</strong> los datos ambientales consolidados pueden descargarse sin PIN, usuario ni contraseña. El PIN se conserva únicamente para registrar mediciones oficiales por sede y proteger la calidad de la información.</div>
+        <p class="help" id="systemMsg">Sistema listo.</p>
+      </aside>
+
+      <section>
+        <nav class="tabs" aria-label="Secciones del sistema">
+          <button class="tab-btn active" data-tab="dashboard" type="button">Dashboard</button>
+          <button class="tab-btn" data-tab="mapa-territorial" type="button">Mapa territorial</button>
+          <button class="tab-btn" data-tab="proyecto-educativo" type="button">Proyecto educativo</button>
+          <button class="tab-btn" data-tab="aula-climatica" type="button">Aula climática</button>
+          <button class="tab-btn" data-tab="misiones" type="button">Misiones</button>
+          <button class="tab-btn" data-tab="calidad-dato" type="button">Calidad del dato</button>
+          <button class="tab-btn" data-tab="captacion" type="button">Agua lluvia</button>
+          <button class="tab-btn" data-tab="ficha-sede" type="button">Ficha por sede</button>
+          <button class="tab-btn" data-tab="registro" type="button">Registro por sede</button>
+          <button class="tab-btn" data-tab="directorio" type="button">Directorio</button>
+          <button class="tab-btn" data-tab="reportes" type="button">Reportes</button>
+          <button class="tab-btn" data-tab="admin" type="button">Privado</button>
+          <button class="tab-btn" data-tab="arquitectura" type="button">Arquitectura</button>
+        </nav>
+
+        <section id="dashboard" class="tab-section active">
+          <div class="dashboard">
+            <div class="cards">
+              <div class="card"><div class="k">Registros</div><div class="v" id="kpiRegistros">0</div><div class="s">Datos filtrados</div></div>
+              <div class="card"><div class="k">Acumulado</div><div class="v" id="kpiAcumulado">0 mm</div><div class="s">Suma de precipitación</div></div>
+              <div class="card"><div class="k">Promedio</div><div class="v" id="kpiPromedio">0 mm</div><div class="s">Por registro</div></div>
+              <div class="card"><div class="k">Máximo</div><div class="v" id="kpiMaximo">0 mm</div><div class="s" id="kpiMaximoSede">Sin datos</div></div>
+              <div class="card"><div class="k">Sedes con datos</div><div class="v" id="kpiSedesActivas">0</div><div class="s">Sedes reportando</div></div>
+              <div class="card"><div class="k">Territorios con datos</div><div class="v" id="kpiTerritoriosActivos">0</div><div class="s">Comunas/corregimientos</div></div>
+            </div>
+            <div id="alertBox" class="alert ok"><strong>Lectura pedagógica:</strong> los datos públicos permiten comparar patrones de lluvia por territorio sin exponer información personal.</div>
+            <div class="charts">
+              <div class="chart"><div class="chart-head"><h3>Tendencia diaria de precipitación</h3><span class="mini">mm por fecha</span></div><canvas id="trendChart" height="260"></canvas></div>
+              <div class="chart"><div class="chart-head"><h3>Acumulado por territorio</h3><span class="mini">Top 10</span></div><canvas id="territorioChart" height="260"></canvas></div>
+            </div>
+            <div class="grid2">
+              <div class="chart"><div class="chart-head"><h3>Acumulado por núcleo</h3><span class="mini">Top 10</span></div><canvas id="nucleoChart" height="260"></canvas></div>
+              <div class="chart"><div class="chart-head"><h3>Sedes con mayor acumulado</h3><span class="mini">Top 8</span></div><canvas id="sedeChart" height="260"></canvas></div>
+            </div>
+            <div class="table-wrap"><div class="chart-head"><h3>Últimos registros públicos</h3><span class="mini" id="lastUpdated">Sin actualización</span></div><table><thead><tr><th>Fecha</th><th>Hora</th><th>Territorio</th><th>Barrio/vereda</th><th>Núcleo</th><th>Sede</th><th>mm</th><th>Intensidad</th><th>Estado</th></tr></thead><tbody id="latestRows"></tbody></table></div>
+          </div>
+        </section>
+
+        <section id="mapa-territorial" class="tab-section">
+          <div class="module">
+            <div class="chart-head"><div><h2>Mapa territorial de Medellín</h2><p>Visualización de comunas, corregimientos, barrios y veredas asociados a las sedes educativas de la ciudad.</p></div><span class="mini" id="mapCount">0 territorios</span></div>
+            <div class="two"><div><label for="mapMode">Nivel de visualización</label><select id="mapMode"><option value="territorio">Comunas y corregimientos</option><option value="barrio">Barrios y veredas probables</option></select></div><div><label for="mapMetric">Métrica del punto</label><select id="mapMetric"><option value="lluvia">Precipitación acumulada</option><option value="sedes">Número de sedes</option><option value="registros">Número de registros</option></select></div></div>
+            <div class="callout-action" style="margin-top:14px">
+              <strong>Convención de colores del mapa:</strong>
+              <div class="mini-map-legend" aria-label="Convención de colores del mapa territorial">
+                <span class="legend-dot neutral">Blanco: sin lluvia registrada o sin datos en el filtro actual</span>
+                <span class="legend-dot">Verde: precipitación baja</span>
+                <span class="legend-dot warn">Amarillo: precipitación moderada</span>
+                <span class="legend-dot bad">Rojo: precipitación alta o punto que requiere seguimiento</span>
+              </div>
+              <p class="help" style="margin:10px 0 0">El tamaño del punto cambia según la métrica seleccionada: precipitación acumulada, número de sedes o número de registros.</p>
+            </div>
+          </div>
+          <div class="map-grid" style="margin-top:16px">
+            <div class="map" id="mapa">
+              <div class="city-shape"></div>
+              <div class="map-title"><span class="mini">Medellín · comunas/corregimientos</span><span class="mini" id="mapHint">Clic en un punto para filtrar</span></div>
+            </div>
+            <div class="territory-list-wrap">
+              <div class="chart-head"><div><h3>Datos territoriales filtrados</h3></div><span class="mini">Resumen territorial</span></div>
+              <div class="territory-panel" id="territoryPanel"></div>
+            </div>
+          </div>
+        </section>
+
+
+        <section id="proyecto-educativo" class="tab-section">
+          <div class="module">
+            <div class="chart-head"><div><h2>Proyecto educativo ambiental</h2><p>La red no solo registra lluvia: transforma cada medición en aprendizaje, cultura científica y acciones de adaptación climática escolar.</p></div><span class="mini">Ciencia escolar ciudadana</span></div>
+            <div class="big-quote">“Medellín puede aprender de su lluvia si sus colegios la miden, la analizan y la convierten en decisiones ambientales.”</div>
+          </div>
+          <div class="edu-grid" style="margin-top:16px">
+            <div class="edu-card"><span class="num">1</span><h3>Medir</h3><p>Los estudiantes registran la precipitación diaria con un protocolo común para todas las sedes.</p></div>
+            <div class="edu-card"><span class="num">2</span><h3>Analizar</h3><p>El sistema compara datos por sede, barrio, comuna, corregimiento, núcleo y fecha.</p></div>
+            <div class="edu-card"><span class="num">3</span><h3>Aprender</h3><p>La información se conecta con matemáticas, ciencias naturales, tecnología, geografía y PRAE.</p></div>
+            <div class="edu-card"><span class="num">4</span><h3>Actuar</h3><p>Cada sede puede proponer acciones sobre gestión del agua, prevención del riesgo y adaptación climática.</p></div>
+          </div>
+          <div class="grid2" style="margin-top:16px">
+            <div class="module"><h3>Roles estudiantiles</h3><p><span class="role-chip">Guardián del pluviómetro</span><span class="role-chip">Analista climático</span><span class="role-chip">Reportero ambiental</span><span class="role-chip">Gestor del riesgo</span><span class="role-chip">Embajador ambiental</span></p><p class="help">Estos roles permiten que el proyecto sea participativo y no dependa solo de una persona.</p></div>
+            <div class="module"><h3>Indicadores de impacto</h3><div class="impact-strip"><div class="impact">Sedes activas</div><div class="impact">Días medidos</div><div class="impact">Acciones ambientales</div></div><p class="help">Los indicadores conectan el dato técnico con apropiación escolar, continuidad y toma de decisiones.</p></div>
+          </div>
+          <div class="module" style="margin-top:16px"><h3>Insignias sugeridas</h3><div class="badge-grid"><div class="badge"><b>Sede constante</b><br><span class="help">Reporta 20 o más días al mes.</span></div><div class="badge"><b>Sede científica</b><br><span class="help">Registra datos completos y verificados.</span></div><div class="badge"><b>Guardiana del agua</b><br><span class="help">Propone acciones de aprovechamiento de lluvia.</span></div><div class="badge"><b>Alerta pedagógica</b><br><span class="help">Identifica riesgos asociados a lluvia intensa.</span></div></div></div>
+        </section>
+
+        <section id="aula-climatica" class="tab-section">
+          <div class="module">
+            <div class="chart-head"><div><h2>Aula Climática</h2><p>Actividades pedagógicas por grado para convertir los datos de precipitación en experiencias de aprendizaje.</p></div><span class="mini">Secuencia didáctica</span></div>
+            <div class="table-wrap"><table class="activity-table"><thead><tr><th>Grados</th><th>Pregunta orientadora</th><th>Actividad</th><th>Producto esperado</th></tr></thead><tbody><tr><td>4° - 5°</td><td>¿Qué es la lluvia y cómo se mide?</td><td>Observar el pluviómetro, dibujarlo y registrar un dato diario.</td><td>Bitácora visual de lluvia.</td></tr><tr><td>6° - 7°</td><td>¿Llueve igual todos los días?</td><td>Construir tabla semanal y gráfica de barras.</td><td>Gráfica de precipitación semanal.</td></tr><tr><td>8° - 9°</td><td>¿Qué patrones aparecen en mi territorio?</td><td>Calcular promedio, máximo, mínimo y comparar con otra sede.</td><td>Informe estadístico corto.</td></tr><tr><td>10°</td><td>¿Cómo se relaciona la lluvia con el riesgo?</td><td>Ubicar puntos de escorrentía, encharcamiento o deslizamiento cercano.</td><td>Mapa escolar de riesgo hídrico.</td></tr><tr><td>11°</td><td>¿Qué decisión ambiental podemos tomar?</td><td>Diseñar una propuesta de adaptación o aprovechamiento de agua lluvia.</td><td>Proyecto PRAE o feria de ciencia.</td></tr></tbody></table></div>
+          </div>
+          <div class="grid2" style="margin-top:16px"><div class="module"><h3>Interpretación rápida</h3><p><strong>1 mm de lluvia</strong> equivale aproximadamente a <strong>1 litro de agua por metro cuadrado</strong>. Por eso, una lluvia de 25 mm significa que cayeron cerca de 25 litros por cada m².</p><div class="formula-box">Litros ≈ precipitación (mm) × área (m²) × coeficiente</div></div><div class="module"><h3>Pregunta para el aula</h3><p>¿Qué diferencias aparecen entre comunas urbanas, corregimientos rurales y zonas de ladera cuando se comparan los acumulados de lluvia?</p><p class="help">Esta pregunta puede activar lectura crítica del territorio, análisis de datos y discusión sobre cambio climático local.</p></div></div>
+        </section>
+
+        <section id="misiones" class="tab-section">
+          <div class="module"><div class="chart-head"><div><h2>Misiones Guardianes Climáticos</h2><p>Ruta gamificada para que cada sede pase de la medición a la acción ambiental.</p></div><span class="mini" id="missionProgress">0/5 completadas</span></div></div>
+          <div class="edu-grid" style="margin-top:16px" id="missionGrid">
+            <div class="edu-card mission-card" data-mission="m1"><span class="num">1</span><h3>Observadores de lluvia</h3><p>Medir durante 7 días seguidos y revisar que el pluviómetro esté limpio y nivelado.</p><div class="mission-state">Pendiente</div></div>
+            <div class="edu-card mission-card" data-mission="m2"><span class="num">2</span><h3>Detectives del clima</h3><p>Comparar la sede con otra comuna o corregimiento usando el dashboard.</p><div class="mission-state">Pendiente</div></div>
+            <div class="edu-card mission-card" data-mission="m3"><span class="num">3</span><h3>Guardianes del agua</h3><p>Calcular el potencial de captación de agua lluvia de un techo de la institución.</p><div class="mission-state">Pendiente</div></div>
+            <div class="edu-card mission-card" data-mission="m4"><span class="num">4</span><h3>Alertas escolares</h3><p>Identificar zonas de encharcamiento, canales, patios o puntos vulnerables.</p><div class="mission-state">Pendiente</div></div>
+            <div class="edu-card mission-card" data-mission="m5"><span class="num">5</span><h3>Plan de adaptación</h3><p>Proponer tres acciones con responsable, fecha y evidencia fotográfica.</p><div class="mission-state">Pendiente</div></div>
+          </div>
+          <div class="module" style="margin-top:16px"><h3>Protocolo común de medición</h3><ol class="protocol-list"><li>Leer el pluviómetro todos los días a una hora acordada por la sede.</li><li>Registrar el valor en milímetros, incluso cuando sea 0 mm.</li><li>Vaciar el pluviómetro después de cada lectura para evitar acumulados falsos.</li><li>Verificar que esté limpio, vertical, nivelado y lejos de techos o árboles.</li><li>Reportar eventos como granizo, tormenta, viento fuerte o inundación cercana.</li><li>Si se omitió un día, registrarlo como observación y no mezclar varios días sin aclararlo.</li></ol></div>
+        </section>
+
+        <section id="calidad-dato" class="tab-section">
+          <div class="module"><div class="chart-head"><div><h2>Calidad del dato</h2><p>Semáforo para fortalecer la confiabilidad de la red y detectar mediciones que requieren revisión pedagógica o técnica.</p></div><span class="mini">Validación escolar</span></div><div class="mini-map-legend"><span class="legend-dot neutral">0 mm</span><span class="legend-dot">0,1 a 30 mm</span><span class="legend-dot warn">30,1 a 70 mm</span><span class="legend-dot bad">Más de 70 mm</span></div></div>
+          <div class="quality-score" style="margin-top:16px"><div class="card"><div class="k">Datos normales</div><div class="v" id="qNormales">0</div><div class="s">Registros hasta 30 mm</div></div><div class="card"><div class="k">Para seguimiento</div><div class="v" id="qSeguimiento">0</div><div class="s">Entre 30,1 y 70 mm</div></div><div class="card"><div class="k">Revisión prioritaria</div><div class="v" id="qRevision">0</div><div class="s">Más de 70 mm o estado revisar</div></div><div class="card"><div class="k">Sedes sin datos</div><div class="v" id="qSinDatos">0</div><div class="s">Según filtro actual</div></div></div>
+          <div class="table-wrap" style="margin-top:16px"><div class="chart-head"><h3>Registros que requieren revisión</h3><span class="mini">Top recientes</span></div><table><thead><tr><th>Fecha</th><th>Sede</th><th>Territorio</th><th>mm</th><th>Motivo</th><th>Acción pedagógica</th></tr></thead><tbody id="qualityRows"></tbody></table></div>
+        </section>
+
+        <section id="captacion" class="tab-section">
+          <div class="module"><div class="chart-head"><div><h2>Calculadora de aprovechamiento de agua lluvia</h2><p>Estima el potencial de captación de agua lluvia de una sede usando los datos de precipitación del sistema.</p></div><span class="mini">Educación + sostenibilidad</span></div></div>
+          <div class="grid2" style="margin-top:16px"><div class="module"><label for="roofArea">Área aproximada de techo o superficie de captación (m²)</label><input id="roofArea" type="number" min="1" step="1" value="500"><label for="calcRain">Precipitación a usar (mm)</label><input id="calcRain" type="number" min="0" step="0.1" value="50"><label for="captureCoeff">Coeficiente de aprovechamiento</label><select id="captureCoeff"><option value="0.8">0,80 · techo en buen estado</option><option value="0.7">0,70 · captación media</option><option value="0.6">0,60 · pérdidas altas</option></select><div class="buttons two"><button class="primary" id="calcWaterBtn" type="button">Calcular</button><button class="ghost" id="useFilteredRainBtn" type="button">Usar acumulado filtrado</button></div><p class="help">El cálculo es estimativo y sirve para actividades pedagógicas, prefactibilidad ambiental y discusión escolar.</p></div><div class="calc-result"><div class="k">Potencial estimado</div><div class="big" id="waterLiters">0 L</div><p id="waterText">Ingresa área, precipitación y coeficiente para estimar el volumen.</p><div class="formula-box">Litros = mm × m² × coeficiente</div><div class="callout-action" style="margin-top:14px"><strong>Actividad:</strong> compara este volumen con el consumo de agua para limpieza de patios, riego de huertas escolares o lavado de herramientas.</div></div></div>
+        </section>
+
+        <section id="ficha-sede" class="tab-section">
+          <div class="module"><div class="chart-head"><div><h2>Ficha ambiental por sede</h2><p>Cada institución puede consultar una lectura resumida de su participación, territorio y comportamiento de lluvia.</p></div><span class="mini">Identidad territorial</span></div><label for="fichaSedeSelect">Selecciona una sede</label><select id="fichaSedeSelect"></select></div>
+          <div id="fichaSedeBox" class="sede-ficha" style="margin-top:16px"></div>
+        </section>
+
+        <section id="registro" class="tab-section">
+          <div class="module">
+            <h2>Registro protegido de precipitación por sede</h2>
+            <p>El enlace o QR puede abrir esta sección con la sede preseleccionada. Para guardar en la base central se exige el <strong>PIN privado de la sede</strong>.</p>
+            <div class="alert security-note"><strong>Importante:</strong> el PIN se valida en el backend de Google Apps Script. No se guardan claves dentro del HTML público.</div>
+            <label for="registroSede">Sede que reporta</label><select id="registroSede"></select><div class="selected-sede" id="selectedSedeBox">Selecciona una sede para iniciar el registro.</div>
+            <form id="registroForm">
+              <label for="sedePin">PIN privado de la sede</label><input id="sedePin" name="pin" type="password" inputmode="numeric" placeholder="PIN entregado a la institución" autocomplete="off" required>
+              <div class="form-grid"><div><label for="fecha">Fecha de medición</label><input id="fecha" name="fecha" type="date" required></div><div><label for="hora">Hora de medición</label><input id="hora" name="hora" type="time" required></div></div>
+              <div class="form-grid"><div><label for="precipitacion">Precipitación en mm</label><input id="precipitacion" name="precipitacion_mm" type="number" step="0.1" min="0" placeholder="Ejemplo: 12.5" required><div id="qualityPreview" class="quality-box good">Ingresa la precipitación para ver el semáforo de calidad.</div></div><div><label for="condicion">Condición observada</label><select id="condicion" name="condicion" required><option value="Cielo despejado">Cielo despejado</option><option value="Nublado sin lluvia">Nublado sin lluvia</option><option value="Llovizna">Llovizna</option><option value="Lluvia moderada">Lluvia moderada</option><option value="Lluvia intensa">Lluvia intensa</option><option value="Tormenta">Tormenta</option></select></div></div>
+              <div class="form-grid"><div><label for="estadoPluviometro">Estado del pluviómetro</label><select id="estadoPluviometro" name="estado_pluviometro"><option value="Limpio y nivelado">Limpio y nivelado</option><option value="Requiere limpieza">Requiere limpieza</option><option value="Inclinado o movido">Inclinado o movido</option><option value="Dañado o incompleto">Dañado o incompleto</option></select></div><div><label for="eventoClimatico">Evento observado</label><select id="eventoClimatico" name="evento_climatico"><option value="Sin evento adicional">Sin evento adicional</option><option value="Tormenta eléctrica">Tormenta eléctrica</option><option value="Granizo">Granizo</option><option value="Inundación cercana">Inundación cercana</option><option value="Viento fuerte">Viento fuerte</option><option value="Movimiento en masa cercano">Movimiento en masa cercano</option></select></div></div>
+              <div class="form-grid"><div><label for="rolResponsable">Responsable de lectura</label><select id="rolResponsable" name="rol_responsable"><option value="Docente">Docente</option><option value="Estudiante">Estudiante</option><option value="Comité ambiental">Comité ambiental</option><option value="Directivo docente">Directivo docente</option><option value="Personal de apoyo">Personal de apoyo</option></select></div><div><label for="fotoUrl">Evidencia fotográfica opcional</label><input id="fotoUrl" name="foto_url" type="url" placeholder="Enlace a foto o evidencia, si aplica"></div></div>
+              <label for="observador">Nombre del observador</label><input id="observador" name="observador" type="text" placeholder="Docente, estudiante o comité ambiental" required>
+              <label for="observaciones">Observaciones internas</label><textarea id="observaciones" name="observaciones" placeholder="Ejemplo: lluvia fuerte durante el descanso, granizo, inundación cercana, cielo nublado, etc."></textarea>
+              <div class="buttons three"><button class="primary" type="submit">Guardar registro</button><button class="ghost" id="copyLinkBtn" type="button">Copiar enlace de esta sede</button><button class="gold" id="goDashboardBtn" type="button">Ver dashboard</button></div>
+              <p class="help">Modo sin backend: el registro queda solo en este navegador como prueba local y no se considera dato oficial.</p>
+            </form>
+          </div>
+        </section>
+
+        <section id="directorio" class="tab-section">
+          <div class="module">
+            <h2>Directorio territorial de sedes educativas</h2>
+            <p>El directorio permite ubicar cada sede por núcleo, comuna/corregimiento y barrio/vereda probable. La descarga de sedes y enlaces queda disponible para cualquier usuario.</p>
+            <div class="three"><input id="searchSede" type="search" placeholder="Buscar por nombre, código, barrio, comuna o núcleo"><button id="exportSedesBtn" class="gold" type="button">Descargar sedes CSV</button><button id="copyAllLinksBtn" class="ghost" type="button">Copiar enlaces filtrados</button></div>
+            <p class="help" id="directorioCount"></p>
+          </div>
+          <div class="table-wrap" style="margin-top:16px"><table><thead><tr><th>Código</th><th>Núcleo</th><th>Tipo</th><th>Nombre de la sede</th><th>Comuna/corregimiento</th><th>Barrio/vereda probable</th><th>Confianza</th><th>Enlace formulario</th><th>Estado</th></tr></thead><tbody id="sedesRows"></tbody></table></div>
+        </section>
+
+        <section id="reportes" class="tab-section">
+          <div class="module">
+            <h2 class="print-only">Reporte Red Escolar de Pluviómetros de Medellín</h2>
+            <h2>Reportes</h2>
+            <p>El reporte público y sus descargas están disponibles para cualquier usuario sin PIN, usuario ni contraseña. Para proteger la privacidad, los archivos públicos no incluyen datos personales del observador.</p>
+            <div class="buttons three"><button id="downloadPublicCsvBtn" class="primary" type="button">Descargar CSV</button><button id="downloadExcelBtn" class="gold" type="button">Descargar Excel</button><button id="printPdfBtn" class="secondary" type="button">Generar PDF público</button></div>
+          </div>
+          <div class="grid2" style="margin-top:16px"><div class="card"><div class="k">Resumen del filtro</div><div class="v" id="reportSummary">0 registros</div><div class="s" id="reportSummarySmall">Sin datos</div></div><div class="card"><div class="k">Recomendación</div><div class="v" id="reportRecommendation">—</div><div class="s">Lectura automática según precipitación</div></div></div>
+          <div class="table-wrap" style="margin-top:16px"><table><thead id="reportHead"></thead><tbody id="reportRows"></tbody></table></div>
+        </section>
+
+        <section id="admin" class="tab-section">
+          <div class="module">
+            <h2>Acceso privado y configuración</h2>
+            <p>Esta zona administra la URL del backend, acceso privado y sincronización completa con datos internos. Las descargas públicas se realizan desde la sección Reportes sin autenticación.</p>
+            <div id="adminLoggedBox" class="admin-bar admin-hidden"><strong>Sesión administradora activa</strong><button id="logoutAdminBtn" class="ghost" type="button" style="max-width:190px">Cerrar sesión</button></div>
+            <div id="adminLoginBox" class="lock-card">
+              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off">
+              <div class="buttons two"><button id="saveBackendBtn" class="primary" type="button">Guardar URL</button><button id="testBackendBtn" class="ghost" type="button">Probar backend</button></div>
+              <div class="form-grid"><div><label for="adminUser">Usuario administrador</label><input id="adminUser" type="text" placeholder="admin" autocomplete="username"></div><div><label for="adminPass">Contraseña</label><input id="adminPass" type="password" placeholder="Contraseña administradora" autocomplete="current-password"></div></div>
+              <div class="buttons two"><button id="loginAdminBtn" class="gold" type="button">Ingresar como administrador</button><button id="syncPrivateBtn" class="secondary admin-protected" type="button">Sincronizar datos privados</button></div>
+              <p class="help">Contraseña inicial del backend: <strong>AdminRedPluvio2026!</strong>. Debe cambiarse desde Apps Script ejecutando <code>cambiarClaveAdmin('NuevaClaveSegura')</code>.</p>
+            </div>
+          </div>
+          <div class="grid2" style="margin-top:16px">
+            <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v4.4</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+          </div>
+        </section>
+
+        <section id="arquitectura" class="tab-section">
+          <div class="module">
+            <h2>Arquitectura territorial del sistema</h2>
+            <p>Esta versión permite comenzar con GitHub Pages y Google Apps Script, incorporando control de acceso por PIN de sede y análisis por territorio.</p>
+            <div class="flow"><div class="flow-step"><b>1. Pluviómetro</b><p>Cada sede mide lluvia en milímetros con su instrumento físico.</p></div><div class="flow-step"><b>2. QR de sede</b><p>El QR abre el formulario con el código de la sede preseleccionado.</p></div><div class="flow-step"><b>3. PIN institucional</b><p>El dato solo se guarda oficialmente si el PIN coincide con la sede.</p></div><div class="flow-step"><b>4. Base central</b><p>Google Sheets recibe todos los datos mediante Apps Script.</p></div><div class="flow-step"><b>5. Mapa territorial</b><p>Los registros se analizan por núcleo, comuna, corregimiento, barrio y vereda.</p></div></div>
+          </div>
+          <div class="table-wrap" style="margin-top:16px"><table><thead><tr><th>Nivel</th><th>Acceso</th><th>Información visible</th><th>Protección</th></tr></thead><tbody><tr><td>Público</td><td>Ciudadanía</td><td>Indicadores, mapas, registros sanitizados</td><td>Sin datos personales</td></tr><tr><td>Sede</td><td>Docente/comité ambiental</td><td>Formulario de ingreso</td><td>Código de sede + PIN</td></tr><tr><td>Administrador</td><td>Equipo central</td><td>Descargas completas, configuración y observaciones internas</td><td>Usuario, contraseña y token temporal</td></tr></tbody></table></div>
+        </section>
+      </section>
+    </section>
+
+    <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v4.4 · mapa con convención de colores · ciencia escolar y gestión climática</div>
+    <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
+  </main>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const nf = new Intl.NumberFormat('es-CO',{maximumFractionDigits:1});
+    const APP = {
+      instituciones: Array.isArray(window.INSTITUCIONES_MEDELLIN) ? window.INSTITUCIONES_MEDELLIN : [],
+      territorios: Array.isArray(window.TERRITORIOS_MEDELLIN) ? window.TERRITORIOS_MEDELLIN : [],
+      registros: [],
+      backendUrl: localStorage.getItem('redPluvioMed.backendUrl') || '',
+      adminToken: sessionStorage.getItem('redPluvioMed.adminToken') || '',
+      adminUser: sessionStorage.getItem('redPluvioMed.adminUser') || '',
+      lastMode: 'public'
+    };
+    APP.sedeMap = new Map(APP.instituciones.map(s => [s.sede_id, s]));
+    function esc(v){return String(v ?? '').replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+    function norm(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
+    function mm(v){const n = Number(String(v ?? 0).replace(',','.'));return isNaN(n)?0:n;}
+    function today(){return new Date().toISOString().slice(0,10);} function nowTime(){return new Date().toTimeString().slice(0,5);}
+    function intensidad(valor){const n=mm(valor); if(n<=0)return 'Sin lluvia'; if(n<=2.5)return 'Ligera'; if(n<=10)return 'Moderada'; if(n<=30)return 'Fuerte'; return 'Muy fuerte';}
+    function tagClass(v){return norm(v).replace(/\s+/g,'-') || 'local';}
+    function unique(arr){return [...new Set(arr.filter(v=>v!==undefined&&v!==null&&String(v).trim()!==''))].sort((a,b)=>String(a).localeCompare(String(b),'es',{numeric:true}));}
+    function sedeById(id){return APP.sedeMap.get(id);}
+    function getSedeUrl(id){const base = location.href.split('#')[0].split('?')[0]; return `${base}?sede=${encodeURIComponent(id)}#registro`;}
+    function setStatus(title, msg){$('heroStatus').textContent = title; $('heroStatusSmall').textContent = msg; $('systemMsg').textContent = msg;}
+    function isAdmin(){return !!APP.adminToken;}
+    function showTab(tab){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.tab-section').forEach(s=>s.classList.toggle('active',s.id===tab));history.replaceState(null,'','#'+tab); if(tab==='dashboard') setTimeout(()=>renderCharts(getFilteredRecords()),60); if(tab==='reportes') renderReport(getFilteredRecords()); if(tab==='mapa-territorial') setTimeout(()=>renderMap(getFilteredRecords()),60); if(tab==='calidad-dato') renderQualityPanel(getFilteredRecords()); if(tab==='captacion') renderWaterCalc(); if(tab==='ficha-sede') renderSedeFicha(); if(tab==='misiones') renderMissions();}
+    function saveLocalRecords(){localStorage.setItem('redPluvioMed.localRecordsV3', JSON.stringify(APP.registros.filter(r => r.fuente !== 'backend')));}
+    function loadLocalRecords(){try{APP.registros = JSON.parse(localStorage.getItem('redPluvioMed.localRecordsV3') || localStorage.getItem('redPluvioMed.localRecordsV2') || '[]').map(enrichRecord);}catch(e){APP.registros=[];}}
+    function makeRain(){const layer=$('rainLayer'); for(let i=0;i<44;i++){const d=document.createElement('span');d.className='drop';d.style.left=Math.random()*100+'vw';d.style.animationDuration=(1.6+Math.random()*2.8)+'s';d.style.animationDelay=(-Math.random()*5)+'s';layer.appendChild(d);}}
+    function init(){makeRain(); loadLocalRecords(); $('backendUrl').value=APP.backendUrl; $('fecha').value=today(); $('hora').value=nowTime(); populateControls(); bindEvents(); preselectSede(); updateAdminUi(); renderAll(); renderWaterCalc(); renderMissions(); updateQualityPreview(); if(APP.backendUrl) syncPublic(false); setStatus(APP.backendUrl?'Configurable':'Local', APP.backendUrl?'Backend guardado. Actualiza datos públicos.':'Sin backend configurado.');}
+    function currentFilters(){return {zona:$('filterZona').value,tipoTerritorio:$('filterTipoTerritorio').value,territorio:$('filterTerritorio').value,barrio:$('filterBarrio').value,nucleo:$('filterNucleo').value,tipo:$('filterTipo').value,sedeId:$('filterSede').value};}
+    function matchSedeFilters(s, includeSede=true){const f=currentFilters(); return (!f.zona||s.zona_territorial===f.zona)&&(!f.tipoTerritorio||s.tipo_territorio===f.tipoTerritorio)&&(!f.territorio||s.territorio===f.territorio)&&(!f.barrio||s.barrio_vereda===f.barrio)&&(!f.nucleo||s.nucleo===f.nucleo)&&(!f.tipo||s.tipo===f.tipo)&&(!includeSede||!f.sedeId||s.sede_id===f.sedeId);}
+    function populateSelect(id, values, label='Todos', current=''){const sel=$(id); const val=current || sel.value; sel.innerHTML=`<option value="">${label}</option>`+values.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join(''); if(values.some(v=>String(v)===String(val))) sel.value=val;}
+    function populateControls(){
+      $('heroSedes').textContent=APP.instituciones.length;
+      $('heroTerritorios').textContent=APP.territorios.length;
+      populateSelect('filterZona', unique(APP.instituciones.map(s=>s.zona_territorial)), 'Todas');
+      populateSelect('filterTipoTerritorio', unique(APP.instituciones.map(s=>s.tipo_territorio)), 'Todos');
+      populateSelect('filterNucleo', unique(APP.instituciones.map(s=>s.nucleo)), 'Todos');
+      populateSelect('filterTipo', unique(APP.instituciones.map(s=>s.tipo)), 'Todos');
+      refreshDependentFilters();
+      populateRegistroSelect();
+      populateFichaSelect();
+    }
+    function baseMatch(s, opts={}){const f=currentFilters(); return (!f.zona||s.zona_territorial===f.zona)&&(!f.tipoTerritorio||s.tipo_territorio===f.tipoTerritorio)&&((opts.ignoreTerritorio)||!f.territorio||s.territorio===f.territorio)&&((opts.ignoreBarrio)||!f.barrio||s.barrio_vereda===f.barrio)&&(!f.nucleo||s.nucleo===f.nucleo)&&(!f.tipo||s.tipo===f.tipo);}
+    function refreshDependentFilters(){
+      const oldTerr=$('filterTerritorio').value, oldBarrio=$('filterBarrio').value, oldSede=$('filterSede').value;
+      const territoryBase=APP.instituciones.filter(s=>baseMatch(s,{ignoreTerritorio:true,ignoreBarrio:true}));
+      populateSelect('filterTerritorio', unique(territoryBase.map(s=>s.territorio)), 'Todos', oldTerr);
+      const barrioBase=APP.instituciones.filter(s=>baseMatch(s,{ignoreBarrio:true}));
+      populateSelect('filterBarrio', unique(barrioBase.map(s=>s.barrio_vereda)), 'Todos', oldBarrio);
+      populateSedeFilter(oldSede);
+    }
+    function populateSedeFilter(current){const sedes=APP.instituciones.filter(s=>matchSedeFilters(s,false)).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es')); $('filterSede').innerHTML='<option value="">Todas</option>'+sedes.map(s=>`<option value="${esc(s.sede_id)}">${esc(s.sede_id)} · ${esc(s.nombre)}</option>`).join(''); if(sedes.some(s=>s.sede_id===current)) $('filterSede').value=current;}
+    function populateRegistroSelect(){const sedes=[...APP.instituciones].sort((a,b)=>a.nucleo.localeCompare(b.nucleo)||a.nombre.localeCompare(b.nombre,'es')); $('registroSede').innerHTML='<option value="">Selecciona sede</option>'+sedes.map(s=>`<option value="${esc(s.sede_id)}">${esc(s.sede_id)} · ${esc(s.nombre)}</option>`).join('');}
+    function preselectSede(){const params=new URLSearchParams(location.search); const sede=params.get('sede'); if(sede && sedeById(sede)){$('registroSede').value=sede; updateSelectedSede(); showTab('registro');} else if(location.hash){const tab=location.hash.replace('#',''); if($(tab)) showTab(tab);}}
+    function bindEvents(){
+      document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+      document.querySelectorAll('[data-tab-link]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab(a.dataset.tabLink)}));
+      ['filterZona','filterTipoTerritorio','filterTerritorio','filterBarrio','filterNucleo','filterTipo'].forEach(id=>$(id).addEventListener('change',()=>{refreshDependentFilters();renderAll();}));
+      ['filterSede','dateFrom','dateTo','mapMode','mapMetric'].forEach(id=>$(id).addEventListener('change',renderAll));
+      $('searchSede').addEventListener('input',renderDirectorio);
+      $('registroSede').addEventListener('change',()=>{updateSelectedSede(); renderSedeFicha();});
+      $('precipitacion').addEventListener('input',updateQualityPreview); $('estadoPluviometro').addEventListener('change',updateQualityPreview);
+      $('registroForm').addEventListener('submit',saveRegistro);
+      $('syncPublicBtn').addEventListener('click',()=>syncPublic(true));
+      $('syncPrivateBtn').addEventListener('click',syncPrivate);
+      $('demoBtn').addEventListener('click',loadDemoData);
+      $('clearLocalBtn').addEventListener('click',clearLocalData);
+      $('copyLinkBtn').addEventListener('click',copySelectedLink);
+      $('goDashboardBtn').addEventListener('click',()=>showTab('dashboard'));
+      $('copyAllLinksBtn').addEventListener('click',copyFilteredLinks);
+      $('exportSedesBtn').addEventListener('click',exportSedesCSV);
+      $('downloadPublicCsvBtn').addEventListener('click',()=>exportPublicCSV(getFilteredRecords()));
+      $('downloadExcelBtn').addEventListener('click',()=>exportRecordsExcel(getFilteredRecords()));
+      $('printPdfBtn').addEventListener('click',()=>{showTab('reportes'); setTimeout(()=>window.print(),120);});
+      $('saveBackendBtn').addEventListener('click',saveBackend);
+      $('testBackendBtn').addEventListener('click',testBackend);
+      $('loginAdminBtn').addEventListener('click',loginAdmin);
+      $('logoutAdminBtn').addEventListener('click',logoutAdmin);
+      $('calcWaterBtn').addEventListener('click',renderWaterCalc);
+      $('useFilteredRainBtn').addEventListener('click',useFilteredRainForCalc);
+      ['roofArea','calcRain','captureCoeff'].forEach(id=>$(id).addEventListener('input',renderWaterCalc));
+      $('fichaSedeSelect').addEventListener('change',renderSedeFicha);
+      document.querySelectorAll('.mission-card').forEach(card=>card.addEventListener('click',()=>toggleMission(card.dataset.mission)));
+      $('sedesRows').addEventListener('click',e=>{const btn=e.target.closest('[data-copy-url]'); if(btn){copyText(btn.dataset.copyUrl).then(()=>setStatus('Copiado','Enlace de sede copiado.'));}});
+      document.querySelectorAll('.admin-protected').forEach(b=>b.title='Requiere acceso administrador'); document.querySelectorAll('#downloadPublicCsvBtn,#downloadExcelBtn,#printPdfBtn,#exportSedesBtn,#copyAllLinksBtn').forEach(b=>b.title='Descarga pública sin PIN, usuario ni contraseña');
+      window.addEventListener('resize',()=>renderCharts(getFilteredRecords()));
+      setupChartInteractions();
+    }
+    function updateSelectedSede(){const s=sedeById($('registroSede').value); $('selectedSedeBox').innerHTML=s?`<strong>${esc(s.nombre)}</strong><br>Código: ${esc(s.sede_id)} · Núcleo ${esc(s.nucleo)} · ${esc(s.tipo)}<br>Territorio: ${esc(s.tipo_territorio)} ${esc(s.codigo_territorio)} · ${esc(s.territorio)} · ${esc(s.barrio_vereda)}<br><span class="tag ${tagClass(s.caracter)}">${esc(s.caracter)}</span> <span class="tag ${tagClass(s.confianza)}">Confianza ${esc(s.confianza)}</span><br><span class="help">Enlace QR: ${esc(getSedeUrl(s.sede_id))}</span>`:'Selecciona una sede para iniciar el registro.';}
+    function enrichRecord(r){const s=sedeById(r.sede_id)||{}; return {...r,nucleo:r.nucleo||s.nucleo||'',tipo:r.tipo||s.tipo||'',tipo_sigla:r.tipo_sigla||s.tipo_sigla||'',sede:r.sede||s.nombre||'',zona_territorial:r.zona_territorial||s.zona_territorial||'',tipo_territorio:r.tipo_territorio||s.tipo_territorio||'',codigo_territorio:r.codigo_territorio||s.codigo_territorio||'',territorio:r.territorio||s.territorio||'',barrio_vereda:r.barrio_vereda||s.barrio_vereda||'',caracter:r.caracter||s.caracter||'',confianza:r.confianza||s.confianza||''};}
+    function getFilteredRecords(){const f=currentFilters(),from=$('dateFrom').value,to=$('dateTo').value; return APP.registros.map(enrichRecord).filter(r=>(!f.zona||r.zona_territorial===f.zona)&&(!f.tipoTerritorio||r.tipo_territorio===f.tipoTerritorio)&&(!f.territorio||r.territorio===f.territorio)&&(!f.barrio||r.barrio_vereda===f.barrio)&&(!f.nucleo||r.nucleo===f.nucleo)&&(!f.tipo||r.tipo===f.tipo)&&(!f.sedeId||r.sede_id===f.sedeId)&&(!from||String(r.fecha)>=from)&&(!to||String(r.fecha)<=to)).sort((a,b)=>String(b.fecha+b.hora).localeCompare(String(a.fecha+a.hora)));}
+    function getFilteredSedes(){const q=norm($('searchSede').value); return APP.instituciones.filter(s=>matchSedeFilters(s,true)&&(!q||norm(`${s.sede_id} ${s.nucleo} ${s.tipo} ${s.nombre} ${s.zona_territorial} ${s.territorio} ${s.barrio_vereda}`).includes(q))).sort((a,b)=>a.territorio.localeCompare(b.territorio,'es')||a.nombre.localeCompare(b.nombre,'es'));}
+    function renderAll(){const rec=getFilteredRecords(); renderKpis(rec); renderCharts(rec); renderMap(rec); renderLatest(rec); renderDirectorio(); renderReport(rec); renderQualityPanel(rec); renderSedeFicha(); renderWaterCalc(false); updateAdminUi(false);}
+    function renderKpis(records){const total=records.reduce((a,r)=>a+mm(r.precipitacion_mm),0); const avg=records.length?total/records.length:0; const max=records.reduce((m,r)=>mm(r.precipitacion_mm)>mm(m.precipitacion_mm||0)?r:m,{}); $('kpiRegistros').textContent=records.length; $('kpiAcumulado').textContent=nf.format(total)+' mm'; $('kpiPromedio').textContent=nf.format(avg)+' mm'; $('kpiMaximo').textContent=nf.format(mm(max.precipitacion_mm))+' mm'; $('kpiMaximoSede').textContent=max.sede||'Sin datos'; $('kpiSedesActivas').textContent=new Set(records.map(r=>r.sede_id)).size; $('kpiTerritoriosActivos').textContent=new Set(records.map(r=>r.territorio).filter(Boolean)).size; const alert=$('alertBox'); alert.className='alert '+(total>200?'bad':total>80?'warn':'ok'); alert.innerHTML=records.length?`<strong>Lectura pedagógica:</strong> ${records.length} registros filtrados acumulan ${nf.format(total)} mm en ${new Set(records.map(r=>r.territorio).filter(Boolean)).size} territorios. ${total>200?'Se recomienda revisar posibles alertas por lluvias acumuladas.':total>80?'Conviene hacer seguimiento por comuna/corregimiento y sede.':'Condición estable para continuar medición.'}`:'<strong>Lectura pedagógica:</strong> aún no hay datos para el filtro seleccionado.'; $('lastUpdated').textContent=records[0]?`Último registro: ${records[0].fecha} ${records[0].hora}`:'Sin actualización';}
+    const CHART_STATE={};
+    let chartTooltipEl=null;
+    function aggregate(records,key,limit){return aggregateDetailed(records,key,limit).map(d=>[d.label,d.value]);}
+    function daily(records){return dailyDetailed(records).map(d=>[d.label,d.value]);}
+    function aggregateDetailed(records,key,limit){
+      const groups=new Map();
+      records.forEach(r=>{
+        const label=r[key]||'Sin dato';
+        if(!groups.has(label)) groups.set(label,{label,value:0,registros:0,sedes:new Set(),territorios:new Set(),barrios:new Set(),max:0,maxSede:'',maxFecha:''});
+        const g=groups.get(label), val=mm(r.precipitacion_mm);
+        g.value+=val; g.registros++; if(r.sede_id)g.sedes.add(r.sede_id); if(r.territorio)g.territorios.add(r.territorio); if(r.barrio_vereda)g.barrios.add(r.barrio_vereda);
+        if(val>=g.max){g.max=val; g.maxSede=r.sede||r.sede_id||''; g.maxFecha=r.fecha||'';}
+      });
+      return [...groups.values()].map(g=>({...g,promedio:g.registros?g.value/g.registros:0,sedesCount:g.sedes.size,territoriosCount:g.territorios.size,barriosCount:g.barrios.size})).sort((a,b)=>b.value-a.value).slice(0,limit);
+    }
+    function dailyDetailed(records){
+      const groups=new Map();
+      records.forEach(r=>{
+        if(!r.fecha)return;
+        if(!groups.has(r.fecha)) groups.set(r.fecha,{label:r.fecha,value:0,registros:0,sedes:new Set(),territorios:new Set(),max:0,maxSede:'',intensidades:new Map()});
+        const g=groups.get(r.fecha), val=mm(r.precipitacion_mm);
+        g.value+=val; g.registros++; if(r.sede_id)g.sedes.add(r.sede_id); if(r.territorio)g.territorios.add(r.territorio);
+        if(val>=g.max){g.max=val; g.maxSede=r.sede||r.sede_id||'';}
+        const inten=r.intensidad||intensidad(val); g.intensidades.set(inten,(g.intensidades.get(inten)||0)+1);
+      });
+      return [...groups.values()].map(g=>({
+        ...g,
+        promedio:g.registros?g.value/g.registros:0,
+        sedesCount:g.sedes.size,
+        territoriosCount:g.territorios.size,
+        intensidadPrincipal:[...g.intensidades.entries()].sort((a,b)=>b[1]-a[1])[0]?.[0]||'Sin dato'
+      })).sort((a,b)=>a.label.localeCompare(b.label)).slice(-18);
+    }
+    function chartHeight(c){const rect=c.getBoundingClientRect(); const cssH=parseFloat(getComputedStyle(c).height); return Math.max(180, Math.round(cssH||rect.height||Number(c.getAttribute('height'))||260));}
+    function setupChartCanvas(id){
+      const c=$(id); if(!c||c.dataset.interactiveChart==='1')return; c.dataset.interactiveChart='1';
+      c.addEventListener('mousemove',e=>handleChartMove(id,e));
+      c.addEventListener('mouseleave',hideChartTooltip);
+      c.addEventListener('click',e=>handleChartClick(id,e));
+    }
+    function setupChartInteractions(){['trendChart','territorioChart','nucleoChart','sedeChart'].forEach(setupChartCanvas);}
+    function getChartTooltip(){
+      if(chartTooltipEl)return chartTooltipEl;
+      chartTooltipEl=document.createElement('div'); chartTooltipEl.className='chart-tooltip'; chartTooltipEl.setAttribute('role','status'); chartTooltipEl.setAttribute('aria-live','polite'); document.body.appendChild(chartTooltipEl); return chartTooltipEl;
+    }
+    function hideChartTooltip(){if(chartTooltipEl)chartTooltipEl.classList.remove('active'); document.querySelectorAll('canvas[data-interactive-chart="1"]').forEach(c=>c.style.cursor='crosshair');}
+    function getCanvasPoint(c,e){const rect=c.getBoundingClientRect(); return {x:e.clientX-rect.left,y:e.clientY-rect.top};}
+    function nearestChartItem(state,pt){
+      if(!state)return null;
+      if(state.type==='bar') return state.items.find(it=>pt.x>=it.x&&pt.x<=it.x+it.w&&pt.y>=it.y&&pt.y<=it.y+it.h) || state.items.find(it=>pt.x>=it.x&&pt.x<=it.x+it.w&&pt.y>=state.pad&&pt.y<=state.H-state.pad);
+      if(state.type==='line'){
+        let best=null,dist=Infinity; state.items.forEach(it=>{const d=Math.hypot(pt.x-it.x,pt.y-it.y); if(d<dist){dist=d; best=it;}}); return dist<=18?best:null;
+      }
+      return null;
+    }
+    
+function tooltipHtmlFor(id,item){
+  const d=item.data;
+  if(id==='trendChart' || id==='sedeTrendChart'){
+    const title = id==='sedeTrendChart' ? `Fecha ${esc(d.label)}` : esc(d.label);
+    return `<div class="tt-title">${title}</div><div class="tt-row"><span>Precipitación acumulada</span><b>${nf.format(d.value)} mm</b></div><div class="tt-row"><span>Registros del día</span><b>${d.registros}</b></div><div class="tt-row"><span>Sedes reportando</span><b>${d.sedesCount}</b></div><div class="tt-row"><span>Territorios</span><b>${d.territoriosCount}</b></div><div class="tt-row"><span>Promedio por registro</span><b>${nf.format(d.promedio)} mm</b></div><div class="tt-row"><span>Mayor registro</span><b>${nf.format(d.max)} mm</b></div><div class="tt-note">Sede con mayor registro: ${esc(d.maxSede||'Sin dato')}. Intensidad predominante: ${esc(d.intensidadPrincipal||'Sin dato')}.</div>`;
+  }
+  const state=CHART_STATE[id]||{};
+  const unit=state.unit||'mm';
+  const metricLabel=state.metricLabel|| (unit==='mm' ? 'Acumulado' : unit==='lecturas' ? 'Lecturas' : 'Valor');
+  const fmtValue = unit==='mm' ? `${nf.format(d.value)} mm` : `${nf.format(d.value)} ${unit}`;
+  if(id==='sedeMonthChart'){
+    return `<div class="tt-title">${esc(d.label)}</div><div class="tt-row"><span>Acumulado mensual</span><b>${nf.format(d.value)} mm</b></div><div class="tt-row"><span>Lecturas en el mes</span><b>${d.registros}</b></div><div class="tt-row"><span>Promedio por lectura</span><b>${nf.format(d.promedio)} mm</b></div><div class="tt-row"><span>Mayor día del mes</span><b>${nf.format(d.max)} mm</b></div><div class="tt-note">Permite comparar la estacionalidad de la lluvia en esta sede.</div>`;
+  }
+  if(id==='sedeTopDaysChart'){
+    return `<div class="tt-title">${esc(d.label)}</div><div class="tt-row"><span>Lluvia del día</span><b>${nf.format(d.value)} mm</b></div><div class="tt-row"><span>Lecturas ese día</span><b>${d.registros}</b></div><div class="tt-row"><span>Condición predominante</span><b>${esc(d.condicion||'Sin dato')}</b></div><div class="tt-note">Top de días más lluviosos en la sede seleccionada.</div>`;
+  }
+  const labelMap={territorioChart:'Territorio',nucleoChart:'Núcleo',sedeChart:'Sede',sedeWeekdayChart:'Día de la semana',sedeIntensityChart:'Intensidad',sedeConditionChart:'Condición observada',sedeQualityChart:'Calidad del dato',sedeEventChart:'Evento climático'};
+  const total=state.total||0;
+  const pct=total?((d.value/total)*100):0;
+  return `<div class="tt-title">${esc(d.label)}</div><div class="tt-row"><span>${labelMap[id]||'Categoría'}</span><b>${esc(d.label)}</b></div><div class="tt-row"><span>${metricLabel}</span><b>${fmtValue}</b></div><div class="tt-row"><span>Participación</span><b>${nf.format(pct)}%</b></div><div class="tt-row"><span>Registros</span><b>${d.registros}</b></div><div class="tt-row"><span>Promedio</span><b>${unit==='mm'?nf.format(d.promedio)+' mm':nf.format(d.promedio)}</b></div><div class="tt-row"><span>Mayor registro</span><b>${nf.format(d.max)} mm</b></div><div class="tt-note">${esc(state.note || 'Pasa el mouse por cada barra para interpretar el comportamiento de la sede.')}</div>`;
+}
+
+    function handleChartMove(id,e){
+      const c=$(id), state=CHART_STATE[id], item=nearestChartItem(state,getCanvasPoint(c,e));
+      if(!item){hideChartTooltip(); return;}
+      c.style.cursor='pointer'; const tt=getChartTooltip(); tt.innerHTML=tooltipHtmlFor(id,item); tt.classList.add('active');
+      const margin=18, w=tt.offsetWidth||280, h=tt.offsetHeight||180;
+      let left=e.clientX+16, top=e.clientY+16;
+      if(left+w>window.innerWidth-margin) left=e.clientX-w-16;
+      if(top+h>window.innerHeight-margin) top=e.clientY-h-16;
+      tt.style.left=Math.max(margin,left)+'px'; tt.style.top=Math.max(margin,top)+'px';
+    }
+    function handleChartClick(id,e){
+      const c=$(id), item=nearestChartItem(CHART_STATE[id],getCanvasPoint(c,e)); if(!item)return;
+      const label=item.data.label;
+      if(id==='territorioChart'){$('filterTerritorio').value=label; refreshDependentFilters(); renderAll();}
+      else if(id==='nucleoChart'){$('filterNucleo').value=label; refreshDependentFilters(); renderAll();}
+      else if(id==='sedeChart'){
+        const s=APP.instituciones.find(x=>x.nombre===label); if(s){$('filterSede').value=s.sede_id; renderAll();}
+      }
+    }
+    function drawBar(id,data,unit='mm',metricLabel='Acumulado',note=''){
+      const c=$(id),ctx=c.getContext('2d'),ratio=devicePixelRatio||1,H=chartHeight(c),W=c.clientWidth,pad=38;
+      c.width=W*ratio; c.height=H*ratio; ctx.setTransform(ratio,0,0,ratio,0,0); ctx.clearRect(0,0,W,H);
+      const max=Math.max(1,...data.map(d=>d.value)); ctx.fillStyle='rgba(246,240,222,.85)'; ctx.font='12px Segoe UI,Arial';
+      CHART_STATE[id]={type:'bar',items:[],pad,H,W,total:data.reduce((a,d)=>a+d.value,0),unit,metricLabel,note};
+      if(!data.length){ctx.fillText('Sin datos',pad,60); return;}
+      ctx.strokeStyle='rgba(246,240,222,.10)'; ctx.lineWidth=1; for(let i=0;i<4;i++){const y=pad+i*(H-pad*2)/3; ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(W-pad,y); ctx.stroke();}
+      const slot=(W-pad*2)/data.length,bw=Math.max(18,Math.min(56,slot*.62));
+      data.forEach((d,i)=>{const x=pad+i*slot+(slot-bw)/2; const bh=Math.max(3,(H-pad*2)*(d.value/max)); const y=H-pad-bh; const grad=ctx.createLinearGradient(0,y,0,H-pad); grad.addColorStop(0,'rgba(255,216,23,.98)'); grad.addColorStop(1,'rgba(0,102,54,.78)'); ctx.fillStyle=grad; roundRect(ctx,x,y,bw,bh,7); ctx.fill(); ctx.fillStyle='rgba(246,240,222,.82)'; ctx.save(); ctx.translate(x+bw/2,H-9); ctx.rotate(-Math.PI/5); ctx.textAlign='center'; ctx.fillText(String(d.label).slice(0,16),0,0); ctx.restore(); CHART_STATE[id].items.push({x,y,w:bw,h:bh,data:d});});
+      ctx.fillStyle='rgba(255,240,167,.92)'; ctx.textAlign='left'; ctx.fillText(unit,8,18);
+    }
+    function drawLine(id,data,unit='mm',metricLabel='Acumulado',note=''){
+      const c=$(id),ctx=c.getContext('2d'),ratio=devicePixelRatio||1,H=chartHeight(c),W=c.clientWidth,pad=40;
+      c.width=W*ratio; c.height=H*ratio; ctx.setTransform(ratio,0,0,ratio,0,0); ctx.clearRect(0,0,W,H);
+      const max=Math.max(1,...data.map(d=>d.value)); CHART_STATE[id]={type:'line',items:[],pad,H,W,total:data.reduce((a,d)=>a+d.value,0),unit,metricLabel,note};
+      ctx.strokeStyle='rgba(246,240,222,.16)'; ctx.lineWidth=1; ctx.fillStyle='rgba(246,240,222,.75)'; ctx.font='12px Segoe UI,Arial';
+      for(let i=0;i<4;i++){const y=pad+i*(H-pad*2)/3; ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(W-pad,y); ctx.stroke(); const val=max-(max*i/3); ctx.fillText(nf.format(val),8,y+4);}
+      if(!data.length){ctx.fillText('Sin datos',pad,60); return;}
+      const getX=i=>pad+i*(W-pad*2)/Math.max(1,data.length-1), getY=d=>H-pad-(H-pad*2)*(d.value/max);
+      ctx.strokeStyle='rgba(255,216,23,.96)'; ctx.lineWidth=3.2; ctx.beginPath(); data.forEach((d,i)=>{const x=getX(i), y=getY(d); if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);}); ctx.stroke();
+      data.forEach((d,i)=>{const x=getX(i), y=getY(d); ctx.fillStyle='rgba(0,102,54,.96)'; ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill(); ctx.strokeStyle='rgba(255,216,23,.55)'; ctx.lineWidth=1.4; ctx.stroke(); CHART_STATE[id].items.push({x,y,w:10,h:10,data:d});});
+      ctx.fillStyle='rgba(255,240,167,.9)'; ctx.fillText(unit,8,18);
+    }
+    function roundRect(ctx,x,y,w,h,r){const radius=Math.min(r,w/2,h/2); ctx.beginPath(); ctx.moveTo(x+radius,y); ctx.lineTo(x+w-radius,y); ctx.quadraticCurveTo(x+w,y,x+w,y+radius); ctx.lineTo(x+w,y+h-radius); ctx.quadraticCurveTo(x+w,y+h,x+w-radius,y+h); ctx.lineTo(x+radius,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-radius); ctx.lineTo(x,y+radius); ctx.quadraticCurveTo(x,y,x+radius,y); ctx.closePath();}
+    function renderCharts(records){
+      drawLine('trendChart',dailyDetailed(records));
+      drawBar('territorioChart',aggregateDetailed(records,'territorio',10));
+      drawBar('nucleoChart',aggregateDetailed(records,'nucleo',10));
+      drawBar('sedeChart',aggregateDetailed(records,'sede',8));
+    }
+    function hashNum(s){let h=0; for(let i=0;i<String(s).length;i++)h=(h*31+String(s).charCodeAt(i))|0; return Math.abs(h);}
+    function metricClass(mmTotal){return mmTotal>60?'rain3':mmTotal>15?'rain2':mmTotal>0?'rain1':'rain0';}
+    function renderMap(records){
+      const map=$('mapa'); [...map.querySelectorAll('.territory-marker')].forEach(n=>n.remove());
+      const mode=$('mapMode').value, metric=$('mapMetric').value, sedes=getFilteredSedes();
+      const groups=new Map();
+      const sourceSedes=sedes.length?sedes:APP.instituciones;
+      if(mode==='barrio'){
+        sourceSedes.forEach(s=>{const key=s.barrio_vereda||'Sin barrio/vereda'; if(!groups.has(key)){const h=hashNum(key), dx=((h%13)-6)*0.75, dy=(((h>>3)%13)-6)*0.75; groups.set(key,{key,label:key,territorio:s.territorio,tipo_territorio:s.tipo_territorio,zona:s.zona_territorial,x:Math.min(92,Math.max(8,Number(s.map_x)+dx)),y:Math.min(96,Math.max(6,Number(s.map_y)+dy)),sedes:new Set(),barrios:new Set(),registros:0,mm:0});} const g=groups.get(key); g.sedes.add(s.sede_id); g.barrios.add(s.barrio_vereda);});
+      } else {
+        sourceSedes.forEach(s=>{const key=s.territorio||'Sin territorio'; if(!groups.has(key))groups.set(key,{key,label:key,territorio:s.territorio,tipo_territorio:s.tipo_territorio,zona:s.zona_territorial,x:Number(s.map_x)||50,y:Number(s.map_y)||50,sedes:new Set(),barrios:new Set(),registros:0,mm:0}); const g=groups.get(key); g.sedes.add(s.sede_id); g.barrios.add(s.barrio_vereda);});
+      }
+      records.forEach(r=>{const key=mode==='barrio'?(r.barrio_vereda||'Sin barrio/vereda'):(r.territorio||'Sin territorio'); const g=groups.get(key); if(g){g.registros++; g.mm+=mm(r.precipitacion_mm);}});
+      const arr=[...groups.values()].sort((a,b)=> metric==='lluvia'?b.mm-a.mm:metric==='registros'?b.registros-a.registros:b.sedes.size-a.sedes.size);
+      $('mapCount').textContent=`${arr.length} ${mode==='barrio'?'barrios/veredas':'territorios'}`;
+      $('territoryPanel').innerHTML=arr.slice(0,30).map(g=>`<div class="territory-card" data-territorio="${esc(g.territorio)}" data-barrio="${esc(mode==='barrio'?g.key:'')}"><b>${esc(g.label)}</b><small>${esc(g.tipo_territorio||'Territorio')} · ${esc(g.zona||'Sin zona')}</small><small>${g.sedes.size} sedes · ${g.registros} registros · ${nf.format(g.mm)} mm</small></div>`).join('') || '<div class="territory-card">Sin territorios en el filtro actual.</div>';
+      $('territoryPanel').querySelectorAll('.territory-card').forEach(card=>card.addEventListener('click',()=>{const t=card.dataset.territorio,b=card.dataset.barrio; if(t){$('filterTerritorio').value=t; refreshDependentFilters(); if(b){$('filterBarrio').value=b;} renderAll();}}));
+      arr.forEach(g=>{
+        const m=document.createElement('div'); m.className='territory-marker'; m.style.left=g.x+'%'; m.style.top=g.y+'%';
+        const size=metric==='lluvia'?Math.min(34,18+g.mm/10):metric==='registros'?Math.min(34,18+g.registros):Math.min(34,16+g.sedes.size/2.5);
+        m.innerHTML=`<div class="marker-tooltip"><div class="tooltip-title">${esc(g.label)}</div><div class="tooltip-row"><span>Territorio</span><b>${esc(g.tipo_territorio||'')}</b></div><div class="tooltip-row"><span>Sedes</span><b>${g.sedes.size}</b></div><div class="tooltip-row"><span>Registros</span><b>${g.registros}</b></div><div class="tooltip-row"><span>Acumulado</span><b>${nf.format(g.mm)} mm</b></div><div class="tooltip-row"><span>Barrios/veredas</span><b>${g.barrios.size}</b></div></div><div class="pin ${metricClass(g.mm)}" style="width:${size}px;height:${size}px"></div><span>${esc(g.label)}</span>`;
+        m.addEventListener('click',()=>{if(mode==='barrio'){$('filterTerritorio').value=g.territorio; refreshDependentFilters(); $('filterBarrio').value=g.key;} else {$('filterTerritorio').value=g.territorio;} refreshDependentFilters(); renderAll();});
+        map.appendChild(m);
+      });
+    }
+    function renderLatest(records){$('latestRows').innerHTML=records.slice(0,14).map(r=>`<tr><td>${esc(r.fecha)}</td><td>${esc(r.hora)}</td><td>${esc(r.territorio)}</td><td>${esc(r.barrio_vereda)}</td><td>${esc(r.nucleo)}</td><td>${esc(r.sede)}</td><td><strong>${nf.format(mm(r.precipitacion_mm))}</strong></td><td><span class="tag ${tagClass(r.intensidad)}">${esc(r.intensidad)}</span></td><td><span class="tag ${tagClass(r.estado_validacion)}">${esc(r.estado_validacion||'Validado')}</span></td></tr>`).join('')||'<tr><td colspan="9">Sin registros públicos en el filtro actual.</td></tr>';}
+    function renderDirectorio(){const sedes=getFilteredSedes(); $('directorioCount').textContent=`${sedes.length} sedes visibles de ${APP.instituciones.length} cargadas.`; $('sedesRows').innerHTML=sedes.slice(0,240).map(s=>{const cls=s.tipo_sigla==='IE'?'ie':s.tipo_sigla==='CE'?'ce':s.tipo_sigla==='SEC'?'sec':'otro'; const url=getSedeUrl(s.sede_id); return `<tr><td><strong>${esc(s.sede_id)}</strong></td><td>${esc(s.nucleo)}</td><td><span class="tag ${cls}">${esc(s.tipo)}</span></td><td>${esc(s.nombre)}</td><td>${esc(s.tipo_territorio)} ${esc(s.codigo_territorio)} · ${esc(s.territorio)}<br><span class="tag ${tagClass(s.caracter)}">${esc(s.caracter)}</span></td><td>${esc(s.barrio_vereda)}</td><td><span class="tag ${tagClass(s.confianza)}">${esc(s.confianza)}</span></td><td><button class="ghost" type="button" data-copy-url="${esc(url)}">Copiar enlace</button><small>${esc(url)}</small></td><td>${esc(s.estado)}</td></tr>`;}).join('')||'<tr><td colspan="9">Sin sedes en el filtro actual.</td></tr>'; if(sedes.length>240) $('sedesRows').innerHTML+='<tr><td colspan="9">Mostrando 240 sedes. Usa búsqueda o filtros para precisar el directorio.</td></tr>';}
+    function renderReport(records){const total=records.reduce((a,r)=>a+mm(r.precipitacion_mm),0); $('reportSummary').textContent=`${records.length} registros`; $('reportSummarySmall').textContent=`${nf.format(total)} mm acumulados · ${new Set(records.map(r=>r.territorio).filter(Boolean)).size} territorios`; $('reportRecommendation').textContent=total>200?'Revisar alertas':total>80?'Hacer seguimiento':'Continuar medición'; const publicHeaders=['fecha','hora','territorio','barrio_vereda','nucleo','sede','precipitacion_mm','intensidad','estado_validacion']; const headers=publicHeaders; $('reportHead').innerHTML='<tr>'+headers.map(h=>`<th>${esc(h)}</th>`).join('')+'</tr>'; $('reportRows').innerHTML=records.slice(0,250).map(r=>`<tr>${headers.map(h=>`<td>${esc(r[h]??'')}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${headers.length}">Sin registros.</td></tr>`;}
+    function populateFichaSelect(){
+      const sel=$('fichaSedeSelect');
+      if(!sel) return;
+      const current=sel.value || ($('filterSede') ? $('filterSede').value : '') || ($('registroSede') ? $('registroSede').value : '') || '';
+      const sedes=[...APP.instituciones].sort((a,b)=>a.nucleo.localeCompare(b.nucleo,'es',{numeric:true})||a.nombre.localeCompare(b.nombre,'es'));
+      sel.innerHTML='<option value="">Selecciona una sede</option>'+sedes.map(s=>`<option value="${esc(s.sede_id)}">${esc(s.sede_id)} · ${esc(s.nombre)}</option>`).join('');
+      if(current && sedes.some(s=>s.sede_id===current)) sel.value=current;
+    }
+    function qualityLevel(value, estado=''){
+      const n=mm(value), e=norm(estado||'');
+      if(e.includes('danado')||e.includes('incompleto')||e.includes('inclinado')||e.includes('movido')||e.includes('revisar')) return {cls:'bad',label:'Revisión prioritaria',motivo:'El estado del pluviómetro o la validación indica posible afectación del dato.',accion:'Verificar instrumento, repetir lectura si es posible y dejar evidencia.'};
+      if(n===0) return {cls:'good',label:'Dato normal',motivo:'Registro de 0 mm. Es válido cuando no hubo lluvia.',accion:'Continuar la medición diaria y mantener el protocolo.'};
+      if(n<=30) return {cls:'good',label:'Dato normal',motivo:'Valor dentro del rango esperado para seguimiento escolar ordinario.',accion:'Registrar y comparar con el acumulado del territorio.'};
+      if(n<=70) return {cls:'warn',label:'Para seguimiento',motivo:'Lluvia alta. Conviene revisar si hubo eventos asociados o acumulación en la sede.',accion:'Confirmar lectura, revisar patios, canales y zonas de escorrentía.'};
+      return {cls:'bad',label:'Revisión prioritaria',motivo:'Dato extremo. Puede ser real, pero requiere verificación antes de análisis institucional.',accion:'Confirmar lectura, estado del pluviómetro y evidencia del evento.'};
+    }
+    function updateQualityPreview(){
+      const box=$('qualityPreview'); if(!box) return;
+      const q=qualityLevel(($('precipitacion')&&$('precipitacion').value)||0,($('estadoPluviometro')&&$('estadoPluviometro').value)||'');
+      box.className='quality-box '+q.cls;
+      box.innerHTML=`<strong>${esc(q.label)}:</strong> ${esc(q.motivo)}<br><span class="help">Acción sugerida: ${esc(q.accion)}</span>`;
+    }
+    function renderQualityPanel(records){
+      if(!$('qNormales')) return;
+      const rec=(records||getFilteredRecords()).map(enrichRecord);
+      let normales=0, seguimiento=0, revision=0;
+      const rows=[];
+      rec.forEach(r=>{
+        const q=qualityLevel(r.precipitacion_mm, r.estado_pluviometro||r.estado_validacion||'');
+        if(q.cls==='good') normales++; else if(q.cls==='warn') seguimiento++; else revision++;
+        if(q.cls!=='good') rows.push({...r,_q:q});
+      });
+      const sedesConDatos=new Set(rec.map(r=>r.sede_id).filter(Boolean));
+      const sedesFiltradas=getFilteredSedes();
+      $('qNormales').textContent=normales;
+      $('qSeguimiento').textContent=seguimiento;
+      $('qRevision').textContent=revision;
+      $('qSinDatos').textContent=Math.max(0,sedesFiltradas.length-sedesConDatos.size);
+      $('qualityRows').innerHTML=rows.slice(0,24).map(r=>`<tr><td>${esc(r.fecha||'')}</td><td>${esc(r.sede||r.sede_id||'')}</td><td>${esc(r.territorio||'')}</td><td><strong>${nf.format(mm(r.precipitacion_mm))}</strong></td><td>${esc(r._q.motivo)}</td><td>${esc(r._q.accion)}</td></tr>`).join('')||'<tr><td colspan="6">No hay registros pendientes de seguimiento en el filtro actual.</td></tr>';
+    }
+    function renderWaterCalc(){
+      if(!$('waterLiters')) return;
+      const area=Math.max(0,mm(($('roofArea')&&$('roofArea').value)||0));
+      const rain=Math.max(0,mm(($('calcRain')&&$('calcRain').value)||0));
+      const coeff=Math.max(0,mm(($('captureCoeff')&&$('captureCoeff').value)||0));
+      const liters=area*rain*coeff;
+      $('waterLiters').textContent=nf.format(liters)+' L';
+      $('waterText').textContent=`Con ${nf.format(rain)} mm de lluvia, un área de ${nf.format(area)} m² y coeficiente ${nf.format(coeff)}, la sede podría captar aproximadamente ${nf.format(liters)} litros de agua lluvia.`;
+    }
+    function useFilteredRainForCalc(){
+      const total=getFilteredRecords().reduce((a,r)=>a+mm(r.precipitacion_mm),0);
+      $('calcRain').value=Number(total.toFixed(1));
+      renderWaterCalc();
+      showTab('captacion');
+      setStatus('Calculadora actualizada','Se usó el acumulado de lluvia del filtro actual.');
+    }
+
+function monthLabel(ym){
+  const [y,m]=(ym||'').split('-');
+  const months=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  return y&&m ? `${months[Math.max(0,Math.min(11,Number(m)-1))]} ${y}` : (ym||'Sin dato');
+}
+function byMonthStats(records){
+  const map=new Map();
+  records.forEach(r=>{ if(!r.fecha) return; const ym=String(r.fecha).slice(0,7); if(!map.has(ym)) map.set(ym,{sortKey:ym,label:monthLabel(ym),value:0,registros:0,sedesCount:1,territoriosCount:1,max:0,maxSede:r.sede||'',maxFecha:'',promedio:0}); const g=map.get(ym); const val=mm(r.precipitacion_mm); g.value+=val; g.registros++; if(val>g.max){g.max=val; g.maxFecha=r.fecha||'';} });
+  return [...map.values()].sort((a,b)=>a.sortKey.localeCompare(b.sortKey)).map(g=>(g.promedio=g.registros?g.value/g.registros:0,g)).slice(-12);
+}
+function byTopDaysStats(records){
+  const map=new Map();
+  records.forEach(r=>{ if(!r.fecha) return; if(!map.has(r.fecha)) map.set(r.fecha,{label:r.fecha,value:0,registros:0,sedesCount:1,territoriosCount:1,max:0,maxSede:r.sede||'',maxFecha:r.fecha||'',promedio:0,condicion:''}); const g=map.get(r.fecha); const val=mm(r.precipitacion_mm); g.value+=val; g.registros++; if(val>g.max){g.max=val; g.condicion=r.condicion||r.intensidad||'';} });
+  return [...map.values()].map(g=>(g.promedio=g.registros?g.value/g.registros:0,g)).sort((a,b)=>b.value-a.value).slice(0,8).reverse();
+}
+function byWeekdayStats(records){
+  const order=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+  const map=new Map(order.map(d=>[d,{label:d,value:0,registros:0,sedesCount:1,territoriosCount:1,max:0,maxSede:'',maxFecha:'',promedio:0}]));
+  records.forEach(r=>{ if(!r.fecha) return; const dt=new Date(r.fecha+'T12:00:00'); if(isNaN(dt)) return; const idx=(dt.getDay()+6)%7; const key=order[idx]; const g=map.get(key); const val=mm(r.precipitacion_mm); g.value+=val; g.registros++; if(val>g.max){g.max=val; g.maxFecha=r.fecha||''; g.maxSede=r.sede||'';} });
+  return order.map(d=>{const g=map.get(d); g.promedio=g.registros?g.value/g.registros:0; return g;});
+}
+function countStats(records, getLabel, order=[]){
+  const map=new Map();
+  records.forEach(r=>{ const label=(getLabel(r)||'Sin dato').toString().trim() || 'Sin dato'; if(!map.has(label)) map.set(label,{label,value:0,registros:0,sedesCount:1,territoriosCount:1,max:0,maxSede:r.sede||'',maxFecha:'',promedio:0}); const g=map.get(label); const val=mm(r.precipitacion_mm); g.value+=1; g.registros++; if(val>g.max){g.max=val; g.maxFecha=r.fecha||''; g.maxSede=r.sede||'';} });
+  let arr=[...map.values()].map(g=>(g.promedio=g.registros?g.max/g.registros:0,g));
+  if(order.length){ const pos=new Map(order.map((x,i)=>[x,i])); arr.sort((a,b)=>(pos.has(a.label)?pos.get(a.label):999)-(pos.has(b.label)?pos.get(b.label):999) || b.value-a.value); }
+  else arr.sort((a,b)=>b.value-a.value);
+  return arr;
+}
+function sedeInsightText(stats){
+  if(!stats.records.length) return 'Aún no hay registros de esta sede. Se recomienda iniciar la medición diaria y construir una línea base local.';
+  const bestMonth=stats.byMonth.reduce((m,x)=>x.value>(m.value||-1)?x:m,{});
+  const bestDay=stats.topDays.reduce((m,x)=>x.value>(m.value||-1)?x:m,{});
+  const wetDays=stats.records.filter(r=>mm(r.precipitacion_mm)>0).length;
+  const dryDays=stats.records.filter(r=>mm(r.precipitacion_mm)===0).length;
+  const dominantIntensity=stats.byIntensity.sort((a,b)=>b.value-a.value)[0]?.label || 'Sin dato';
+  return `La sede presenta ${stats.records.length} lecturas, con ${wetDays} registros con lluvia y ${dryDays} registros sin precipitación. El mes más lluvioso es ${bestMonth.label||'sin dato'} con ${nf.format(bestMonth.value||0)} mm y el día más intenso fue ${bestDay.label||'sin dato'} con ${nf.format(bestDay.value||0)} mm. La intensidad predominante es ${dominantIntensity}.`;
+}
+
+    
+function renderSedeFicha(){
+  const box=$('fichaSedeBox'); if(!box) return;
+  const selected=($('fichaSedeSelect')&&$('fichaSedeSelect').value) || ($('filterSede')&&$('filterSede').value) || ($('registroSede')&&$('registroSede').value) || '';
+  let sede=selected?sedeById(selected):null;
+  if(!sede && APP.instituciones.length) sede=APP.instituciones[0];
+  if(sede && $('fichaSedeSelect') && !$('fichaSedeSelect').value) $('fichaSedeSelect').value=sede.sede_id;
+  if(!sede){box.innerHTML='<div class="module">No hay sedes cargadas.</div>'; return;}
+  const records=APP.registros.map(enrichRecord).filter(r=>r.sede_id===sede.sede_id).sort((a,b)=>String(a.fecha+a.hora).localeCompare(String(b.fecha+b.hora)));
+  const total=records.reduce((a,r)=>a+mm(r.precipitacion_mm),0);
+  const max=records.reduce((m,r)=>mm(r.precipitacion_mm)>mm(m.precipitacion_mm||0)?r:m,{});
+  const avg=records.length?total/records.length:0;
+  const dias=new Set(records.map(r=>r.fecha).filter(Boolean)).size;
+  const rainy=records.filter(r=>mm(r.precipitacion_mm)>0);
+  const dry=records.filter(r=>mm(r.precipitacion_mm)===0);
+  const last=[...records].sort((a,b)=>String(b.fecha+b.hora).localeCompare(String(a.fecha+a.hora)))[0];
+  const q=max && max.precipitacion_mm!==undefined ? qualityLevel(max.precipitacion_mm,max.estado_pluviometro||max.estado_validacion||'') : {cls:'good',label:'Sin datos',motivo:'Aún no hay registros para la sede.',accion:'Iniciar medición diaria.'};
+  const stats={
+    records,
+    byMonth:byMonthStats(records),
+    topDays:byTopDaysStats(records),
+    byWeekday:byWeekdayStats(records),
+    byIntensity:countStats(records,r=>r.intensidad||'Sin dato',['Ninguna','Llovizna','Lluvia moderada','Lluvia intensa','Tormenta']),
+    byCondition:countStats(records,r=>r.condicion||'Sin dato'),
+    byQuality:countStats(records,r=>qualityLevel(r.precipitacion_mm,r.estado_pluviometro||r.estado_validacion||'').label,['Dato normal','Para seguimiento','Revisión prioritaria']),
+    byEvent:countStats(records,r=>r.evento_climatico||'Sin dato')
+  };
+  const bestMonth=stats.byMonth.reduce((m,x)=>x.value>(m.value||-1)?x:m,{});
+  const bestDay=stats.topDays.reduce((m,x)=>x.value>(m.value||-1)?x:m,{});
+  const latestRows=[...records].sort((a,b)=>String(b.fecha+b.hora).localeCompare(String(a.fecha+a.hora))).slice(0,10);
+  box.innerHTML=`
+    <div class="sede-hero">
+      <h3>${esc(sede.nombre)}</h3>
+      <p><strong>Código:</strong> ${esc(sede.sede_id)} · <strong>Núcleo:</strong> ${esc(sede.nucleo)} · ${esc(sede.tipo)}</p>
+      <p><strong>Territorio:</strong> ${esc(sede.tipo_territorio)} ${esc(sede.codigo_territorio)} · ${esc(sede.territorio)} · ${esc(sede.barrio_vereda)}</p>
+      <p><span class="tag ${tagClass(sede.caracter)}">${esc(sede.caracter)}</span> <span class="tag ${tagClass(sede.confianza)}">Confianza ${esc(sede.confianza)}</span> <span class="tag ${tagClass(sede.estado)}">${esc(sede.estado)}</span></p>
+      <div class="callout-action"><strong>Acción sugerida:</strong> conformar un equipo de medición con estudiantes, registrar la lectura a la misma hora todos los días y usar estas gráficas para socializar hallazgos ambientales de la sede.</div>
+      <div class="ficha-story"><strong>Lectura interpretativa:</strong> ${esc(sedeInsightText(stats))}</div>
+    </div>
+    <div class="module">
+      <div class="cards" style="grid-template-columns:1fr 1fr">
+        <div class="card"><div class="k">Registros</div><div class="v">${records.length}</div><div class="s">Lecturas de la sede</div></div>
+        <div class="card"><div class="k">Días medidos</div><div class="v">${dias}</div><div class="s">Fechas únicas</div></div>
+        <div class="card"><div class="k">Acumulado</div><div class="v">${nf.format(total)} mm</div><div class="s">Suma registrada</div></div>
+        <div class="card"><div class="k">Promedio</div><div class="v">${nf.format(avg)} mm</div><div class="s">Por lectura</div></div>
+        <div class="card"><div class="k">Con lluvia</div><div class="v">${rainy.length}</div><div class="s">Lecturas > 0 mm</div></div>
+        <div class="card"><div class="k">Sin lluvia</div><div class="v">${dry.length}</div><div class="s">Lecturas de 0 mm</div></div>
+      </div>
+      <div class="quality-box ${q.cls}"><strong>${esc(q.label)}:</strong> máximo de ${nf.format(mm(max.precipitacion_mm))} mm ${max.fecha?'el '+esc(max.fecha):''}.<br><span class="help">${esc(q.accion)}</span></div>
+      <div class="stat-line">
+        <div class="stat-chip"><b>Última lectura</b>${last?esc((last.fecha||'')+' '+(last.hora||'')):'Sin registros'}</div>
+        <div class="stat-chip"><b>Mes más lluvioso</b>${bestMonth.label?esc(bestMonth.label):'Sin dato'} · ${nf.format(bestMonth.value||0)} mm</div>
+        <div class="stat-chip"><b>Día pico</b>${bestDay.label?esc(bestDay.label):'Sin dato'} · ${nf.format(bestDay.value||0)} mm</div>
+        <div class="stat-chip"><b>Enlace de registro</b><span style="word-break:break-all">${esc(getSedeUrl(sede.sede_id))}</span></div>
+      </div>
+    </div>
+    <div class="ficha-chart-grid" style="grid-column:1/-1;margin-top:2px">
+      <div class="chart"><div class="chart-head"><h3>Evolución diaria</h3><span class="mini">mm por fecha</span></div><canvas id="sedeTrendChart" height="250"></canvas></div>
+      <div class="chart"><div class="chart-head"><h3>Acumulado mensual</h3><span class="mini">mm por mes</span></div><canvas id="sedeMonthChart" height="250"></canvas></div>
+      <div class="chart"><div class="chart-head"><h3>Días más lluviosos</h3><span class="mini">Top 8</span></div><canvas id="sedeTopDaysChart" height="250"></canvas></div>
+      <div class="chart"><div class="chart-head"><h3>Comportamiento por día</h3><span class="mini">mm por día de semana</span></div><canvas id="sedeWeekdayChart" height="250"></canvas></div>
+      <div class="chart"><div class="chart-head"><h3>Intensidad reportada</h3><span class="mini">Lecturas por intensidad</span></div><canvas id="sedeIntensityChart" height="250"></canvas></div>
+      <div class="chart"><div class="chart-head"><h3>Condición observada</h3><span class="mini">Lecturas por condición</span></div><canvas id="sedeConditionChart" height="250"></canvas></div>
+      <div class="chart"><div class="chart-head"><h3>Calidad del dato</h3><span class="mini">Lecturas por estado</span></div><canvas id="sedeQualityChart" height="250"></canvas></div>
+      <div class="chart"><div class="chart-head"><h3>Evento climático</h3><span class="mini">Lecturas por evento</span></div><canvas id="sedeEventChart" height="250"></canvas></div>
+    </div>
+    <div class="module sede-mini-table" style="grid-column:1/-1">
+      <div class="chart-head"><div><h3>Últimas lecturas de la sede</h3><p>Resumen reciente para lectura pedagógica y seguimiento del equipo ambiental.</p></div><span class="mini">Últimos 10 registros</span></div>
+      <div class="table-wrap" style="padding:0;border:0;background:transparent;box-shadow:none"><table><thead><tr><th>Fecha</th><th>Hora</th><th>mm</th><th>Intensidad</th><th>Condición</th><th>Estado del pluviómetro</th><th>Calidad</th></tr></thead><tbody>${latestRows.map(r=>{const qr=qualityLevel(r.precipitacion_mm,r.estado_pluviometro||r.estado_validacion||''); return `<tr><td>${esc(r.fecha||'')}</td><td>${esc(r.hora||'')}</td><td><strong>${nf.format(mm(r.precipitacion_mm))}</strong></td><td>${esc(r.intensidad||'')}</td><td>${esc(r.condicion||'')}</td><td>${esc(r.estado_pluviometro||r.estado_validacion||'')}</td><td>${esc(qr.label)}</td></tr>`;}).join('') || '<tr><td colspan="7">Sin registros para esta sede.</td></tr>'}</tbody></table></div>
+    </div>`;
+  setupChartCanvas('sedeTrendChart');
+  setupChartCanvas('sedeMonthChart');
+  setupChartCanvas('sedeTopDaysChart');
+  setupChartCanvas('sedeWeekdayChart');
+  setupChartCanvas('sedeIntensityChart');
+  setupChartCanvas('sedeConditionChart');
+  setupChartCanvas('sedeQualityChart');
+  setupChartCanvas('sedeEventChart');
+  drawLine('sedeTrendChart', dailyDetailed(records).slice(-18), 'mm', 'Acumulado diario', 'Muestra la evolución diaria de la precipitación registrada por la sede.');
+  drawBar('sedeMonthChart', stats.byMonth, 'mm', 'Acumulado mensual', 'Permite identificar los meses de mayor lluvia en la sede.');
+  drawBar('sedeTopDaysChart', stats.topDays, 'mm', 'Lluvia del día', 'Resume los días con mayor precipitación registrados en la sede.');
+  drawBar('sedeWeekdayChart', stats.byWeekday, 'mm', 'Acumulado por día', 'Compara qué días de la semana concentran mayor lluvia según las lecturas registradas.');
+  drawBar('sedeIntensityChart', stats.byIntensity, 'lecturas', 'Lecturas', 'Distribución de la intensidad reportada en las mediciones de la sede.');
+  drawBar('sedeConditionChart', stats.byCondition.slice(0,8), 'lecturas', 'Lecturas', 'Resumen de las condiciones meteorológicas observadas en la sede.');
+  drawBar('sedeQualityChart', stats.byQuality, 'lecturas', 'Lecturas', 'Ayuda a reconocer cuántas lecturas son normales y cuántas requieren seguimiento o revisión.');
+  drawBar('sedeEventChart', stats.byEvent.slice(0,8), 'lecturas', 'Lecturas', 'Eventos climáticos asociados a las mediciones de la sede.');
+}
+function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPluvioMed.misionesV4')||'[]'));}catch(e){return new Set();}}
+    function saveMissionSet(set){localStorage.setItem('redPluvioMed.misionesV4',JSON.stringify([...set]));}
+    function renderMissions(){
+      const set=missionSet();
+      document.querySelectorAll('.mission-card').forEach(card=>{
+        const done=set.has(card.dataset.mission);
+        card.classList.toggle('done',done);
+        const state=card.querySelector('.mission-state');
+        if(state) state.textContent=done?'Completada':'Pendiente';
+      });
+      if($('missionProgress')) $('missionProgress').textContent=`${set.size}/5 completadas`;
+    }
+    function toggleMission(id){
+      const set=missionSet();
+      set.has(id)?set.delete(id):set.add(id);
+      saveMissionSet(set);
+      renderMissions();
+      setStatus('Misiones actualizadas',`${set.size} de 5 misiones completadas en este navegador.`);
+    }
+    async function copyText(text){
+      try{ if(navigator.clipboard && window.isSecureContext){ await navigator.clipboard.writeText(text); return true; } }catch(e){}
+      const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.focus(); ta.select(); let ok=false; try{ok=document.execCommand('copy');}catch(e){} ta.remove(); return ok;
+    }
+
+    async function saveRegistro(e){e.preventDefault(); const sede=sedeById($('registroSede').value); if(!sede){alert('Selecciona una sede.'); return;} const precip=mm($('precipitacion').value); const q=qualityLevel(precip,''); const payload={sede_id:sede.sede_id,pin:$('sedePin').value.trim(),fecha:$('fecha').value,hora:$('hora').value,precipitacion_mm:precip,condicion:$('condicion').value,rol_responsable:$('rolResponsable').value,estado_pluviometro:$('estadoPluviometro').value,evento_climatico:$('eventoClimatico').value,foto_url:$('fotoUrl').value.trim(),calidad_dato:q.label,observador:$('observador').value.trim(),observaciones:$('observaciones').value.trim()}; if(!payload.pin){alert('Ingresa el PIN privado de la sede.'); return;} if(q.cls==='bad' && !confirm('El dato requiere revisión prioritaria. ¿Confirmas que la lectura fue verificada?')) return; if(APP.backendUrl){try{const res=await apiJsonp('add',payload); if(!res||!res.ok) throw new Error(res&&res.error?res.error:'No confirmado'); const record=enrichRecord({...res.record,fuente:'backend',synced:true}); APP.registros=[record,...APP.registros.filter(r=>r.registro_id!==record.registro_id)]; $('sedePin').value=''; $('registroForm').reset(); $('fecha').value=today(); $('hora').value=nowTime(); $('registroSede').value=sede.sede_id; updateSelectedSede(); updateQualityPreview(); renderAll(); setStatus('Guardado','Registro validado con PIN y guardado en la base central.');}catch(err){setStatus('Error',err.message||'No se pudo guardar. Verifica PIN, backend y permisos.'); alert('No se pudo guardar oficialmente: '+(err.message||'revisa el PIN o el backend.'));}} else {const rec=enrichRecord({registro_id:'LOCAL-'+Date.now(),timestamp:new Date().toISOString(),sede_id:sede.sede_id,nucleo:sede.nucleo,tipo:sede.tipo,sede:sede.nombre,fecha:payload.fecha,hora:payload.hora,precipitacion_mm:precip,condicion:payload.condicion,rol_responsable:payload.rol_responsable,estado_pluviometro:payload.estado_pluviometro,evento_climatico:payload.evento_climatico,foto_url:payload.foto_url,calidad_dato:payload.calidad_dato,observador:payload.observador,observaciones:payload.observaciones,intensidad:intensidad(precip),estado_validacion:q.cls==='bad'?'Revisar':'Pendiente',motivo_validacion:q.motivo,fuente:'local_sin_backend',synced:false}); APP.registros=[rec,...APP.registros]; saveLocalRecords(); renderAll(); setStatus('Local','Registro guardado solo como prueba local. Configura backend para registro oficial.');}}
+    function apiJsonp(action,params={}){return new Promise((resolve,reject)=>{if(!APP.backendUrl)return reject(new Error('Sin URL de backend')); const cb='__redPluvioCb'+Date.now()+Math.floor(Math.random()*100000); const query=new URLSearchParams({action,callback:cb}); Object.entries(params).forEach(([k,v])=>{if(v!==undefined&&v!==null)query.set(k,String(v));}); const sep=APP.backendUrl.includes('?')?'&':'?'; const script=document.createElement('script'); const timer=setTimeout(()=>cleanup(new Error('Tiempo de espera agotado')),15000); function cleanup(err,data){clearTimeout(timer); delete window[cb]; if(script.parentNode)script.parentNode.removeChild(script); err?reject(err):resolve(data);} window[cb]=data=>cleanup(null,data); script.onerror=()=>cleanup(new Error('No se pudo cargar el backend')); script.src=APP.backendUrl+sep+query.toString(); document.body.appendChild(script);});}
+    function saveBackend(){APP.backendUrl=$('backendUrl').value.trim(); localStorage.setItem('redPluvioMed.backendUrl',APP.backendUrl); setStatus(APP.backendUrl?'Configurable':'Local',APP.backendUrl?'URL de backend guardada.':'Se eliminó la URL del backend.');}
+    async function testBackend(){saveBackend(); try{const res=await apiJsonp('ping'); if(res&&res.ok)setStatus('Conectado',`Backend activo. ${res.message||''}`); else setStatus('Error','El backend respondió, pero no confirmó OK.');}catch(e){setStatus('Error','No se pudo conectar con el backend.');}}
+    async function syncPublic(showMsg=true){if(!APP.backendUrl){if(showMsg)setStatus('Local','Configura primero la URL del backend.'); return;} try{const res=await apiJsonp('publicrecords',{limit:5000}); if(!res||!res.ok)throw new Error(res&&res.error?res.error:'Respuesta inválida'); const remote=(Array.isArray(res.records)?res.records:[]).map(r=>enrichRecord({...r,fuente:'backend',synced:true})); const local=APP.registros.filter(r=>r.fuente!=='backend'); const map=new Map(local.map(r=>[r.registro_id,r])); remote.forEach(r=>map.set(r.registro_id,r)); APP.registros=[...map.values()].sort((a,b)=>String(b.fecha+b.hora).localeCompare(String(a.fecha+a.hora))); APP.lastMode='public'; renderAll(); if(showMsg)setStatus('Sincronizado',`Se actualizaron ${remote.length} registros públicos.`);}catch(e){if(showMsg)setStatus('Error','No se pudieron actualizar los registros públicos.');}}
+    async function syncPrivate(){if(!isAdmin()) return requireAdmin(()=>{}); try{const res=await apiJsonp('records',{token:APP.adminToken,limit:100000}); if(!res||!res.ok)throw new Error(res&&res.error?res.error:'Respuesta inválida'); const remote=(Array.isArray(res.records)?res.records:[]).map(r=>enrichRecord({...r,fuente:'backend',synced:true})); const local=APP.registros.filter(r=>r.fuente!=='backend'); APP.registros=[...remote,...local]; APP.lastMode='private'; renderAll(); setStatus('Privado',`Se sincronizaron ${remote.length} registros completos.`);}catch(e){setStatus('Error','No se pudieron sincronizar datos privados. Inicia sesión de nuevo.');}}
+    async function loginAdmin(){saveBackend(); if(!APP.backendUrl){alert('Primero guarda la URL del backend.');return;} try{const res=await apiJsonp('adminlogin',{usuario:$('adminUser').value.trim()||'admin',password:$('adminPass').value}); if(!res||!res.ok)throw new Error(res&&res.error?res.error:'Credenciales inválidas'); APP.adminToken=res.token; APP.adminUser=res.usuario||'admin'; sessionStorage.setItem('redPluvioMed.adminToken',APP.adminToken); sessionStorage.setItem('redPluvioMed.adminUser',APP.adminUser); $('adminPass').value=''; updateAdminUi(); setStatus('Administrador','Sesión administradora activa.'); await syncPrivate();}catch(e){setStatus('Acceso denegado',e.message||'No se pudo iniciar sesión.'); alert('Acceso denegado. Verifica usuario, contraseña y backend.');}}
+    function logoutAdmin(){APP.adminToken='';APP.adminUser='';sessionStorage.removeItem('redPluvioMed.adminToken');sessionStorage.removeItem('redPluvioMed.adminUser');updateAdminUi();syncPublic(false);setStatus('Sesión cerrada','Se cerró el acceso privado.');}
+    function updateAdminUi(render=true){const ok=isAdmin(); $('adminLoggedBox').classList.toggle('admin-hidden',!ok); document.querySelectorAll('.admin-protected').forEach(b=>{b.disabled=!ok;}); if(render) renderReport(getFilteredRecords());}
+    function requireAdmin(fn){if(!isAdmin()){showTab('admin'); setStatus('Privado','Esta acción requiere acceso administrador.'); alert('Esta acción requiere acceso administrador.'); return;} return fn();}
+    function loadDemoData(){const sample=APP.instituciones.filter((_,i)=>i%13===0).slice(0,42); const now=new Date(); const nuevos=[]; for(let i=0;i<180;i++){const s=sample[i%sample.length]; const d=new Date(now); d.setDate(now.getDate()-(i%45)); const val=Number((Math.random()*(i%9===0?55:20)).toFixed(1)); nuevos.push(enrichRecord({registro_id:'DEMO-'+Date.now()+'-'+i,timestamp:new Date().toISOString(),sede_id:s.sede_id,nucleo:s.nucleo,tipo:s.tipo,sede:s.nombre,fecha:d.toISOString().slice(0,10),hora:String(6+(i%13)).padStart(2,'0')+':'+String((i*7)%60).padStart(2,'0'),precipitacion_mm:val,condicion:val>30?'Tormenta':val>10?'Lluvia intensa':val>0?'Llovizna':'Nublado sin lluvia',intensidad:intensidad(val),estado_validacion:'Demo',fuente:'demo',synced:false}));} APP.registros=[...nuevos,...APP.registros.filter(r=>!String(r.registro_id).startsWith('DEMO-'))]; saveLocalRecords(); renderAll(); setStatus('Demo','Datos de demostración cargados localmente.');}
+    function clearLocalData(){if(!confirm('¿Deseas borrar los registros locales de este navegador? No borra datos del backend.'))return; APP.registros=APP.registros.filter(r=>r.fuente==='backend'); saveLocalRecords(); renderAll(); setStatus('Local','Datos locales limpiados.');}
+    async function copySelectedLink(){const id=$('registroSede').value; if(!id){alert('Selecciona una sede.');return;} await copyText(getSedeUrl(id)); setStatus('Copiado','Enlace de formulario copiado. Puedes convertirlo en QR.');}
+    async function copyFilteredLinks(){const links=getFilteredSedes().map(s=>`${s.sede_id}\t${s.nombre}\t${s.territorio}\t${s.barrio_vereda}\t${getSedeUrl(s.sede_id)}`).join('\n'); await copyText(links); setStatus('Copiado','Enlaces filtrados copiados al portapapeles.');}
+    function downloadFile(name,content,type){const blob=new Blob([content],{type}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);}
+    function toCsv(rows,fields){const lines=[fields.join(',')]; rows.forEach(r=>lines.push(fields.map(f=>`"${String(r[f]??'').replace(/"/g,'""')}"`).join(','))); return '\ufeff'+lines.join('\n');}
+    function exportSedesCSV(){downloadFile('sedes_territoriales_red_pluviometros_medellin.csv',toCsv(getFilteredSedes(),['sede_id','nucleo','tipo','tipo_sigla','nombre','zona_territorial','tipo_territorio','codigo_territorio','territorio','barrio_vereda','caracter','confianza','estado','qr_url']),'text/csv;charset=utf-8');}
+    function exportPublicCSV(records){downloadFile('registros_publicos_territoriales_pluviometros_medellin.csv',toCsv(records.map(enrichRecord),['registro_id','timestamp','sede_id','nucleo','tipo','sede','zona_territorial','tipo_territorio','codigo_territorio','territorio','barrio_vereda','fecha','hora','precipitacion_mm','condicion','intensidad','estado_pluviometro','evento_climatico','rol_responsable','calidad_dato','estado_validacion','fuente']),'text/csv;charset=utf-8');}
+    function exportRecordsExcel(records){const headers=['registro_id','timestamp','sede_id','nucleo','tipo','sede','zona_territorial','tipo_territorio','codigo_territorio','territorio','barrio_vereda','fecha','hora','precipitacion_mm','condicion','intensidad','estado_pluviometro','evento_climatico','rol_responsable','calidad_dato','estado_validacion','fuente']; const rows=records.map(enrichRecord).map(r=>{const o={}; headers.forEach(h=>o[h]=r[h]??''); return o;}); const table=`<html><head><meta charset="UTF-8"></head><body><h2>Red Escolar de Pluviómetros de Medellín</h2><p>Exportación pública sin datos personales.</p><table border="1"><thead><tr>${headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${headers.map(h=>`<td>${esc(r[h]||'')}</td>`).join('')}</tr>`).join('')}</tbody></table></body></html>`; downloadFile('registros_publicos_territoriales_pluviometros_medellin.xls',table,'application/vnd.ms-excel;charset=utf-8');}
+    if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>null));}
+    document.addEventListener('DOMContentLoaded',init);
+  </script>
+</body>
+</html>

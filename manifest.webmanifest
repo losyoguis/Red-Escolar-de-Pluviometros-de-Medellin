@@ -1,0 +1,17 @@
+{
+  "name": "Red Escolar de Pluviómetros de Medellín",
+  "short_name": "PluvioMed",
+  "description": "Sistema central seguro, responsive y con mapa territorial para la red escolar de pluviómetros de Medellín.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#07110b",
+  "theme_color": "#07110b",
+  "icons": [
+    {
+      "src": "assets/logo_losyoguis.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
