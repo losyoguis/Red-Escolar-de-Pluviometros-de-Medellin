@@ -320,7 +320,7 @@
             <p>Esta zona administra la URL del backend, acceso privado y sincronización completa con datos internos. Las descargas públicas se realizan desde la sección Reportes sin autenticación.</p>
             <div id="adminLoggedBox" class="admin-bar admin-hidden"><strong>Sesión administradora activa</strong><button id="logoutAdminBtn" class="ghost" type="button" style="max-width:190px">Cerrar sesión</button></div>
             <div id="adminLoginBox" class="lock-card">
-              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbzazMbk9TEbGwswOsMGIkrapak4ed3ZjqMkJad3dWW6_Me9DF4NqOtDJg4u429cR1aJ/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"><p class="help">Este backend ya queda preconfigurado. Solo cambia esta URL si publicas una nueva implementación de Apps Script.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
+              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbweJUHWPw6eTE1sypnr3daEqCGtNTNxzxCb2tB5-txU0kuA1aW6Z_12z8wHWXVqD-4i/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"><p class="help">Este backend ya queda preconfigurado. Solo cambia esta URL si publicas una nueva implementación de Apps Script.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
               <div class="buttons two"><button id="saveBackendBtn" class="primary" type="button">Guardar URL</button><button id="testBackendBtn" class="ghost" type="button">Probar backend</button></div>
               <div class="form-grid"><div><label for="adminUser">Usuario administrador</label><input id="adminUser" type="text" placeholder="admin" autocomplete="username"></div><div><label for="adminPass">Contraseña</label><input id="adminPass" type="password" placeholder="Contraseña administradora" autocomplete="current-password"></div></div>
               <div class="buttons two"><button id="loginAdminBtn" class="gold" type="button">Ingresar como administrador</button><button id="syncPrivateBtn" class="secondary admin-protected" type="button">Sincronizar datos privados</button></div>
@@ -329,7 +329,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v4.8</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v4.9</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -345,7 +345,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v4.8 · mapa con última foto · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v4.9 · guardado estable de fotos · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -881,13 +881,13 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       if(!file){clearSelectedPhoto(); return;}
       if(!/^image\//.test(file.type||'')){alert('Selecciona una imagen válida.'); clearSelectedPhoto(); return;}
       try{
-        const dataUrl=await compressImageFile(file,1000,.72);
+        const dataUrl=await compressImageFile(file,700,.52);
         const base64=dataUrl.split(',')[1]||'';
         const mime=(dataUrl.match(/^data:([^;]+);base64,/)||[])[1] || 'image/jpeg';
         APP.pendingPhoto={dataUrl,base64,mime,name:file.name||'evidencia.jpg',size:base64.length};
         $('fotoPreview').src=dataUrl;
         $('fotoPreviewName').textContent=file.name || 'Foto tomada desde cámara';
-        $('fotoPreviewInfo').textContent=`Lista para enviar · ${mime} · ${Math.round(base64.length*0.75/1024)} KB aprox.`;
+        $('fotoPreviewInfo').textContent=`Lista para enviar · ${mime} · ${Math.round(base64.length*0.75/1024)} KB aprox. · versión liviana`;
         $('fotoPreviewBox').classList.add('active');
         setStatus('Foto lista','La evidencia fue comprimida y quedará asociada al registro.');
       }catch(err){
@@ -928,7 +928,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         const add=(k,v)=>{const input=document.createElement('input'); input.type='hidden'; input.name=k; input.value=v==null?'':String(v); form.appendChild(input);};
         add('action',action); add('post_token',token);
         Object.entries(params).forEach(([k,v])=>add(k,v));
-        const timer=setTimeout(()=>cleanup(new Error('Tiempo de espera agotado al enviar foto.')),45000);
+        const timer=setTimeout(()=>cleanup(new Error('La foto tardó demasiado en subirse. El registro queda protegido y la evidencia se puede intentar nuevamente con una imagen más liviana.')),120000);
         function onMessage(ev){
           const msg=ev.data||{};
           if(!msg || msg.source!=='redPluvioAppsScript' || msg.token!==token) return;
@@ -945,13 +945,26 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       });
     }
 
+    function finishRegistroGuardado(res,sede,msg){
+      const record=enrichRecord({...res.record,fuente:'backend',synced:true});
+      APP.registros=[record,...APP.registros.filter(r=>r.registro_id!==record.registro_id)];
+      $('sedePin').value='';
+      $('registroForm').reset();
+      clearSelectedPhoto();
+      $('fecha').value=today(); $('hora').value=nowTime(); $('registroSede').value=sede.sede_id;
+      updateSelectedSede(); updateQualityPreview(); renderAll();
+      setStatus('Guardado',msg||'Registro guardado en la base central.');
+    }
+
     async function saveRegistro(e){
       e.preventDefault();
       const sede=sedeById($('registroSede').value);
       if(!sede){alert('Selecciona una sede.'); return;}
       const precip=mm($('precipitacion').value);
       const q=qualityLevel(precip,'');
+      const clientId='REG-WEB-'+Date.now()+'-'+Math.floor(Math.random()*100000);
       const payload={
+        cliente_registro_id:clientId,
         sede_id:sede.sede_id,
         pin:$('sedePin').value.trim(),
         fecha:$('fecha').value,
@@ -966,26 +979,42 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         observador:$('observador').value.trim(),
         observaciones:$('observaciones').value.trim()
       };
-      if(APP.pendingPhoto){
-        payload.foto_base64=APP.pendingPhoto.base64;
-        payload.foto_mime=APP.pendingPhoto.mime;
-        payload.foto_nombre=APP.pendingPhoto.name;
-      }
       if(!payload.pin){alert('Ingresa el PIN privado de la sede.'); return;}
       if(q.cls==='bad' && !confirm('El dato requiere revisión prioritaria. ¿Confirmas que la lectura fue verificada?')) return;
       if(APP.backendUrl){
         try{
-          setStatus('Guardando','Enviando registro' + (APP.pendingPhoto?' y evidencia fotográfica.':'...'));
-          const res=APP.pendingPhoto ? await apiPost('add',payload) : await apiJsonp('add',payload);
+          setStatus('Guardando','Guardando primero el registro oficial...');
+          const res=await apiJsonp('add',payload);
           if(!res||!res.ok) throw new Error(res&&res.error?res.error:'No confirmado');
-          const record=enrichRecord({...res.record,fuente:'backend',synced:true});
-          APP.registros=[record,...APP.registros.filter(r=>r.registro_id!==record.registro_id)];
-          $('sedePin').value='';
-          $('registroForm').reset();
-          clearSelectedPhoto();
-          $('fecha').value=today(); $('hora').value=nowTime(); $('registroSede').value=sede.sede_id;
-          updateSelectedSede(); updateQualityPreview(); renderAll();
-          setStatus('Guardado',res.foto_url?'Registro y fotografía guardados.':'Registro guardado en la base central.');
+          let finalRes=res;
+          let photoMsg='Registro guardado en la base central.';
+          if(APP.pendingPhoto){
+            try{
+              setStatus('Registro guardado','Subiendo evidencia fotográfica liviana a GitHub...');
+              const photoPayload={
+                registro_id:res.registro_id,
+                cliente_registro_id:res.registro_id,
+                sede_id:sede.sede_id,
+                pin:payload.pin,
+                fecha:payload.fecha,
+                foto_base64:APP.pendingPhoto.base64,
+                foto_mime:APP.pendingPhoto.mime,
+                foto_nombre:APP.pendingPhoto.name
+              };
+              const up=await apiPost('photo',photoPayload);
+              if(up&&up.ok&&up.record){
+                finalRes=up;
+                photoMsg='Registro y fotografía guardados correctamente.';
+              } else {
+                photoMsg='Registro guardado. La foto no se pudo subir: '+(up&&up.error?up.error:'respuesta no confirmada');
+                alert(photoMsg+'\n\nEl dato oficial quedó guardado. Puedes intentar nuevamente con una foto más liviana.');
+              }
+            }catch(photoErr){
+              photoMsg='Registro guardado. La foto no se pudo subir por tiempo de espera o conexión lenta.';
+              alert(photoMsg+'\n\nEl dato oficial quedó protegido en la base central. Intenta de nuevo con una foto más liviana o revisa la configuración de GitHub.');
+            }
+          }
+          finishRegistroGuardado(finalRes,sede,photoMsg);
         }catch(err){
           setStatus('Error',err.message||'No se pudo guardar. Verifica PIN, backend y permisos.');
           alert('No se pudo guardar oficialmente: '+(err.message||'revisa el PIN o el backend.'));
