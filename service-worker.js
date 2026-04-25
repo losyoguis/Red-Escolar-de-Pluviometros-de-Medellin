@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v4-6-backend-configurado';
+const CACHE_NAME = 'red-pluviometros-medellin-v4-8-mapa-ultima-foto';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];
