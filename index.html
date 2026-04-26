@@ -320,7 +320,7 @@
             <p>Esta zona administra la URL del backend, acceso privado y sincronización completa con datos internos. Las descargas públicas se realizan desde la sección Reportes sin autenticación.</p>
             <div id="adminLoggedBox" class="admin-bar admin-hidden"><strong>Sesión administradora activa</strong><button id="logoutAdminBtn" class="ghost" type="button" style="max-width:190px">Cerrar sesión</button></div>
             <div id="adminLoginBox" class="lock-card">
-              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbz87t4YhE_kOhOHPXCHlwdP4wu-i1K8NVeLxdAXL2WEEeYwWWHSY1cGMhDcyySLLeE/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"><p class="help">Este backend ya queda preconfigurado. Solo cambia esta URL si publicas una nueva implementación de Apps Script.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
+              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbweJUHWPw6eTE1sypnr3daEqCGtNTNxzxCb2tB5-txU0kuA1aW6Z_12z8wHWXVqD-4i/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"><p class="help">Este backend ya queda preconfigurado. Solo cambia esta URL si publicas una nueva implementación de Apps Script.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
               <div class="buttons two"><button id="saveBackendBtn" class="primary" type="button">Guardar URL</button><button id="testBackendBtn" class="ghost" type="button">Probar backend</button></div>
               <div class="form-grid"><div><label for="adminUser">Usuario administrador</label><input id="adminUser" type="text" placeholder="admin" autocomplete="username"></div><div><label for="adminPass">Contraseña</label><input id="adminPass" type="password" placeholder="Contraseña administradora" autocomplete="current-password"></div></div>
               <div class="buttons two"><button id="loginAdminBtn" class="gold" type="button">Ingresar como administrador</button><button id="syncPrivateBtn" class="secondary admin-protected" type="button">Sincronizar datos privados</button></div>
@@ -329,7 +329,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.2</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.3</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -345,7 +345,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.2 · verificación PIN web · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.3 · verificación PIN compatible · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -979,12 +979,22 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       const msg=$('pinCheckMsg');
       if(!sede){ alert('Selecciona una sede para verificar el PIN.'); return; }
       if(!pin){ alert('Escribe el PIN antes de verificar.'); return; }
-      if(!APP.backendUrl){ alert('No hay backend configurado.'); return; }
+      if(pin.length < 4){
+        msg.textContent='El PIN parece demasiado corto. Revisa los números entregados a la sede.';
+        msg.style.color='var(--danger)';
+        return;
+      }
+      if(!APP.backendUrl){
+        msg.textContent='PIN con formato válido. No hay backend configurado; se validará cuando configures la URL /exec.';
+        msg.style.color='var(--warn)';
+        return;
+      }
       try{
         msg.textContent='Verificando PIN en el backend...';
         msg.style.color='var(--muted)';
         setStatus('Verificando PIN','Consultando credencial de la sede...');
         const res=await apiJsonpTry(['checkpin','verificarpin','validarpin','pincheck','pin'],{sede_id:sede.sede_id,pin});
+        const err=(res&&res.error)?String(res.error):'';
         if(res&&res.valido){
           msg.textContent=res.mensaje||'PIN válido.';
           msg.style.color='var(--ok)';
@@ -993,20 +1003,20 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
             updateSelectedSede();
           }
           setStatus('PIN válido',res.mensaje||'La credencial fue verificada.');
+        } else if(err.toLowerCase().includes('acción no reconocida') || err.toLowerCase().includes('accion no reconocida')){
+          // Compatibilidad con implementaciones antiguas: no bloquea el formulario.
+          msg.textContent='PIN con formato válido. La verificación previa no está disponible en este backend; se validará oficialmente al guardar.';
+          msg.style.color='var(--warn)';
+          setStatus('Validación al guardar','El backend publicado aún no reconoce verificación previa, pero el guardado sí validará el PIN.');
         } else {
-          const err=(res&&res.error)?res.error:'PIN no válido.';
-          if(String(err).toLowerCase().includes('acción no reconocida')){
-            msg.textContent='Backend pendiente por actualizar: pega el Codigo.gs v5.2, ejecuta setupRedPluviometrosMedellin() y reimplementa como Nueva versión.';
-          } else {
-            msg.textContent=err;
-          }
+          msg.textContent=err || 'PIN no válido.';
           msg.style.color='var(--danger)';
           setStatus('PIN no válido',msg.textContent);
         }
       }catch(err){
-        msg.textContent='No se pudo verificar el PIN. Revisa conexión, URL /exec y que Apps Script esté reimplementado con v5.2.';
-        msg.style.color='var(--danger)';
-        setStatus('Error','No se pudo verificar el PIN.');
+        msg.textContent='PIN con formato válido. No se pudo hacer la verificación previa por conexión; se validará oficialmente al guardar.';
+        msg.style.color='var(--warn)';
+        setStatus('Validación al guardar','No se pudo verificar previamente, pero puedes intentar guardar el registro.');
       }
     }
 
@@ -1071,7 +1081,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
           finishRegistroGuardado(finalRes,sede,photoMsg);
         }catch(err){
           setStatus('Error',err.message||'No se pudo guardar. Verifica PIN, backend y permisos.');
-          alert('No se pudo guardar oficialmente: '+(err.message||'revisa el PIN o el backend.')+'\n\nRecomendación: verifica el PIN con el botón “Verificar PIN” y confirma que Apps Script fue reimplementado con la versión v5.2.');
+          alert('No se pudo guardar oficialmente: '+(err.message||'revisa el PIN o el backend.')+'\n\nRecomendación: verifica el PIN con el botón “Verificar PIN” y confirma que Apps Script fue reimplementado con la versión v5.3.');
         }
       } else {
         const rec=enrichRecord({
