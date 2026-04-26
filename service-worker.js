@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v7-4-registro-autocomplete';
+const CACHE_NAME = 'red-pluviometros-medellin-v7-5-filtros-contextuales';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];
