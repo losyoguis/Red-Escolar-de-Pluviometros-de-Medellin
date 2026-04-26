@@ -288,7 +288,7 @@
               <label for="observador">Nombre del observador</label><input id="observador" name="observador" type="text" placeholder="Docente, estudiante o comité ambiental" required>
               <label for="observaciones">Observaciones internas</label><textarea id="observaciones" name="observaciones" placeholder="Ejemplo: lluvia fuerte durante el descanso, granizo, inundación cercana, cielo nublado, etc."></textarea>
               <div class="buttons three"><button class="primary" type="submit">Guardar registro</button><button class="ghost" id="copyLinkBtn" type="button">Copiar enlace de esta sede</button><button class="gold" id="goDashboardBtn" type="button">Ver dashboard</button></div>
-              <p class="help">Modo sin backend: el registro queda solo en este navegador como prueba local y no se considera dato oficial.</p>
+              <p class="help" id="backendModeMsg">Verificando backend oficial...</p>
             </form>
           </div>
         </section>
@@ -329,7 +329,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.8</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.9</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -345,7 +345,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.8 · guardado antibloqueo PIN · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.9 · backend oficial obligatorio · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -353,11 +353,18 @@
     const $ = id => document.getElementById(id);
     const nf = new Intl.NumberFormat('es-CO',{maximumFractionDigits:1});
     const DEFAULT_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbweJUHWPw6eTE1sypnr3daEqCGtNTNxzxCb2tB5-txU0kuA1aW6Z_12z8wHWXVqD-4i/exec';
+    const URL_PARAMS = new URLSearchParams(location.search);
+    const BACKEND_PARAM = URL_PARAMS.get('exec') || URL_PARAMS.get('backend') || '';
+    if(BACKEND_PARAM && /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/i.test(BACKEND_PARAM)){
+      localStorage.setItem('redPluvioMed.backendUrl', BACKEND_PARAM);
+    }
     const APP = {
       instituciones: Array.isArray(window.INSTITUCIONES_MEDELLIN) ? window.INSTITUCIONES_MEDELLIN : [],
       territorios: Array.isArray(window.TERRITORIOS_MEDELLIN) ? window.TERRITORIOS_MEDELLIN : [],
       registros: [],
-      backendUrl: localStorage.getItem('redPluvioMed.backendUrl') || DEFAULT_BACKEND_URL,
+      backendUrl: (BACKEND_PARAM && /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/i.test(BACKEND_PARAM)) ? BACKEND_PARAM : (localStorage.getItem('redPluvioMed.backendUrl') || DEFAULT_BACKEND_URL),
+      backendVersion: '',
+      backendOk: false,
       adminToken: sessionStorage.getItem('redPluvioMed.adminToken') || '',
       adminUser: sessionStorage.getItem('redPluvioMed.adminUser') || '',
       lastMode: 'public',
@@ -381,7 +388,7 @@
     function saveLocalRecords(){localStorage.setItem('redPluvioMed.localRecordsV3', JSON.stringify(APP.registros.filter(r => r.fuente !== 'backend')));}
     function loadLocalRecords(){try{APP.registros = JSON.parse(localStorage.getItem('redPluvioMed.localRecordsV3') || localStorage.getItem('redPluvioMed.localRecordsV2') || '[]').map(enrichRecord);}catch(e){APP.registros=[];}}
     function makeRain(){const layer=$('rainLayer'); for(let i=0;i<44;i++){const d=document.createElement('span');d.className='drop';d.style.left=Math.random()*100+'vw';d.style.animationDuration=(1.6+Math.random()*2.8)+'s';d.style.animationDelay=(-Math.random()*5)+'s';layer.appendChild(d);}}
-    function init(){makeRain(); loadLocalRecords(); $('backendUrl').value=APP.backendUrl; $('fecha').value=today(); $('hora').value=nowTime(); populateControls(); bindEvents(); preselectSede(); updateAdminUi(); renderAll(); renderWaterCalc(); renderMissions(); updateQualityPreview(); if(APP.backendUrl) syncPublic(false); setStatus(APP.backendUrl?'Configurable':'Local', APP.backendUrl?'Backend guardado. Actualiza datos públicos.':'Sin backend configurado.');}
+    function init(){makeRain(); loadLocalRecords(); $('backendUrl').value=APP.backendUrl; $('fecha').value=today(); $('hora').value=nowTime(); populateControls(); bindEvents(); preselectSede(); updateAdminUi(); renderAll(); renderWaterCalc(); renderMissions(); updateQualityPreview(); updateBackendModeMsg(); if(APP.backendUrl) syncPublic(false); setStatus(APP.backendUrl?'Configurable':'Local', APP.backendUrl?'Backend guardado. Actualiza datos públicos.':'Sin backend configurado.');}
     function currentFilters(){return {q:norm(($('filterSearch')&&$('filterSearch').value)||''),zona:$('filterZona').value,tipoTerritorio:$('filterTipoTerritorio').value,territorio:$('filterTerritorio').value,barrio:$('filterBarrio').value,nucleo:$('filterNucleo').value,tipo:$('filterTipo').value,sedeId:$('filterSede').value};}
     function filterSearchMatchesSede(s,q){if(!q)return true; return norm(`${s.sede_id} ${s.nucleo} ${s.tipo} ${s.tipo_sigla} ${s.nombre} ${s.zona_territorial} ${s.tipo_territorio} ${s.codigo_territorio} ${s.territorio} ${s.barrio_vereda} ${s.caracter} ${s.confianza} ${s.estado}`).includes(q);}
     function filterSearchMatchesRecord(r,q){if(!q)return true; return norm(`${r.registro_id} ${r.sede_id} ${r.nucleo} ${r.tipo} ${r.sede} ${r.zona_territorial} ${r.tipo_territorio} ${r.codigo_territorio} ${r.territorio} ${r.barrio_vereda} ${r.fecha} ${r.hora} ${r.condicion} ${r.intensidad} ${r.estado_validacion} ${r.estado_pluviometro} ${r.evento_climatico} ${r.rol_responsable}`).includes(q);}
@@ -973,6 +980,35 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       return last || {ok:false,error:'No hubo respuesta del backend.'};
     }
 
+    function backendLooksCurrent(){
+      return APP.backendOk && /v5\.(8|9)|backend oficial|antibloqueo|guardado flexible/i.test(APP.backendVersion||'');
+    }
+    function updateBackendModeMsg(){
+      const el=$('backendModeMsg'); if(!el) return;
+      if(APP.backendUrl){
+        el.innerHTML=`Backend configurado: <strong>${esc(APP.backendUrl)}</strong><br>Estado: ${APP.backendOk?('conectado · '+esc(APP.backendVersion||'versión no informada')):'pendiente de prueba'}.`;
+      }else{
+        el.textContent='Modo sin backend: el registro queda solo en este navegador como prueba local y no se considera dato oficial.';
+      }
+    }
+    async function ensureBackendForOfficialSave(){
+      if(!APP.backendUrl) return {ok:false,error:'No hay URL /exec configurada.'};
+      try{
+        const ping=await apiJsonp('ping',{});
+        APP.backendOk=!!(ping&&ping.ok);
+        APP.backendVersion=String((ping&&ping.version)||'');
+        updateBackendModeMsg();
+        if(!APP.backendOk) return {ok:false,error:'El backend no respondió correctamente.'};
+        if(!backendLooksCurrent()){
+          return {ok:false,error:'El /exec configurado no parece estar actualizado. Versión detectada: '+(APP.backendVersion||'sin versión')+'.'};
+        }
+        return {ok:true};
+      }catch(err){
+        APP.backendOk=false; updateBackendModeMsg();
+        return {ok:false,error:'No se pudo conectar con el backend /exec: '+(err.message||err)};
+      }
+    }
+
     async function verifyPinBeforeSubmit(){
       const sede=sedeById($('registroSede').value);
       const pin=cleanPin($('sedePin').value);
@@ -985,7 +1021,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v5.8: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v5.9: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
@@ -1019,6 +1055,9 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       if(q.cls==='bad' && !confirm('El dato requiere revisión prioritaria. ¿Confirmas que la lectura fue verificada?')) return;
       if(APP.backendUrl){
         try{
+          setStatus('Verificando backend','Confirmando que el /exec publicado sea la versión oficial...');
+          const backendCheck=await ensureBackendForOfficialSave();
+          if(!backendCheck.ok) throw new Error(backendCheck.error);
           setStatus('Guardando','Guardando primero el registro oficial...');
           const res=await apiJsonp('add',payload);
           if(!res||!res.ok) throw new Error(res&&res.error?res.error:'No confirmado');
@@ -1064,13 +1103,13 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
               }
               throw new Error((fallback&&fallback.error)||'El modo de revisión no fue confirmado por el backend.');
             }catch(fallbackErr){
-              setStatus('Error','No se pudo usar el modo de revisión. El /exec publicado sigue sin actualizar.');
-              alert('No se pudo guardar oficialmente porque el /exec publicado sigue usando un backend anterior.\n\nSolución: pega el Codigo.gs v5.8, ejecuta setupRedPluviometrosMedellin() y en Implementar > Administrar implementaciones selecciona Nueva versión > Implementar.');
+              setStatus('Error','El /exec configurado no corresponde al backend actualizado.');
+              alert('No se pudo guardar oficialmente porque la URL /exec configurada no corresponde al backend actualizado.\n\nSolución rápida:\n1. En Apps Script haz Implementar > Administrar implementaciones > Nueva versión > Implementar.\n2. Copia la URL que termina en /exec.\n3. En la app, pestaña Privado, pega esa URL y pulsa Guardar URL.\n\nLuego vuelve a intentar guardar el registro.');
               return;
             }
           }
           setStatus('Error',emsg||'No se pudo guardar. Verifica backend y permisos.');
-          alert('No se pudo guardar oficialmente: '+(emsg||'revisa el backend.')+'\n\nSi el error continúa, actualiza Codigo.gs a v5.8 y reimplementa Apps Script como Nueva versión.');
+          alert('No se pudo guardar oficialmente: '+(emsg||'revisa el backend.')+'\n\nEste error casi siempre significa que la app está apuntando a un /exec viejo o a otro proyecto de Apps Script. Copia la URL /exec de la implementación actualizada y pégala en la pestaña Privado > Backend Apps Script central.');
         }
       } else {
         const rec=enrichRecord({
@@ -1090,7 +1129,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       }
     }
     function apiJsonp(action,params={}){return new Promise((resolve,reject)=>{if(!APP.backendUrl)return reject(new Error('Sin URL de backend')); const cb='__redPluvioCb'+Date.now()+Math.floor(Math.random()*100000); const query=new URLSearchParams({action,callback:cb}); Object.entries(params).forEach(([k,v])=>{if(v!==undefined&&v!==null)query.set(k,String(v));}); const sep=APP.backendUrl.includes('?')?'&':'?'; const script=document.createElement('script'); const timer=setTimeout(()=>cleanup(new Error('Tiempo de espera agotado')),15000); function cleanup(err,data){clearTimeout(timer); delete window[cb]; if(script.parentNode)script.parentNode.removeChild(script); err?reject(err):resolve(data);} window[cb]=data=>cleanup(null,data); script.onerror=()=>cleanup(new Error('No se pudo cargar el backend')); script.src=APP.backendUrl+sep+query.toString(); document.body.appendChild(script);});}
-    function saveBackend(){APP.backendUrl=$('backendUrl').value.trim() || DEFAULT_BACKEND_URL; $('backendUrl').value=APP.backendUrl; localStorage.setItem('redPluvioMed.backendUrl',APP.backendUrl); setStatus(APP.backendUrl?'Configurable':'Local',APP.backendUrl?'URL de backend guardada.':'Se eliminó la URL del backend.');}
+    function saveBackend(){APP.backendUrl=$('backendUrl').value.trim() || DEFAULT_BACKEND_URL; $('backendUrl').value=APP.backendUrl; APP.backendOk=false; APP.backendVersion=''; localStorage.setItem('redPluvioMed.backendUrl',APP.backendUrl); updateBackendModeMsg(); setStatus(APP.backendUrl?'Configurable':'Local',APP.backendUrl?'URL de backend guardada. Pulsa Probar backend.':'Se eliminó la URL del backend.');}
     async function testBackend(){saveBackend(); try{const res=await apiJsonp('ping'); if(res&&res.ok)setStatus('Conectado',`Backend activo. ${res.message||''}`); else setStatus('Error','El backend respondió, pero no confirmó OK.');}catch(e){setStatus('Error','No se pudo conectar con el backend.');}}
     async function syncPublic(showMsg=true){if(!APP.backendUrl){if(showMsg)setStatus('Local','Configura primero la URL del backend.'); return;} try{const res=await apiJsonp('publicrecords',{limit:5000}); if(!res||!res.ok)throw new Error(res&&res.error?res.error:'Respuesta inválida'); const remote=(Array.isArray(res.records)?res.records:[]).map(r=>enrichRecord({...r,fuente:'backend',synced:true})); const local=APP.registros.filter(r=>r.fuente!=='backend'); const map=new Map(local.map(r=>[r.registro_id,r])); remote.forEach(r=>map.set(r.registro_id,r)); APP.registros=[...map.values()].sort((a,b)=>String(b.fecha+b.hora).localeCompare(String(a.fecha+a.hora))); APP.lastMode='public'; renderAll(); if(showMsg)setStatus('Sincronizado',`Se actualizaron ${remote.length} registros públicos.`);}catch(e){if(showMsg)setStatus('Error','No se pudieron actualizar los registros públicos.');}}
     async function syncPrivate(){if(!isAdmin()) return requireAdmin(()=>{}); try{const res=await apiJsonp('records',{token:APP.adminToken,limit:100000}); if(!res||!res.ok)throw new Error(res&&res.error?res.error:'Respuesta inválida'); const remote=(Array.isArray(res.records)?res.records:[]).map(r=>enrichRecord({...r,fuente:'backend',synced:true})); const local=APP.registros.filter(r=>r.fuente!=='backend'); APP.registros=[...remote,...local]; APP.lastMode='private'; renderAll(); setStatus('Privado',`Se sincronizaron ${remote.length} registros completos.`);}catch(e){setStatus('Error','No se pudieron sincronizar datos privados. Inicia sesión de nuevo.');}}
