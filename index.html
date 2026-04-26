@@ -358,8 +358,6 @@
           <div class="module">
             <h2>Registro protegido de precipitación por sede</h2>
             <p>El enlace o QR puede abrir esta sección con la sede preseleccionada. Para guardar en la base central se exige el <strong>PIN privado de la sede</strong>.</p>
-            <div class="alert security-note"><strong>Importante:</strong> el PIN se valida en el backend de Google Apps Script. No se guardan claves dentro del HTML público.</div>
-            <div class="alert ok"><strong>Formulario directo:</strong> en esta sección se ocultan los filtros territoriales para que la sede pueda registrar datos de forma más limpia y rápida.</div>
             <label for="registroSedeSearch">Buscar sede que reporta</label>
             <div class="registro-search-wrap">
               <div class="registro-search-mini">
@@ -420,7 +418,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.6</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.7</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -436,7 +434,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.6 · QR por sede · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.7 · registro sin avisos · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -1649,7 +1647,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v7.6: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v7.7: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
