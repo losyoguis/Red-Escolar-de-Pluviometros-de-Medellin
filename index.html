@@ -47,6 +47,18 @@
     .autocomplete-item span{display:block;color:var(--muted);font-size:.76rem;margin-top:3px;line-height:1.25}
     .autocomplete-empty{padding:10px 12px;color:var(--muted);font-size:.82rem}
     .autocomplete-help{margin-top:6px;color:var(--muted);font-size:.76rem;line-height:1.25}
+    .registro-search-wrap{position:relative;margin:10px 0 12px}
+    .registro-search-wrap input{padding-right:46px}
+    .registro-suggestions{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:120;display:none;max-height:340px;overflow:auto;border-radius:18px;border:1px solid rgba(255,216,23,.34);background:rgba(7,17,11,.985);box-shadow:0 22px 52px rgba(0,0,0,.50);padding:8px}
+    .registro-suggestions.active{display:grid;gap:6px}
+    .registro-suggestion{width:100%;display:block;text-align:left;min-height:auto!important;padding:11px 12px!important;border-radius:14px!important;background:rgba(246,240,222,.055)!important;border:1px solid rgba(246,240,222,.09)!important;color:var(--paper)!important;cursor:pointer}
+    .registro-suggestion:hover,.registro-suggestion.active{background:rgba(255,216,23,.14)!important;border-color:rgba(255,216,23,.40)!important;transform:none!important}
+    .registro-suggestion strong{display:block;color:#fff0a7;font-size:.90rem;line-height:1.20}
+    .registro-suggestion span{display:block;color:var(--muted);font-size:.77rem;margin-top:3px;line-height:1.25}
+    .registro-search-mini{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:6px}
+    .registro-clear-search{width:42px!important;height:42px!important;min-height:42px!important;padding:0!important;border-radius:13px!important}
+    .registro-search-status{margin-top:7px;color:#fff0a7;font-size:.82rem;font-weight:850;min-height:1.2em}
+
     @media (max-width:760px){.autocomplete-list{position:fixed;left:16px;right:16px;top:auto;bottom:20px;max-height:48vh}}
     @media (min-width:1280px){.panel .date-filter-row{grid-template-columns:1fr}.panel .date-actions{grid-template-columns:1fr 1fr}.panel .date-actions button:nth-child(3){grid-column:1/-1}}
     @media (max-width:760px){.date-filter-row{grid-template-columns:1fr}.date-actions{grid-template-columns:1fr}}
@@ -346,6 +358,15 @@
             <h2>Registro protegido de precipitación por sede</h2>
             <p>El enlace o QR puede abrir esta sección con la sede preseleccionada. Para guardar en la base central se exige el <strong>PIN privado de la sede</strong>.</p>
             <div class="alert security-note"><strong>Importante:</strong> el PIN se valida en el backend de Google Apps Script. No se guardan claves dentro del HTML público.</div>
+            <label for="registroSedeSearch">Buscar sede que reporta</label>
+            <div class="registro-search-wrap">
+              <div class="registro-search-mini">
+                <input id="registroSedeSearch" type="search" autocomplete="off" placeholder="Escribe nombre de sede, código, núcleo, comuna o barrio">
+                <button id="clearRegistroSedeSearchBtn" class="registro-clear-search ghost" type="button" aria-label="Limpiar búsqueda de sede">×</button>
+              </div>
+              <div id="registroSedeSuggestions" class="registro-suggestions" role="listbox" aria-label="Sugerencias de sede para reportar"></div>
+              <div id="registroSedeSearchStatus" class="registro-search-status">Selecciona una sede para reportar.</div>
+            </div>
             <label for="registroSede">Sede que reporta</label><select id="registroSede"></select><div class="selected-sede" id="selectedSedeBox">Selecciona una sede para iniciar el registro.</div>
             <form id="registroForm">
               <label for="sedePin">PIN privado de la sede</label><input id="sedePin" name="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="12" placeholder="PIN entregado a la institución" autocomplete="off" required><p class="help">Escribe solo los números del PIN. El botón Revisar PIN confirma el formato. Si el backend rechaza el PIN, la app intentará guardar la medición como “Revisar” para que no se pierda.</p><div class="buttons two"><button id="verifyPinBtn" class="ghost" type="button">Revisar PIN</button><span class="help" id="pinCheckMsg">Verifica que el PIN corresponda a la sede seleccionada.</span></div>
@@ -397,7 +418,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.3</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.4</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -413,7 +434,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.3 · búsqueda con autocompletado · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.4 · autocompletado en ingreso de datos · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -729,8 +750,93 @@
       updateFilterStatus();
       if(render) renderAll();
     }
-    function populateRegistroSelect(){const sedes=[...APP.instituciones].sort((a,b)=>a.nucleo.localeCompare(b.nucleo)||a.nombre.localeCompare(b.nombre,'es')); $('registroSede').innerHTML='<option value="">Selecciona sede</option>'+sedes.map(s=>`<option value="${esc(s.sede_id)}">${esc(s.sede_id)} · ${esc(s.nombre)}</option>`).join('');}
-    function preselectSede(){const params=new URLSearchParams(location.search); const sede=params.get('sede'); if(sede && sedeById(sede)){$('registroSede').value=sede; updateSelectedSede(); showTab('registro');} else if(location.hash){const tab=location.hash.replace('#',''); if($(tab)) showTab(tab);}}
+    function buildRegistroSedeSuggestions(q){
+      const query=norm(q);
+      if(!query) return [];
+      const parts=query.split(/\s+/).filter(Boolean);
+      return APP.instituciones
+        .map(s=>{
+          const hay=norm(`${s.sede_id} ${s.nucleo} ${s.tipo} ${s.tipo_sigla} ${s.nombre} ${s.zona_territorial} ${s.tipo_territorio} ${s.codigo_territorio} ${s.territorio} ${s.barrio_vereda} ${s.caracter} ${s.confianza}`);
+          const starts=norm(s.nombre).startsWith(query)||norm(s.sede_id).startsWith(query)||norm(String(s.nucleo)).startsWith(query)||norm(s.territorio).startsWith(query)||norm(s.barrio_vereda).startsWith(query);
+          const match=parts.every(p=>hay.includes(p));
+          return match ? {s,score:(starts?0:1)+Math.min(hay.indexOf(parts[0]||query),99)} : null;
+        })
+        .filter(Boolean)
+        .sort((a,b)=>a.score-b.score || String(a.s.nucleo).localeCompare(String(b.s.nucleo),'es') || a.s.nombre.localeCompare(b.s.nombre,'es'))
+        .slice(0,12)
+        .map(x=>x.s);
+    }
+    function hideRegistroSedeSuggestions(){
+      const box=$('registroSedeSuggestions'); if(box){box.classList.remove('active'); box.innerHTML='';}
+    }
+    function renderRegistroSedeSuggestions(){
+      const input=$('registroSedeSearch'), box=$('registroSedeSuggestions');
+      if(!input||!box) return;
+      const q=input.value.trim();
+      if(!q){hideRegistroSedeSuggestions(); if($('registroSedeSearchStatus')) $('registroSedeSearchStatus').textContent='Selecciona una sede para reportar.'; return;}
+      const sedes=buildRegistroSedeSuggestions(q);
+      if(!sedes.length){
+        box.innerHTML='<div class="autocomplete-empty">No se encontraron sedes. Intenta con otra palabra, núcleo, comuna o código.</div>';
+        box.classList.add('active');
+        if($('registroSedeSearchStatus')) $('registroSedeSearchStatus').textContent='Sin coincidencias para la búsqueda actual.';
+        return;
+      }
+      box.innerHTML=sedes.map((s,i)=>`<button type="button" class="registro-suggestion" role="option" data-sede-id="${esc(s.sede_id)}" data-i="${i}">
+        <strong>${esc(s.nombre)}</strong>
+        <span>${esc(s.sede_id)} · Núcleo ${esc(s.nucleo)} · ${esc(s.territorio)} · ${esc(s.barrio_vereda)}</span>
+      </button>`).join('');
+      box.classList.add('active');
+      if($('registroSedeSearchStatus')) $('registroSedeSearchStatus').textContent=`${sedes.length} coincidencia(s). Selecciona una sede.`;
+      box.querySelectorAll('.registro-suggestion').forEach(btn=>btn.addEventListener('click',()=>selectRegistroSede(btn.dataset.sedeId,true)));
+    }
+    function selectRegistroSede(sedeId,fromSuggestion=false){
+      const sede=sedeById(sedeId);
+      if(!sede) return;
+      $('registroSede').value=sede.sede_id;
+      if($('registroSedeSearch')) $('registroSedeSearch').value=`${sede.sede_id} · ${sede.nombre}`;
+      if($('registroSedeSearchStatus')) $('registroSedeSearchStatus').textContent=`Sede seleccionada: ${sede.nombre}`;
+      hideRegistroSedeSuggestions();
+      updateSelectedSede();
+      renderSedeFicha();
+      if($('pinCheckMsg')){
+        $('pinCheckMsg').textContent='Verifica que el PIN corresponda a la sede seleccionada.';
+        $('pinCheckMsg').style.color='';
+      }
+      if(fromSuggestion){
+        setStatus('Sede seleccionada',`${sede.sede_id} · ${sede.nombre}`);
+      }
+    }
+    function handleRegistroSedeKeys(ev){
+      const box=$('registroSedeSuggestions');
+      if(!box || !box.classList.contains('active')) return;
+      const items=[...box.querySelectorAll('.registro-suggestion')];
+      if(!items.length) return;
+      const current=items.findIndex(i=>i.classList.contains('active'));
+      if(ev.key==='ArrowDown'){
+        ev.preventDefault();
+        const next=items[(current+1+items.length)%items.length];
+        items.forEach(i=>i.classList.remove('active')); next.classList.add('active'); next.scrollIntoView({block:'nearest'});
+      }
+      if(ev.key==='ArrowUp'){
+        ev.preventDefault();
+        const next=items[(current-1+items.length)%items.length];
+        items.forEach(i=>i.classList.remove('active')); next.classList.add('active'); next.scrollIntoView({block:'nearest'});
+      }
+      if(ev.key==='Enter' && current>=0){
+        ev.preventDefault();
+        items[current].click();
+      }
+      if(ev.key==='Escape') hideRegistroSedeSuggestions();
+    }
+    function clearRegistroSedeSearch(){
+      if($('registroSedeSearch')) $('registroSedeSearch').value='';
+      if($('registroSedeSearchStatus')) $('registroSedeSearchStatus').textContent='Selecciona una sede para reportar.';
+      hideRegistroSedeSuggestions();
+      $('registroSede').value='';
+      updateSelectedSede();
+    }
+    function populateRegistroSelect(){const sedes=[...APP.instituciones].sort((a,b)=>a.nucleo.localeCompare(b.nucleo)||a.nombre.localeCompare(b.nombre,'es')); $('registroSede').innerHTML='<option value="">Selecciona sede</option>'+sedes.map(s=>`<option value="${esc(s.sede_id)}">${esc(s.sede_id)} · ${esc(s.nombre)}</option>`).join(''); if($('registroSede').value){selectRegistroSede($('registroSede').value,false);}}
+    function preselectSede(){const params=new URLSearchParams(location.search); const sede=params.get('sede'); if(sede && sedeById(sede)){$('registroSede').value=sede; selectRegistroSede(sede,false); showTab('registro');} else if(location.hash){const tab=location.hash.replace('#',''); if($(tab)) showTab(tab);}}
     function bindEvents(){
       document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
       document.querySelectorAll('[data-tab-link]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab(a.dataset.tabLink)}));
@@ -742,7 +848,14 @@
       document.addEventListener('click',e=>{if(!e.target.closest('.autocomplete-wrap'))hideFilterSuggestions();});
       $('clearFilterSearchBtn').addEventListener('click',()=>{$('filterSearch').value='';hideFilterSuggestions();applyFilters({refresh:true,render:true});});
       $('searchSede').addEventListener('input',renderDirectorio);
-      $('registroSede').addEventListener('change',()=>{updateSelectedSede(); renderSedeFicha(); if($('pinCheckMsg')){$('pinCheckMsg').textContent='Verifica que el PIN corresponda a la sede seleccionada.';$('pinCheckMsg').style.color='';}});
+      $('registroSede').addEventListener('change',()=>{if($('registroSede').value) selectRegistroSede($('registroSede').value,false); else clearRegistroSedeSearch();});
+      if($('registroSedeSearch')){
+        $('registroSedeSearch').addEventListener('input',renderRegistroSedeSuggestions);
+        $('registroSedeSearch').addEventListener('focus',renderRegistroSedeSuggestions);
+        $('registroSedeSearch').addEventListener('keydown',handleRegistroSedeKeys);
+      }
+      if($('clearRegistroSedeSearchBtn')) $('clearRegistroSedeSearchBtn').addEventListener('click',clearRegistroSedeSearch);
+      document.addEventListener('click',e=>{if(!e.target.closest('.registro-search-wrap'))hideRegistroSedeSuggestions();});
       if($('verifyPinBtn')) $('verifyPinBtn').addEventListener('click',verifyPinBeforeSubmit);
       if($('sedePin')) $('sedePin').addEventListener('input',()=>{if($('pinCheckMsg')){$('pinCheckMsg').textContent='PIN escrito. Puedes verificarlo antes de guardar.';$('pinCheckMsg').style.color='';}});
       $('precipitacion').addEventListener('input',updateQualityPreview); $('estadoPluviometro').addEventListener('change',updateQualityPreview);
@@ -1401,7 +1514,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       $('sedePin').value='';
       $('registroForm').reset();
       clearSelectedPhoto();
-      $('fecha').value=today(); $('hora').value=nowTime(); $('registroSede').value=sede.sede_id;
+      $('fecha').value=today(); $('hora').value=nowTime(); $('registroSede').value=sede.sede_id; selectRegistroSede(sede.sede_id,false);
       updateSelectedSede(); updateQualityPreview(); renderAll(); updateDashboardSyncMsg('Registro recibido en la app. Pulsa Actualizar datos públicos si deseas verificarlo contra Google Sheets.', `${APP.registros.length} registros cargados`);
       const statusMsg=msg||((res&&res.pin_validado===false)?'Registro guardado para revisión administrativa.':'Registro guardado en la base central.');
       setStatus('Guardado',statusMsg);
@@ -1474,7 +1587,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v7.3: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v7.4: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
