@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v6-7-mapa-foto-punto';
+const CACHE_NAME = 'red-pluviometros-medellin-v6-8-carrusel-hora';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];
