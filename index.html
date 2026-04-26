@@ -420,7 +420,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.5</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.6</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -436,7 +436,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.5 · filtros contextuales · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.6 · QR por sede · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -465,6 +465,48 @@
       mapEvidenceFocus: null
     };
     APP.sedeMap = new Map(APP.instituciones.map(s => [s.sede_id, s]));
+    function applySedesFromBackend(sedes){
+      if(!Array.isArray(sedes) || !sedes.length) return;
+      const selectedRegistro=$('registroSede') ? $('registroSede').value : '';
+      const selectedFicha=$('fichaSedeSelect') ? $('fichaSedeSelect').value : '';
+      const previousById = new Map(APP.instituciones.map(s=>[String(s.sede_id),s]));
+      APP.instituciones = sedes
+        .filter(s=>s && s.sede_id)
+        .map(s=>{
+          const prev=previousById.get(String(s.sede_id))||{};
+          return {...prev,...s,
+            sede_id:String(s.sede_id||'').trim(),
+            nucleo:String(s.nucleo||'').trim(),
+            nombre:String(s.nombre||'').trim(),
+            tipo:String(s.tipo||'').trim(),
+            tipo_sigla:String(s.tipo_sigla||'').trim(),
+            zona_territorial:String(s.zona_territorial||'').trim(),
+            tipo_territorio:String(s.tipo_territorio||'').trim(),
+            codigo_territorio:String(s.codigo_territorio||'').trim(),
+            territorio:String(s.territorio||'').trim(),
+            barrio_vereda:String(s.barrio_vereda||'').trim(),
+            caracter:String(s.caracter||'').trim(),
+            confianza:String(s.confianza||'').trim(),
+            estado:String(s.estado||'ACTIVA').trim()
+          };
+        });
+      APP.sedeMap = new Map(APP.instituciones.map(s => [s.sede_id, s]));
+      const terrMap = new Map((APP.territorios||[]).map(t=>[`${t.tipo_territorio}|${t.territorio}`,t]));
+      APP.instituciones.forEach(s=>{
+        const key=`${s.tipo_territorio}|${s.territorio}`;
+        if(!terrMap.has(key)){
+          terrMap.set(key,{tipo_territorio:s.tipo_territorio,codigo_territorio:s.codigo_territorio,territorio:s.territorio,zona_territorial:s.zona_territorial,x:50,y:50});
+        }
+      });
+      APP.territorios=[...terrMap.values()];
+      populateControls();
+      populateRegistroSelect();
+      populateFichaSelect();
+      if(selectedRegistro && sedeById(selectedRegistro)) $('registroSede').value=selectedRegistro;
+      if(selectedFicha && sedeById(selectedFicha)) $('fichaSedeSelect').value=selectedFicha;
+      updateSelectedSede();
+      updateFilterStatus();
+    }
     function esc(v){return String(v ?? '').replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
     function norm(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
     function mm(v){const n = Number(String(v ?? 0).replace(',','.'));return isNaN(n)?0:n;}
@@ -1607,7 +1649,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v7.5: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v7.6: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
@@ -1775,6 +1817,8 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         APP.backendSpreadsheetId=String((ping&&ping.spreadsheetId)||'');
         APP.backendRows=Number((ping&&ping.filasRegistros)||0);
         updateBackendModeMsg();
+        const sedesRes=await apiJsonp('sedes',{t:Date.now()});
+        if(sedesRes&&sedesRes.ok&&Array.isArray(sedesRes.sedes)) applySedesFromBackend(sedesRes.sedes);
         const res=await apiJsonp('publicrecords',{limit:5000, t:Date.now()});
         if(!res||!res.ok)throw new Error(res&&res.error?res.error:'Respuesta inválida');
         const remote=(Array.isArray(res.records)?res.records:[]).map(r=>enrichRecord({...r,fuente:'backend',synced:true}));
