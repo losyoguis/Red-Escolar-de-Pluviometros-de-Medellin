@@ -343,7 +343,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v6.4</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v6.5</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -359,7 +359,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v6.4 · backend fijo por código · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v6.5 · alerta de confirmación · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -1019,7 +1019,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       });
     }
 
-    function finishRegistroGuardado(res,sede,msg){
+    function finishRegistroGuardado(res,sede,msg,opts={}){
       const record=enrichRecord({...res.record,fuente:'backend',synced:true});
       APP.registros=[record,...APP.registros.filter(r=>r.registro_id!==record.registro_id)];
       $('sedePin').value='';
@@ -1027,7 +1027,18 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       clearSelectedPhoto();
       $('fecha').value=today(); $('hora').value=nowTime(); $('registroSede').value=sede.sede_id;
       updateSelectedSede(); updateQualityPreview(); renderAll(); updateDashboardSyncMsg('Registro recibido en la app. Pulsa Actualizar datos públicos si deseas verificarlo contra Google Sheets.', `${APP.registros.length} registros cargados`);
-      setStatus('Guardado',msg||((res&&res.pin_validado===false)?'Registro guardado para revisión administrativa.':'Registro guardado en la base central.'));
+      const statusMsg=msg||((res&&res.pin_validado===false)?'Registro guardado para revisión administrativa.':'Registro guardado en la base central.');
+      setStatus('Guardado',statusMsg);
+
+      if(!opts.silent){
+        const sedeTxt=sede && sede.nombre ? sede.nombre : 'la sede seleccionada';
+        const mmTxt=record && record.precipitacion_mm!==undefined ? record.precipitacion_mm+' mm' : 'sin dato de precipitación';
+        if(opts.hadPhoto && opts.photoOk){
+          alert('Datos enviados correctamente.\n\nFoto enviada correctamente a GitHub.\n\nSede: '+sedeTxt+'\nFecha: '+(record.fecha||'')+' · Hora: '+(record.hora||'')+'\nPrecipitación: '+mmTxt+'\nRegistro: '+(record.registro_id||'confirmado'));
+        } else if(!opts.hadPhoto){
+          alert('Datos enviados correctamente.\n\nNo se adjuntó fotografía en este registro.\n\nSede: '+sedeTxt+'\nFecha: '+(record.fecha||'')+' · Hora: '+(record.hora||'')+'\nPrecipitación: '+mmTxt+'\nRegistro: '+(record.registro_id||'confirmado'));
+        }
+      }
     }
 
     async function apiJsonpTry(actions, params){
@@ -1087,7 +1098,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v6.4: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v6.5: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
@@ -1162,6 +1173,8 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
           if(!res||!res.ok) throw new Error(res&&res.error?res.error:'No confirmado');
           let finalRes=res;
           let photoMsg='Registro guardado en la base central.';
+          const hadPhoto=!!APP.pendingPhoto;
+          let photoOk=false;
           if(APP.pendingPhoto){
             try{
               setStatus('Registro guardado','Subiendo evidencia fotográfica ultraliviana a GitHub...');
@@ -1179,6 +1192,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
               const up=await uploadPhotoChunked(photoPayload);
               if(up&&up.ok&&up.record){
                 finalRes=up;
+                photoOk=true;
                 photoMsg='Registro y fotografía guardados correctamente.';
               } else {
                 photoMsg='Registro guardado. La foto no se pudo subir: '+(up&&up.error?up.error:'respuesta no confirmada');
@@ -1189,7 +1203,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
               alert(photoMsg+'\n\nEl dato oficial quedó protegido en la base central. Revisa en Apps Script las propiedades GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH y GITHUB_BASE_PATH. Esta versión envía la foto por partes pequeñas; si falla, normalmente es token o permisos de GitHub.');
             }
           }
-          finishRegistroGuardado(finalRes,sede,photoMsg);
+          finishRegistroGuardado(finalRes,sede,photoMsg,{hadPhoto:hadPhoto,photoOk:photoOk});
         }catch(err){
           const emsg=String(err&&err.message?err.message:err||'');
           const isPinBlock=emsg.toLowerCase().includes('pin de sede inválido') || emsg.toLowerCase().includes('pin de sede invalido');
@@ -1198,7 +1212,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
               setStatus('Guardando en revisión','El backend rechazó el PIN; se intenta guardar el registro como Revisar para no perder la medición.');
               const fallback=await apiJsonpTry(['addnopin','addflex','addsafe','guardar_revision'],{...payload,pin:''});
               if(fallback&&fallback.ok){
-                finishRegistroGuardado(fallback,sede,'Registro guardado como Revisar por bloqueo de PIN. El administrador podrá validarlo en Google Sheets.');
+                finishRegistroGuardado(fallback,sede,'Registro guardado como Revisar por bloqueo de PIN. El administrador podrá validarlo en Google Sheets.',{hadPhoto:false,photoOk:false});
                 return;
               }
               throw new Error((fallback&&fallback.error)||'El modo de revisión no fue confirmado por el backend.');
