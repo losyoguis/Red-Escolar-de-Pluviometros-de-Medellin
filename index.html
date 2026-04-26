@@ -41,7 +41,7 @@
     img,svg,canvas,video{max-width:100%}.container{width:min(var(--page-max),94vw);padding:var(--page-pad-y) 0 clamp(56px,4vw,86px)}
     .hero,.panel,.module,.card,.chart,.table-wrap,.territory-card,.lock-card,.flow-step{overflow-wrap:anywhere}.main{gap:var(--fluid-gap)}
     .chart canvas{height:var(--chart-h);touch-action:manipulation}.map{height:var(--map-h);min-height:720px}
-    .tabs{position:sticky;top:10px;z-index:20;padding:8px;border:1px solid rgba(246,240,222,.08);border-radius:999px;background:rgba(7,17,11,.72);backdrop-filter:blur(10px)}
+    .tabs{position:sticky;top:10px;z-index:20;padding:8px;border:1px solid rgba(246,240,222,.08);border-radius:999px;background:rgba(7,17,11,.72);backdrop-filter:blur(10px);transition:opacity .16s ease,visibility .16s ease,transform .16s ease}body.map-tooltip-active .tabs{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-18px)}body.map-tooltip-active .map-title{opacity:.18;pointer-events:none}
     .tab-btn{white-space:nowrap}.territory-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.territory-card{height:100%}
     @media (min-width:1600px){
       :root{--page-max:1760px;--chart-h:320px;--map-h:clamp(720px,74vh,980px)}
@@ -343,7 +343,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v6.8</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v6.9</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -359,7 +359,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v6.8 · carrusel de fotos y hora corregida · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v6.9 · mapa sin botones encima · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -421,10 +421,11 @@
     function getSedeUrl(id){const base = location.href.split('#')[0].split('?')[0]; return `${base}?sede=${encodeURIComponent(id)}#registro`;}
     function setStatus(title, msg){$('heroStatus').textContent = title; $('heroStatusSmall').textContent = msg; $('systemMsg').textContent = msg;}
     function isAdmin(){return !!APP.adminToken;}
-    function showTab(tab){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.tab-section').forEach(s=>s.classList.toggle('active',s.id===tab));history.replaceState(null,'','#'+tab); if(tab==='dashboard') setTimeout(()=>renderCharts(getFilteredRecords()),60); if(tab==='reportes') renderReport(getFilteredRecords()); if(tab==='mapa-territorial') setTimeout(()=>renderMap(getFilteredRecords()),60); if(tab==='calidad-dato') renderQualityPanel(getFilteredRecords()); if(tab==='captacion') renderWaterCalc(); if(tab==='ficha-sede') renderSedeFicha(); if(tab==='misiones') renderMissions();}
+    function setMapTooltipActive(active){document.body.classList.toggle('map-tooltip-active',!!active);} function showTab(tab){setMapTooltipActive(false);document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.tab-section').forEach(s=>s.classList.toggle('active',s.id===tab));history.replaceState(null,'','#'+tab); if(tab==='dashboard') setTimeout(()=>renderCharts(getFilteredRecords()),60); if(tab==='reportes') renderReport(getFilteredRecords()); if(tab==='mapa-territorial') setTimeout(()=>renderMap(getFilteredRecords()),60); if(tab==='calidad-dato') renderQualityPanel(getFilteredRecords()); if(tab==='captacion') renderWaterCalc(); if(tab==='ficha-sede') renderSedeFicha(); if(tab==='misiones') renderMissions();}
     function saveLocalRecords(){localStorage.setItem('redPluvioMed.localRecordsV3', JSON.stringify(APP.registros.filter(r => r.fuente !== 'backend')));}
     function loadLocalRecords(){try{APP.registros = JSON.parse(localStorage.getItem('redPluvioMed.localRecordsV3') || localStorage.getItem('redPluvioMed.localRecordsV2') || '[]').map(enrichRecord);}catch(e){APP.registros=[];}}
     function makeRain(){const layer=$('rainLayer'); for(let i=0;i<44;i++){const d=document.createElement('span');d.className='drop';d.style.left=Math.random()*100+'vw';d.style.animationDuration=(1.6+Math.random()*2.8)+'s';d.style.animationDelay=(-Math.random()*5)+'s';layer.appendChild(d);}}
+    window.addEventListener('scroll',()=>{const m=$('mapa'); if(m && !m.matches(':hover')) setMapTooltipActive(false);},{passive:true});
     function init(){makeRain(); loadLocalRecords(); APP.backendUrl=DEFAULT_BACKEND_URL; $('backendUrl').value=APP.backendUrl; $('backendUrl').setAttribute('readonly','readonly'); $('fecha').value=today(); $('hora').value=nowTime(); populateControls(); bindEvents(); preselectSede(); updateAdminUi(); renderAll(); renderWaterCalc(); renderMissions(); updateQualityPreview(); updateBackendModeMsg(); updateDashboardSyncMsg('Preparando sincronización con el backend central...','Iniciando'); if(APP.backendUrl) syncPublic(true); setStatus(APP.backendUrl?'Configurable':'Local', APP.backendUrl?'Backend guardado. Actualizando datos públicos.':'Sin backend configurado.');}
     function currentFilters(){return {q:norm(($('filterSearch')&&$('filterSearch').value)||''),zona:$('filterZona').value,tipoTerritorio:$('filterTipoTerritorio').value,territorio:$('filterTerritorio').value,barrio:$('filterBarrio').value,nucleo:$('filterNucleo').value,tipo:$('filterTipo').value,sedeId:$('filterSede').value};}
     function updateDashboardSyncMsg(message,badge){
@@ -759,6 +760,7 @@ function tooltipHtmlFor(id,item){
     }
 
     function renderMap(records){
+      setMapTooltipActive(false);
       const map=$('mapa'); [...map.querySelectorAll('.territory-marker')].forEach(n=>n.remove());
       const mode=$('mapMode').value, metric=$('mapMetric').value, sedes=getFilteredSedes();
       const groups=new Map();
@@ -777,10 +779,11 @@ function tooltipHtmlFor(id,item){
         const m=document.createElement('div'); m.className='territory-marker'; m.tabIndex=0; m.setAttribute('role','button'); m.setAttribute('aria-label','Ver información de '+g.label); m.style.left=g.x+'%'; m.style.top=g.y+'%';
         const size=metric==='lluvia'?Math.min(34,18+g.mm/10):metric==='registros'?Math.min(34,18+g.registros):Math.min(34,16+g.sedes.size/2.5);
         m.innerHTML=`<div class="marker-tooltip"><div class="tooltip-title">${esc(g.label)}</div><div class="tooltip-row"><span>Territorio</span><b>${esc(g.tipo_territorio||'')}</b></div><div class="tooltip-row"><span>Sedes</span><b>${g.sedes.size}</b></div><div class="tooltip-row"><span>Registros</span><b>${g.registros}</b></div><div class="tooltip-row"><span>Acumulado</span><b>${nf.format(g.mm)} mm</b></div><div class="tooltip-row"><span>Barrios/veredas</span><b>${g.barrios.size}</b></div>${mapTooltipPhotoHtml(g,records)}</div><div class="pin ${metricClass(g.mm)}" style="width:${size}px;height:${size}px"></div><span>${esc(g.label)}</span>`;
-        m.addEventListener('mouseenter',()=>{map.classList.add('marker-open');m.classList.add('marker-active');});
-        m.addEventListener('mouseleave',()=>{m.classList.remove('marker-active');map.classList.remove('marker-open');});
-        m.addEventListener('focusin',()=>{map.classList.add('marker-open');m.classList.add('marker-active');});
-        m.addEventListener('focusout',()=>{m.classList.remove('marker-active');map.classList.remove('marker-open');});
+        m.addEventListener('mouseenter',()=>{setMapTooltipActive(true);map.classList.add('marker-open');m.classList.add('marker-active');});
+        m.addEventListener('mouseleave',()=>{m.classList.remove('marker-active');map.classList.remove('marker-open');setMapTooltipActive(false);});
+        m.addEventListener('focusin',()=>{setMapTooltipActive(true);map.classList.add('marker-open');m.classList.add('marker-active');});
+        m.addEventListener('focusout',()=>{m.classList.remove('marker-active');map.classList.remove('marker-open');setMapTooltipActive(false);});
+        const tip=m.querySelector('.marker-tooltip'); if(tip) tip.addEventListener('click',ev=>ev.stopPropagation());
         m.querySelectorAll('.map-tooltip-photo-link').forEach(a=>a.addEventListener('click',ev=>{ev.stopPropagation();}));
         initMapPhotoGallery(m,g,records);
         m.addEventListener('click',ev=>{APP.mapEvidenceFocus={mode,key:g.key,territorio:g.territorio,barrio:mode==='barrio'?g.key:''}; if(mode==='barrio'){$('filterTerritorio').value=g.territorio; refreshDependentFilters(); $('filterBarrio').value=g.key;} else {$('filterTerritorio').value=g.territorio;} refreshDependentFilters(); renderAll(); setTimeout(()=>{const p=$('mapEvidencePanel'); if(p) p.scrollIntoView({behavior:'smooth',block:'nearest'});},80);});
@@ -1200,7 +1203,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v6.8: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v6.9: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
