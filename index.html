@@ -334,8 +334,8 @@
             <p>Esta zona administra la URL del backend, acceso privado y sincronización completa con datos internos. Las descargas públicas se realizan desde la sección Reportes sin autenticación.</p>
             <div id="adminLoggedBox" class="admin-bar admin-hidden"><strong>Sesión administradora activa</strong><button id="logoutAdminBtn" class="ghost" type="button" style="max-width:190px">Cerrar sesión</button></div>
             <div id="adminLoginBox" class="lock-card">
-              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbweJUHWPw6eTE1sypnr3daEqCGtNTNxzxCb2tB5-txU0kuA1aW6Z_12z8wHWXVqD-4i/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"><p class="help">Este backend ya queda preconfigurado. Solo cambia esta URL si publicas una nueva implementación de Apps Script.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
-              <div class="buttons two"><button id="saveBackendBtn" class="primary" type="button">Guardar URL</button><button id="testBackendBtn" class="ghost" type="button">Probar backend</button></div>
+              <label for="backendUrl">Backend Apps Script central</label><p id="backendCodeOnlyNotice" class="help">URL fija por código: no es necesario configurarla en cada navegador.</p><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbweJUHWPw6eTE1sypnr3daEqCGtNTNxzxCb2tB5-txU0kuA1aW6Z_12z8wHWXVqD-4i/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" readonly aria-readonly="true"><p class="help">Este backend queda configurado directamente por código. No depende del navegador ni de localStorage.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
+              <div class="buttons two"><button id="saveBackendBtn" class="primary" type="button">Backend fijo por código</button><button id="testBackendBtn" class="ghost" type="button">Probar backend</button></div>
               <div class="form-grid"><div><label for="adminUser">Usuario administrador</label><input id="adminUser" type="text" placeholder="admin" autocomplete="username"></div><div><label for="adminPass">Contraseña</label><input id="adminPass" type="password" placeholder="Contraseña administradora" autocomplete="current-password"></div></div>
               <div class="buttons two"><button id="loginAdminBtn" class="gold" type="button">Ingresar como administrador</button><button id="syncPrivateBtn" class="secondary admin-protected" type="button">Sincronizar datos privados</button></div>
               <p class="help">Contraseña inicial del backend: <strong>AdminRedPluvio2026!</strong>. Debe cambiarse desde Apps Script ejecutando <code>cambiarClaveAdmin('NuevaClaveSegura')</code>.</p>
@@ -343,7 +343,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v6.2</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v6.4</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -359,14 +359,14 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v6.2 · hoja central fija · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v6.4 · backend fijo por código · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
   <script>
     const $ = id => document.getElementById(id);
     const nf = new Intl.NumberFormat('es-CO',{maximumFractionDigits:1});
-    const DEFAULT_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbweJUHWPw6eTE1sypnr3daEqCGtNTNxzxCb2tB5-txU0kuA1aW6Z_12z8wHWXVqD-4i/exec';
+    const DEFAULT_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyVUhDkRKeHB-IEx3wIrFHL3-tK7z2kxqGmS5UihIt7jPyP6n2BSClYPoRrZwoyyPUv/exec';
     const URL_PARAMS = new URLSearchParams(location.search);
     const BACKEND_PARAM = URL_PARAMS.get('exec') || URL_PARAMS.get('backend') || '';
     if(BACKEND_PARAM && /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/i.test(BACKEND_PARAM)){
@@ -404,7 +404,7 @@
     function saveLocalRecords(){localStorage.setItem('redPluvioMed.localRecordsV3', JSON.stringify(APP.registros.filter(r => r.fuente !== 'backend')));}
     function loadLocalRecords(){try{APP.registros = JSON.parse(localStorage.getItem('redPluvioMed.localRecordsV3') || localStorage.getItem('redPluvioMed.localRecordsV2') || '[]').map(enrichRecord);}catch(e){APP.registros=[];}}
     function makeRain(){const layer=$('rainLayer'); for(let i=0;i<44;i++){const d=document.createElement('span');d.className='drop';d.style.left=Math.random()*100+'vw';d.style.animationDuration=(1.6+Math.random()*2.8)+'s';d.style.animationDelay=(-Math.random()*5)+'s';layer.appendChild(d);}}
-    function init(){makeRain(); loadLocalRecords(); $('backendUrl').value=APP.backendUrl; $('fecha').value=today(); $('hora').value=nowTime(); populateControls(); bindEvents(); preselectSede(); updateAdminUi(); renderAll(); renderWaterCalc(); renderMissions(); updateQualityPreview(); updateBackendModeMsg(); updateDashboardSyncMsg('Preparando sincronización con el backend central...','Iniciando'); if(APP.backendUrl) syncPublic(true); setStatus(APP.backendUrl?'Configurable':'Local', APP.backendUrl?'Backend guardado. Actualizando datos públicos.':'Sin backend configurado.');}
+    function init(){makeRain(); loadLocalRecords(); APP.backendUrl=DEFAULT_BACKEND_URL; $('backendUrl').value=APP.backendUrl; $('backendUrl').setAttribute('readonly','readonly'); $('fecha').value=today(); $('hora').value=nowTime(); populateControls(); bindEvents(); preselectSede(); updateAdminUi(); renderAll(); renderWaterCalc(); renderMissions(); updateQualityPreview(); updateBackendModeMsg(); updateDashboardSyncMsg('Preparando sincronización con el backend central...','Iniciando'); if(APP.backendUrl) syncPublic(true); setStatus(APP.backendUrl?'Configurable':'Local', APP.backendUrl?'Backend guardado. Actualizando datos públicos.':'Sin backend configurado.');}
     function currentFilters(){return {q:norm(($('filterSearch')&&$('filterSearch').value)||''),zona:$('filterZona').value,tipoTerritorio:$('filterTipoTerritorio').value,territorio:$('filterTerritorio').value,barrio:$('filterBarrio').value,nucleo:$('filterNucleo').value,tipo:$('filterTipo').value,sedeId:$('filterSede').value};}
     function updateDashboardSyncMsg(message,badge){
       const msg=$('dashboardSyncMsg'), b=$('dashboardSyncBadge');
@@ -948,12 +948,12 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
     }
     function compressImageToBudget(file){
       const attempts=[
-        {maxSide:560,quality:.42},
-        {maxSide:480,quality:.36},
-        {maxSide:400,quality:.32},
-        {maxSide:340,quality:.28}
+        {maxSide:420,quality:.32},
+        {maxSide:360,quality:.28},
+        {maxSide:300,quality:.24},
+        {maxSide:240,quality:.20}
       ];
-      const maxBytes=120*1024;
+      const maxBytes=55*1024;
       let last=null;
       return attempts.reduce((promise,cfg)=>promise.then(prev=>{
         if(prev && prev.bytes<=maxBytes) return prev;
@@ -1087,11 +1087,44 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v6.2: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v6.4: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
       setStatus('PIN recibido','La verificación previa es local; el backend validará el PIN al guardar el registro.');
+    }
+
+    async function uploadPhotoChunked(photoPayload){
+      if(!photoPayload || !photoPayload.foto_base64) throw new Error('No hay foto para subir.');
+      const session='PHOTO-'+Date.now()+'-'+Math.floor(Math.random()*100000);
+      const base64=String(photoPayload.foto_base64||'').replace(/\s/g,'');
+      const chunkSize=1400;
+      const total=Math.ceil(base64.length/chunkSize);
+      setStatus('Preparando foto',`Enviando evidencia en ${total} partes pequeñas...`);
+      const start=await apiJsonp('photostart',{
+        session,
+        registro_id:photoPayload.registro_id,
+        cliente_registro_id:photoPayload.cliente_registro_id,
+        sede_id:photoPayload.sede_id,
+        pin:photoPayload.pin,
+        fecha:photoPayload.fecha,
+        foto_mime:photoPayload.foto_mime,
+        foto_nombre:photoPayload.foto_nombre,
+        foto_kb:photoPayload.foto_kb||''
+      });
+      if(!start||!start.ok) throw new Error(start&&start.error?start.error:'No se pudo iniciar la subida por partes.');
+      for(let i=0;i<total;i++){
+        const chunk=base64.slice(i*chunkSize,(i+1)*chunkSize);
+        const res=await apiJsonp('photochunk',{session,index:i,total,chunk});
+        if(!res||!res.ok) throw new Error(res&&res.error?res.error:`No se pudo subir parte ${i+1}/${total}.`);
+        if(i===0 || i===total-1 || (i+1)%10===0){
+          setStatus('Subiendo foto',`Evidencia enviada ${i+1}/${total} partes...`);
+        }
+      }
+      setStatus('Finalizando foto','Creando archivo en GitHub y asociándolo al registro...');
+      const finish=await apiJsonp('photofinish',{session});
+      if(!finish||!finish.ok) throw new Error(finish&&finish.error?finish.error:'GitHub no confirmó la foto.');
+      return finish;
     }
 
     async function saveRegistro(e){
@@ -1143,17 +1176,17 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
                 foto_nombre:APP.pendingPhoto.name,
                 foto_kb:APP.pendingPhoto.kb
               };
-              const up=await apiPost('photo',photoPayload);
+              const up=await uploadPhotoChunked(photoPayload);
               if(up&&up.ok&&up.record){
                 finalRes=up;
                 photoMsg='Registro y fotografía guardados correctamente.';
               } else {
                 photoMsg='Registro guardado. La foto no se pudo subir: '+(up&&up.error?up.error:'respuesta no confirmada');
-                alert(photoMsg+'\n\nEl dato oficial quedó guardado. Puedes intentar nuevamente con una foto más liviana.');
+                alert(photoMsg+'\n\nEl dato oficial quedó guardado. Puedes intentar nuevamente con otra foto.');
               }
             }catch(photoErr){
-              photoMsg='Registro guardado. La foto no se pudo subir por tiempo de espera, permisos de GitHub o conexión lenta.';
-              alert(photoMsg+'\n\nEl dato oficial quedó protegido en la base central. Revisa en Apps Script las propiedades GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH y GITHUB_BASE_PATH. También puedes intentar con otra foto.');
+              photoMsg='Registro guardado. La foto no se pudo subir por permisos de GitHub, token vencido o conexión lenta.';
+              alert(photoMsg+'\n\nEl dato oficial quedó protegido en la base central. Revisa en Apps Script las propiedades GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH y GITHUB_BASE_PATH. Esta versión envía la foto por partes pequeñas; si falla, normalmente es token o permisos de GitHub.');
             }
           }
           finishRegistroGuardado(finalRes,sede,photoMsg);
@@ -1195,8 +1228,15 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('Local','Registro guardado solo como prueba local. Configura backend para registro oficial.');
       }
     }
-    function apiJsonp(action,params={}){return new Promise((resolve,reject)=>{if(!APP.backendUrl)return reject(new Error('Sin URL de backend')); const cb='__redPluvioCb'+Date.now()+Math.floor(Math.random()*100000); const query=new URLSearchParams({action,callback:cb}); Object.entries(params).forEach(([k,v])=>{if(v!==undefined&&v!==null)query.set(k,String(v));}); const sep=APP.backendUrl.includes('?')?'&':'?'; const script=document.createElement('script'); const timer=setTimeout(()=>cleanup(new Error('Tiempo de espera agotado')),15000); function cleanup(err,data){clearTimeout(timer); delete window[cb]; if(script.parentNode)script.parentNode.removeChild(script); err?reject(err):resolve(data);} window[cb]=data=>cleanup(null,data); script.onerror=()=>cleanup(new Error('No se pudo cargar el backend')); script.src=APP.backendUrl+sep+query.toString(); document.body.appendChild(script);});}
-    function saveBackend(){APP.backendUrl=$('backendUrl').value.trim() || DEFAULT_BACKEND_URL; $('backendUrl').value=APP.backendUrl; APP.backendOk=false; APP.backendVersion=''; localStorage.setItem('redPluvioMed.backendUrl',APP.backendUrl); updateBackendModeMsg(); setStatus(APP.backendUrl?'Configurable':'Local',APP.backendUrl?'URL de backend guardada. Pulsa Probar backend.':'Se eliminó la URL del backend.');}
+    function apiJsonp(action,params={}){return new Promise((resolve,reject)=>{if(!APP.backendUrl)return reject(new Error('Sin URL de backend')); const cb='__redPluvioCb'+Date.now()+Math.floor(Math.random()*100000); const query=new URLSearchParams({action,callback:cb}); Object.entries(params).forEach(([k,v])=>{if(v!==undefined&&v!==null)query.set(k,String(v));}); const sep=APP.backendUrl.includes('?')?'&':'?'; const script=document.createElement('script'); const timer=setTimeout(()=>cleanup(new Error('Tiempo de espera agotado')),60000); function cleanup(err,data){clearTimeout(timer); delete window[cb]; if(script.parentNode)script.parentNode.removeChild(script); err?reject(err):resolve(data);} window[cb]=data=>cleanup(null,data); script.onerror=()=>cleanup(new Error('No se pudo cargar el backend')); script.src=APP.backendUrl+sep+query.toString(); document.body.appendChild(script);});}
+    function saveBackend(){
+  APP.backendUrl=DEFAULT_BACKEND_URL;
+  $('backendUrl').value=APP.backendUrl;
+  APP.backendOk=false;
+  APP.backendVersion='';
+  updateBackendModeMsg();
+  setStatus('Backend fijo','La URL /exec está configurada por código y no depende del navegador.');
+}
     async function testBackend(){saveBackend(); try{const res=await apiJsonp('ping'); if(res&&res.ok){APP.backendOk=true; APP.backendVersion=String(res.version||''); APP.backendSpreadsheetId=String(res.spreadsheetId||''); APP.backendRows=Number(res.filasRegistros||0); updateBackendModeMsg(); updateDashboardSyncMsg(`Backend conectado: ${APP.backendVersion||res.message||''}. Hoja: ${APP.backendSpreadsheetId||'sin ID'} · filas Registros: ${APP.backendRows}`,'Conectado'); setStatus('Conectado',`Backend activo. ${res.message||''} ${res.version||''}`);} else {updateDashboardSyncMsg('El backend respondió, pero no confirmó OK.','Error'); setStatus('Error','El backend respondió, pero no confirmó OK.');}}catch(e){APP.backendOk=false; updateBackendModeMsg(); updateDashboardSyncMsg('No se pudo conectar con el backend: '+(e.message||e),'Error'); setStatus('Error','No se pudo conectar con el backend.');}}
     async function syncPublic(showMsg=true){
       if(!APP.backendUrl){
