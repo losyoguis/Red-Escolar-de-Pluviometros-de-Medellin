@@ -25,6 +25,19 @@
     .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.tab-btn{width:auto;min-height:auto;padding:10px 14px;border-radius:999px;font-size:.88rem}.tab-btn.active{background:linear-gradient(135deg,var(--green),#1f7a49)!important;border-color:rgba(255,216,23,.45)}.tab-section{display:none}.tab-section.active{display:block}.dashboard{display:grid;gap:18px}.cards{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}.card{padding:16px}.card .k{color:#fff0a7;font-weight:950;font-size:.81rem;text-transform:uppercase;letter-spacing:.025em}.card .v{font-size:1.63rem;font-weight:950;margin-top:8px;line-height:1.1}.card .s{color:var(--muted);font-size:.82rem;margin-top:6px}
     .alert{padding:16px;border-left:5px solid var(--gold)}.alert.ok{border-left-color:var(--ok)}.alert.warn{border-left-color:var(--warn)}.alert.bad{border-left-color:var(--danger)}.security-note{border-left:5px solid var(--gold);background:rgba(255,216,23,.06)}.charts{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.chart{padding:14px}.chart-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.mini{padding:8px 10px;border-radius:999px;background:rgba(246,240,222,.05);border:1px solid var(--line);color:var(--muted);font-size:.8rem}canvas{width:100%;display:block}.chart canvas{cursor:crosshair}.chart-tooltip{position:fixed;z-index:9999;min-width:245px;max-width:min(360px,92vw);padding:12px 13px;border-radius:16px;background:rgba(7,17,11,.97);border:1px solid rgba(255,216,23,.52);box-shadow:0 18px 42px rgba(0,0,0,.42);color:var(--ink);pointer-events:none;opacity:0;transform:translate(12px,12px);transition:opacity .12s ease}.chart-tooltip.active{opacity:1}.chart-tooltip .tt-title{font-weight:950;color:#fff0a7;margin-bottom:8px;line-height:1.2}.chart-tooltip .tt-row{display:flex;justify-content:space-between;gap:16px;border-top:1px solid rgba(246,240,222,.09);padding:6px 0;font-size:.86rem}.chart-tooltip .tt-row span{color:var(--muted)}.chart-tooltip .tt-row b{text-align:right}.chart-tooltip .tt-note{margin-top:7px;color:var(--muted);font-size:.78rem;line-height:1.35}.table-wrap{padding:14px;overflow:auto}table{width:100%;border-collapse:collapse;min-width:960px}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid rgba(246,240,222,.075);font-size:.88rem;vertical-align:top}th{color:#fff0a7;background:rgba(246,240,222,.055);position:sticky;top:0;z-index:2}
     .tag{display:inline-flex;padding:6px 10px;border-radius:999px;font-weight:950;font-size:.76rem;white-space:nowrap}.tag.ie{background:rgba(125,223,138,.14);color:var(--ok)}.tag.sec{background:rgba(124,199,255,.14);color:var(--blue)}.tag.ce{background:rgba(255,213,106,.14);color:var(--warn)}.tag.otro{background:rgba(255,255,255,.12);color:#fff}.tag.rural{background:rgba(255,213,106,.15);color:var(--warn)}.tag.urbano{background:rgba(125,223,138,.14);color:var(--ok)}.tag.alta,.tag.validado,.tag.sync,.tag.ligera,.tag.sin-lluvia{background:rgba(125,223,138,.14);color:var(--ok)}.tag.media,.tag.moderada,.tag.pendiente,.tag.local{background:rgba(255,213,106,.15);color:var(--warn)}.tag.baja,.tag.fuerte,.tag.muy-fuerte,.tag.revisar{background:rgba(255,135,135,.14);color:var(--danger)}.tag.private{background:rgba(255,216,23,.13);color:#fff0a7}.help{font-size:.85rem;color:var(--muted);margin-top:8px;line-height:1.4}.selected-sede{background:rgba(246,240,222,.06);border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0}.selected-sede strong{color:#fff0a7}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .date-filter-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+    .date-picker-card{position:relative}
+    .date-field{position:relative;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:rgba(246,240,222,.055);border-radius:18px;padding:7px 8px;min-height:62px}
+    .date-field:focus-within{border-color:rgba(255,216,23,.55);box-shadow:0 0 0 3px rgba(255,216,23,.09)}
+    .date-field input[type=date]{border:0!important;background:transparent!important;padding:10px 6px!important;min-height:44px;color:var(--paper);font-weight:950;font-size:1rem;width:100%;color-scheme:dark}
+    .date-field input[type=date]::-webkit-calendar-picker-indicator{opacity:0;display:none}
+    .date-open-btn{width:48px!important;height:48px!important;min-height:48px!important;padding:0!important;border-radius:15px!important;background:linear-gradient(135deg,rgba(255,216,23,.20),rgba(0,102,54,.22))!important;border:1px solid rgba(255,216,23,.42)!important;color:#fff0a7!important;font-size:1.35rem!important;line-height:1!important;display:flex!important;align-items:center!important;justify-content:center!important}
+    .date-open-btn:hover{background:linear-gradient(135deg,rgba(255,216,23,.32),rgba(0,102,54,.28))!important;transform:translateY(-1px)}
+    .date-display{display:block;margin-top:7px;color:#fff0a7;font-weight:900;font-size:.86rem;min-height:1.2em}
+    .date-hint{display:block;margin-top:4px;color:var(--muted);font-size:.78rem;line-height:1.25}
+    .date-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+    .date-actions button{min-height:36px!important;padding:8px!important;font-size:.78rem!important;border-radius:999px!important}
+    @media (max-width:760px){.date-filter-row{grid-template-columns:1fr}.date-actions{grid-template-columns:1fr 1fr 1fr}}
     .map-grid{display:grid;grid-template-columns:1fr;gap:16px}.map{height:clamp(720px,88vh,1120px);min-height:720px;border-radius:22px;position:relative;overflow:visible;background:radial-gradient(circle at 35% 45%,rgba(255,216,23,.14),transparent 22%),linear-gradient(180deg,#102315,#08110b);border:1px solid var(--line);isolation:isolate}.map::before{content:'';position:absolute;inset:0;border-radius:22px;box-shadow:inset 0 0 0 1px rgba(246,240,222,.04);pointer-events:none;z-index:1}.city-shape{position:absolute;left:8%;top:5%;width:84%;height:89%;opacity:.55}.city-shape:before{content:"";position:absolute;inset:0;background:rgba(0,102,54,.18);border:2px dashed rgba(255,216,23,.38);clip-path:polygon(42% 2%,53% 10%,59% 23%,76% 24%,87% 38%,82% 52%,91% 66%,80% 83%,61% 92%,43% 98%,26% 92%,13% 80%,18% 62%,7% 45%,18% 27%,33% 24%);filter:drop-shadow(0 0 22px rgba(255,216,23,.08))}.map-title{position:absolute;left:14px;top:14px;right:14px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;z-index:4}.map-note{position:absolute;left:14px;bottom:14px;right:14px;color:var(--muted);font-size:.82rem;background:rgba(7,17,11,.78);border:1px solid var(--line);border-radius:14px;padding:10px;z-index:4}.territory-marker{position:absolute;display:flex;flex-direction:column;align-items:center;gap:5px;transform:translate(-50%,-50%);cursor:pointer;z-index:8;transition:opacity .14s ease,filter .14s ease,transform .14s ease}.territory-marker:hover,.territory-marker.marker-active,.territory-marker:focus-within{z-index:5000;filter:brightness(1.08);transform:translate(-50%,-50%) scale(1.03)}.map:has(.territory-marker:hover) .territory-marker:not(:hover),.map:has(.territory-marker:focus-within) .territory-marker:not(:focus-within),.map.marker-open .territory-marker:not(.marker-active){opacity:.05;visibility:hidden;pointer-events:none}.pin{width:18px;height:18px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 8px rgba(255,216,23,.14);border:1px solid rgba(0,0,0,.35)}.pin.rain0{background:#f1f0df}.pin.rain1{background:var(--ok)}.pin.rain2{background:var(--warn)}.pin.rain3{background:var(--danger);box-shadow:0 0 0 10px rgba(255,135,135,.18)}.territory-marker span{white-space:nowrap;background:rgba(7,17,11,.92);border:1px solid var(--line);padding:5px 7px;border-radius:10px;font-size:.72rem}.marker-tooltip{position:absolute;left:50%;bottom:calc(100% + 16px);transform:translateX(-50%) translateY(8px);min-width:min(360px,86vw);max-width:min(430px,92vw);background:rgba(7,17,11,.985);border:1px solid rgba(255,216,23,.60);box-shadow:0 24px 58px rgba(0,0,0,.62),0 0 0 9999px rgba(0,0,0,.10);border-radius:18px;padding:13px 14px;opacity:0;visibility:hidden;pointer-events:auto;transition:.18s ease;z-index:10000;text-align:left}.territory-marker:hover .marker-tooltip,.territory-marker.marker-active .marker-tooltip,.territory-marker:focus-within .marker-tooltip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}.tooltip-title{font-weight:950;color:#fff0a7;margin-bottom:7px}.tooltip-row{display:flex;justify-content:space-between;gap:10px;border-top:1px solid rgba(246,240,222,.08);padding-top:6px;margin-top:6px;font-size:.86rem}.territory-list-wrap{padding:14px;border-radius:20px;background:rgba(15,28,19,.72);border:1px solid var(--line);box-shadow:var(--shadow)}.territory-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;max-height:none;overflow:visible;padding-right:0}.territory-card{padding:15px;border-radius:18px;cursor:pointer;transition:.18s}.territory-card:hover{transform:translateY(-1px);border-color:rgba(255,216,23,.35)}.territory-card b{color:#fff0a7}.territory-card small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}
     .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.flow-step{padding:14px;border-radius:18px}.flow-step b{color:#fff0a7}.flow-step p{font-size:.86rem;margin:8px 0 0}.admin-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,216,23,.08);border:1px solid rgba(255,216,23,.22);border-radius:16px;padding:12px;margin:12px 0}.admin-hidden{display:none!important}.lock-card{background:rgba(5,8,6,.62);border-color:rgba(255,216,23,.24)}.footer{color:var(--muted);text-align:center;margin-top:26px;font-size:.9rem}.yoguis-footer{margin-top:28px;border:1px solid var(--line);background:#000;border-radius:24px;box-shadow:var(--shadow);overflow:hidden;text-align:center}.yoguis-footer img{display:block;width:100%;height:auto;max-height:360px;object-fit:contain;background:#000}.yoguis-footer-link{display:flex;justify-content:center;align-items:center;padding:14px 16px 18px;background:#000;border-top:1px solid rgba(246,240,222,.08)}.yoguis-footer-link a{color:#ffef3c;text-decoration:none;font-weight:950;letter-spacing:.02em;font-size:1rem}.print-only{display:none}.mobile-actionbar{display:none}
     @media print{body{background:#fff;color:#111}.container{width:100%;padding:0}.hero,.panel,.tabs,.mobile-actionbar,.yoguis-footer,.footer button,.buttons,.admin-hidden,#rainLayer{display:none!important}.main{display:block}.tab-section{display:block}.tab-section:not(#reportes){display:none}.module,.table-wrap,.card{box-shadow:none;border:1px solid #ccc;background:#fff;color:#111}.print-only{display:block}.card .k,.card .v,.card .s,p,.help{color:#111}}
@@ -128,7 +141,31 @@
         <label for="filterNucleo">Núcleo educativo</label><select id="filterNucleo"><option value="">Todos</option></select>
         <label for="filterTipo">Tipo de sede</label><select id="filterTipo"><option value="">Todos</option></select>
         <label for="filterSede">Sede</label><select id="filterSede"><option value="">Todas</option></select>
-        <div class="two"><div><label for="dateFrom">Desde</label><input id="dateFrom" type="date"></div><div><label for="dateTo">Hasta</label><input id="dateTo" type="date"></div></div>
+        <div class="date-filter-row">
+          <div class="date-picker-card">
+            <label for="dateFrom">Desde</label>
+            <div class="date-field">
+              <input id="dateFrom" type="date" aria-label="Fecha inicial del filtro">
+              <button class="date-open-btn" type="button" data-date-target="dateFrom" aria-label="Abrir calendario desde">📅</button>
+            </div>
+            <span id="dateFromDisplay" class="date-display">Sin fecha inicial</span>
+            <span class="date-hint">Abre el calendario y selecciona la fecha inicial.</span>
+          </div>
+          <div class="date-picker-card">
+            <label for="dateTo">Hasta</label>
+            <div class="date-field">
+              <input id="dateTo" type="date" aria-label="Fecha final del filtro">
+              <button class="date-open-btn" type="button" data-date-target="dateTo" aria-label="Abrir calendario hasta">📅</button>
+            </div>
+            <span id="dateToDisplay" class="date-display">Sin fecha final</span>
+            <span class="date-hint">Abre el calendario y selecciona la fecha final.</span>
+          </div>
+        </div>
+        <div class="date-actions" aria-label="Atajos de calendario">
+          <button id="dateTodayBtn" class="ghost" type="button">Hoy</button>
+          <button id="dateMonthBtn" class="ghost" type="button">Este mes</button>
+          <button id="dateClearBtn" class="ghost" type="button">Limpiar fechas</button>
+        </div>
         <div class="buttons">
           <button id="syncPublicBtn" class="primary" type="button">Actualizar datos públicos</button>
           <button id="demoBtn" class="gold" type="button">Cargar datos demo</button>
@@ -343,7 +380,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.0</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.1</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -359,7 +396,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.0 · logo botón corregido · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.1 · calendarios visibles · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -408,6 +445,45 @@
       const h=formatHora(r&&r.hora);
       return [f,h].filter(Boolean).join(' · ');
     }
+    function formatDateHuman(v){
+      if(!v) return '';
+      const parts=String(v).split('-');
+      if(parts.length===3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+      return String(v);
+    }
+    function updateDateDisplays(){
+      const f=$('dateFrom'), t=$('dateTo');
+      if($('dateFromDisplay')) $('dateFromDisplay').textContent=f&&f.value?`Desde: ${formatDateHuman(f.value)}`:'Sin fecha inicial';
+      if($('dateToDisplay')) $('dateToDisplay').textContent=t&&t.value?`Hasta: ${formatDateHuman(t.value)}`:'Sin fecha final';
+    }
+    function openDatePicker(id){
+      const input=$(id);
+      if(!input) return;
+      input.focus();
+      try{ if(typeof input.showPicker==='function') input.showPicker(); }
+      catch(e){ /* algunos navegadores solo permiten showPicker desde gesto de usuario */ }
+    }
+    function setDateRangePreset(mode){
+      const now=new Date();
+      const yyyy=now.getFullYear();
+      const mm=String(now.getMonth()+1).padStart(2,'0');
+      const dd=String(now.getDate()).padStart(2,'0');
+      if(mode==='today'){
+        const d=`${yyyy}-${mm}-${dd}`;
+        $('dateFrom').value=d; $('dateTo').value=d;
+      }
+      if(mode==='month'){
+        const first=`${yyyy}-${mm}-01`;
+        const lastDate=new Date(yyyy, now.getMonth()+1, 0).getDate();
+        const last=`${yyyy}-${mm}-${String(lastDate).padStart(2,'0')}`;
+        $('dateFrom').value=first; $('dateTo').value=last;
+      }
+      if(mode==='clear'){
+        $('dateFrom').value=''; $('dateTo').value='';
+      }
+      updateDateDisplays();
+      renderAll();
+    }
     function recordSortKey(r){
       const h=formatHora(r&&r.hora);
       const hh=/^\d{2}:\d{2}$/.test(h)?h:'00:00';
@@ -427,7 +503,7 @@
     function loadLocalRecords(){try{APP.registros = JSON.parse(localStorage.getItem('redPluvioMed.localRecordsV3') || localStorage.getItem('redPluvioMed.localRecordsV2') || '[]').map(enrichRecord);}catch(e){APP.registros=[];}}
     function makeRain(){const layer=$('rainLayer'); for(let i=0;i<44;i++){const d=document.createElement('span');d.className='drop';d.style.left=Math.random()*100+'vw';d.style.animationDuration=(1.6+Math.random()*2.8)+'s';d.style.animationDelay=(-Math.random()*5)+'s';layer.appendChild(d);}}
     window.addEventListener('scroll',()=>{const m=$('mapa'); if(m && !m.matches(':hover')) setMapTooltipActive(false);},{passive:true});
-    function init(){makeRain(); loadLocalRecords(); APP.backendUrl=DEFAULT_BACKEND_URL; $('backendUrl').value=APP.backendUrl; $('backendUrl').setAttribute('readonly','readonly'); $('fecha').value=today(); $('hora').value=nowTime(); populateControls(); bindEvents(); preselectSede(); updateAdminUi(); renderAll(); renderWaterCalc(); renderMissions(); updateQualityPreview(); updateBackendModeMsg(); updateDashboardSyncMsg('Preparando sincronización con el backend central...','Iniciando'); if(APP.backendUrl) syncPublic(true); setStatus(APP.backendUrl?'Configurable':'Local', APP.backendUrl?'Backend guardado. Actualizando datos públicos.':'Sin backend configurado.');}
+    function init(){makeRain(); loadLocalRecords(); APP.backendUrl=DEFAULT_BACKEND_URL; $('backendUrl').value=APP.backendUrl; $('backendUrl').setAttribute('readonly','readonly'); $('fecha').value=today(); $('hora').value=nowTime(); populateControls(); updateDateDisplays(); bindEvents(); preselectSede(); updateAdminUi(); renderAll(); renderWaterCalc(); renderMissions(); updateQualityPreview(); updateBackendModeMsg(); updateDashboardSyncMsg('Preparando sincronización con el backend central...','Iniciando'); if(APP.backendUrl) syncPublic(true); setStatus(APP.backendUrl?'Configurable':'Local', APP.backendUrl?'Backend guardado. Actualizando datos públicos.':'Sin backend configurado.');}
     function currentFilters(){return {q:norm(($('filterSearch')&&$('filterSearch').value)||''),zona:$('filterZona').value,tipoTerritorio:$('filterTipoTerritorio').value,territorio:$('filterTerritorio').value,barrio:$('filterBarrio').value,nucleo:$('filterNucleo').value,tipo:$('filterTipo').value,sedeId:$('filterSede').value};}
     function updateDashboardSyncMsg(message,badge){
       const msg=$('dashboardSyncMsg'), b=$('dashboardSyncBadge');
@@ -437,7 +513,7 @@
     function clearAllFilters(render=true){
       ['filterSearch','dateFrom','dateTo','searchSede'].forEach(id=>{const el=$(id); if(el) el.value='';});
       ['filterZona','filterTipoTerritorio','filterTerritorio','filterBarrio','filterNucleo','filterTipo','filterSede'].forEach(id=>{const el=$(id); if(el) el.value='';});
-      refreshDependentFilters();
+      refreshDependentFilters(); updateDateDisplays();
       if(render) renderAll();
       updateDashboardSyncMsg('Filtros limpiados. Se muestran todos los registros públicos cargados.', `${APP.registros.length} registros cargados`);
     }
@@ -484,7 +560,12 @@
       $('fotoFile').addEventListener('change',handlePhotoInput);
       $('clearPhotoBtn').addEventListener('click',clearSelectedPhoto);
       $('registroForm').addEventListener('submit',saveRegistro);
-      $('syncPublicBtn').addEventListener('click',()=>syncPublic(true)); if($('dashboardSyncBtn'))$('dashboardSyncBtn').addEventListener('click',()=>syncPublic(true)); if($('dashboardClearFiltersBtn'))$('dashboardClearFiltersBtn').addEventListener('click',()=>clearAllFilters(true)); if($('dashboardTestBackendBtn'))$('dashboardTestBackendBtn').addEventListener('click',testBackend);
+      $('syncPublicBtn').addEventListener('click',()=>syncPublic(true));
+      document.querySelectorAll('[data-date-target]').forEach(btn=>btn.addEventListener('click',()=>openDatePicker(btn.dataset.dateTarget)));
+      ['dateFrom','dateTo'].forEach(id=>{const el=$(id); if(el){el.addEventListener('click',()=>openDatePicker(id)); el.addEventListener('change',()=>{updateDateDisplays();renderAll();});}});
+      $('dateTodayBtn')?.addEventListener('click',()=>setDateRangePreset('today'));
+      $('dateMonthBtn')?.addEventListener('click',()=>setDateRangePreset('month'));
+      $('dateClearBtn')?.addEventListener('click',()=>setDateRangePreset('clear')); if($('dashboardSyncBtn'))$('dashboardSyncBtn').addEventListener('click',()=>syncPublic(true)); if($('dashboardClearFiltersBtn'))$('dashboardClearFiltersBtn').addEventListener('click',()=>clearAllFilters(true)); if($('dashboardTestBackendBtn'))$('dashboardTestBackendBtn').addEventListener('click',testBackend);
       $('syncPrivateBtn').addEventListener('click',syncPrivate);
       $('demoBtn').addEventListener('click',loadDemoData);
       $('clearLocalBtn').addEventListener('click',clearLocalData);
@@ -1204,7 +1285,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v7.0: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v7.1: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
