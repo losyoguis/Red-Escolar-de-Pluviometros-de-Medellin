@@ -38,6 +38,16 @@
     .date-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
     .date-actions button{min-height:38px!important;padding:8px!important;font-size:.82rem!important;border-radius:999px!important}
     .filter-status{margin-top:12px;padding:10px 12px;border-radius:14px;background:rgba(125,223,138,.08);border:1px solid rgba(125,223,138,.22);color:#dfffe4;font-size:.82rem;font-weight:850;line-height:1.35}
+    .autocomplete-wrap{position:relative}
+    .autocomplete-list{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:80;display:none;max-height:315px;overflow:auto;border-radius:18px;border:1px solid rgba(255,216,23,.32);background:rgba(7,17,11,.98);box-shadow:0 20px 48px rgba(0,0,0,.46);padding:8px}
+    .autocomplete-list.active{display:grid;gap:6px}
+    .autocomplete-item{width:100%;display:block;text-align:left;min-height:auto!important;padding:10px 12px!important;border-radius:14px!important;background:rgba(246,240,222,.055)!important;border:1px solid rgba(246,240,222,.09)!important;color:var(--paper)!important;cursor:pointer}
+    .autocomplete-item:hover,.autocomplete-item.active{background:rgba(255,216,23,.14)!important;border-color:rgba(255,216,23,.38)!important;transform:none!important}
+    .autocomplete-item strong{display:block;color:#fff0a7;font-size:.88rem;line-height:1.18}
+    .autocomplete-item span{display:block;color:var(--muted);font-size:.76rem;margin-top:3px;line-height:1.25}
+    .autocomplete-empty{padding:10px 12px;color:var(--muted);font-size:.82rem}
+    .autocomplete-help{margin-top:6px;color:var(--muted);font-size:.76rem;line-height:1.25}
+    @media (max-width:760px){.autocomplete-list{position:fixed;left:16px;right:16px;top:auto;bottom:20px;max-height:48vh}}
     @media (min-width:1280px){.panel .date-filter-row{grid-template-columns:1fr}.panel .date-actions{grid-template-columns:1fr 1fr}.panel .date-actions button:nth-child(3){grid-column:1/-1}}
     @media (max-width:760px){.date-filter-row{grid-template-columns:1fr}.date-actions{grid-template-columns:1fr}}
     .map-grid{display:grid;grid-template-columns:1fr;gap:16px}.map{height:clamp(720px,88vh,1120px);min-height:720px;border-radius:22px;position:relative;overflow:visible;background:radial-gradient(circle at 35% 45%,rgba(255,216,23,.14),transparent 22%),linear-gradient(180deg,#102315,#08110b);border:1px solid var(--line);isolation:isolate}.map::before{content:'';position:absolute;inset:0;border-radius:22px;box-shadow:inset 0 0 0 1px rgba(246,240,222,.04);pointer-events:none;z-index:1}.city-shape{position:absolute;left:8%;top:5%;width:84%;height:89%;opacity:.55}.city-shape:before{content:"";position:absolute;inset:0;background:rgba(0,102,54,.18);border:2px dashed rgba(255,216,23,.38);clip-path:polygon(42% 2%,53% 10%,59% 23%,76% 24%,87% 38%,82% 52%,91% 66%,80% 83%,61% 92%,43% 98%,26% 92%,13% 80%,18% 62%,7% 45%,18% 27%,33% 24%);filter:drop-shadow(0 0 22px rgba(255,216,23,.08))}.map-title{position:absolute;left:14px;top:14px;right:14px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;z-index:4}.map-note{position:absolute;left:14px;bottom:14px;right:14px;color:var(--muted);font-size:.82rem;background:rgba(7,17,11,.78);border:1px solid var(--line);border-radius:14px;padding:10px;z-index:4}.territory-marker{position:absolute;display:flex;flex-direction:column;align-items:center;gap:5px;transform:translate(-50%,-50%);cursor:pointer;z-index:8;transition:opacity .14s ease,filter .14s ease,transform .14s ease}.territory-marker:hover,.territory-marker.marker-active,.territory-marker:focus-within{z-index:5000;filter:brightness(1.08);transform:translate(-50%,-50%) scale(1.03)}.map:has(.territory-marker:hover) .territory-marker:not(:hover),.map:has(.territory-marker:focus-within) .territory-marker:not(:focus-within),.map.marker-open .territory-marker:not(.marker-active){opacity:.05;visibility:hidden;pointer-events:none}.pin{width:18px;height:18px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 8px rgba(255,216,23,.14);border:1px solid rgba(0,0,0,.35)}.pin.rain0{background:#f1f0df}.pin.rain1{background:var(--ok)}.pin.rain2{background:var(--warn)}.pin.rain3{background:var(--danger);box-shadow:0 0 0 10px rgba(255,135,135,.18)}.territory-marker span{white-space:nowrap;background:rgba(7,17,11,.92);border:1px solid var(--line);padding:5px 7px;border-radius:10px;font-size:.72rem}.marker-tooltip{position:absolute;left:50%;bottom:calc(100% + 16px);transform:translateX(-50%) translateY(8px);min-width:min(360px,86vw);max-width:min(430px,92vw);background:rgba(7,17,11,.985);border:1px solid rgba(255,216,23,.60);box-shadow:0 24px 58px rgba(0,0,0,.62),0 0 0 9999px rgba(0,0,0,.10);border-radius:18px;padding:13px 14px;opacity:0;visibility:hidden;pointer-events:auto;transition:.18s ease;z-index:10000;text-align:left}.territory-marker:hover .marker-tooltip,.territory-marker.marker-active .marker-tooltip,.territory-marker:focus-within .marker-tooltip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}.tooltip-title{font-weight:950;color:#fff0a7;margin-bottom:7px}.tooltip-row{display:flex;justify-content:space-between;gap:10px;border-top:1px solid rgba(246,240,222,.08);padding-top:6px;margin-top:6px;font-size:.86rem}.territory-list-wrap{padding:14px;border-radius:20px;background:rgba(15,28,19,.72);border:1px solid var(--line);box-shadow:var(--shadow)}.territory-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;max-height:none;overflow:visible;padding-right:0}.territory-card{padding:15px;border-radius:18px;cursor:pointer;transition:.18s}.territory-card:hover{transform:translateY(-1px);border-color:rgba(255,216,23,.35)}.territory-card b{color:#fff0a7}.territory-card small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}
@@ -133,7 +143,11 @@
         <h2>Filtros territoriales</h2>
         <p class="help">El mapa y los reportes se pueden consultar por zona, comuna/corregimiento, barrio/vereda, núcleo y sede.</p>
         <label for="filterSearch">Buscar dentro de los filtros</label>
-        <input id="filterSearch" type="search" placeholder="Buscar sede, núcleo, comuna, barrio o vereda">
+        <div class="autocomplete-wrap">
+          <input id="filterSearch" type="search" autocomplete="off" placeholder="Escribe sede, núcleo, comuna, barrio o vereda">
+          <div id="filterSuggestions" class="autocomplete-list" role="listbox" aria-label="Sugerencias de búsqueda"></div>
+        </div>
+        <div class="autocomplete-help">Mientras escribes aparecen coincidencias. Puedes seleccionar una sugerencia para aplicar la búsqueda.</div>
         <div class="buttons" style="margin-top:8px"><button id="clearFilterSearchBtn" class="ghost" type="button">Limpiar búsqueda</button></div>
         <p class="help">La búsqueda reduce automáticamente las opciones de los filtros y actualiza el dashboard, el mapa, las fichas y los reportes.</p>
         <div id="filterStatus" class="filter-status">Filtros listos · mostrando todas las sedes.</div>
@@ -383,7 +397,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.2</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.3</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -399,7 +413,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.2 · filtros y calendarios corregidos · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.3 · búsqueda con autocompletado · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -506,6 +520,118 @@
     function makeRain(){const layer=$('rainLayer'); for(let i=0;i<44;i++){const d=document.createElement('span');d.className='drop';d.style.left=Math.random()*100+'vw';d.style.animationDuration=(1.6+Math.random()*2.8)+'s';d.style.animationDelay=(-Math.random()*5)+'s';layer.appendChild(d);}}
     window.addEventListener('scroll',()=>{const m=$('mapa'); if(m && !m.matches(':hover')) setMapTooltipActive(false);},{passive:true});
     function init(){makeRain(); loadLocalRecords(); APP.backendUrl=DEFAULT_BACKEND_URL; $('backendUrl').value=APP.backendUrl; $('backendUrl').setAttribute('readonly','readonly'); $('fecha').value=today(); $('hora').value=nowTime(); populateControls(); updateDateDisplays(); updateFilterStatus(); bindEvents(); preselectSede(); updateAdminUi(); renderAll(); renderWaterCalc(); renderMissions(); updateQualityPreview(); updateBackendModeMsg(); updateDashboardSyncMsg('Preparando sincronización con el backend central...','Iniciando'); if(APP.backendUrl) syncPublic(true); setStatus(APP.backendUrl?'Configurable':'Local', APP.backendUrl?'Backend guardado. Actualizando datos públicos.':'Sin backend configurado.');}
+    function buildFilterSuggestionSource(){
+      const items=[];
+      const seen=new Set();
+      const add=(kind,value,label,detail='')=>{
+        const v=String(value||'').trim();
+        if(!v) return;
+        const key=kind+'|'+norm(v)+'|'+norm(label||v);
+        if(seen.has(key)) return;
+        seen.add(key);
+        items.push({kind,value:v,label:label||v,detail});
+      };
+      APP.instituciones.forEach(s=>{
+        add('sede', s.nombre, s.nombre, `${s.sede_id} · Núcleo ${s.nucleo} · ${s.territorio} · ${s.barrio_vereda}`);
+        add('codigo', s.sede_id, s.sede_id, `${s.nombre} · Núcleo ${s.nucleo}`);
+        add('nucleo', s.nucleo, `Núcleo ${s.nucleo}`, `${s.zona_territorial} · ${s.territorio}`);
+        add('territorio', s.territorio, s.territorio, `${s.tipo_territorio} ${s.codigo_territorio} · ${s.zona_territorial}`);
+        add('barrio', s.barrio_vereda, s.barrio_vereda, `${s.territorio} · ${s.tipo_territorio}`);
+        add('zona', s.zona_territorial, s.zona_territorial, 'Zona territorial');
+        add('tipoTerritorio', s.tipo_territorio, s.tipo_territorio, 'Tipo de territorio');
+        add('tipo', s.tipo, s.tipo, 'Tipo de sede');
+      });
+      return items.sort((a,b)=>a.label.localeCompare(b.label,'es'));
+    }
+    function getFilterSuggestions(q){
+      const query=norm(q);
+      if(!query) return [];
+      const parts=query.split(/\s+/).filter(Boolean);
+      return buildFilterSuggestionSource()
+        .map(item=>{
+          const hay=norm(`${item.label} ${item.value} ${item.detail}`);
+          const starts=hay.startsWith(query) || norm(item.value).startsWith(query) || norm(item.label).startsWith(query);
+          const match=parts.every(p=>hay.includes(p));
+          return match ? {...item,score:(starts?0:1)+Math.min(hay.indexOf(parts[0]||query),99)} : null;
+        })
+        .filter(Boolean)
+        .sort((a,b)=>a.score-b.score || a.label.localeCompare(b.label,'es'))
+        .slice(0,10);
+    }
+    function hideFilterSuggestions(){
+      const box=$('filterSuggestions'); if(box){box.classList.remove('active'); box.innerHTML='';}
+    }
+    function renderFilterSuggestions(){
+      const input=$('filterSearch'), box=$('filterSuggestions');
+      if(!input||!box) return;
+      const q=input.value.trim();
+      const suggestions=getFilterSuggestions(q);
+      if(!q){
+        hideFilterSuggestions();
+        return;
+      }
+      if(!suggestions.length){
+        box.innerHTML='<div class="autocomplete-empty">No hay coincidencias. Prueba con otra palabra, núcleo, comuna o sede.</div>';
+        box.classList.add('active');
+        return;
+      }
+      const kindLabel={sede:'Sede educativa',codigo:'Código de sede',nucleo:'Núcleo educativo',territorio:'Comuna/corregimiento',barrio:'Barrio/vereda',zona:'Zona territorial',tipoTerritorio:'Tipo de territorio',tipo:'Tipo de sede'};
+      box.innerHTML=suggestions.map((s,i)=>`<button type="button" class="autocomplete-item" role="option" data-i="${i}" data-kind="${esc(s.kind)}" data-value="${esc(s.value)}"><strong>${esc(s.label)}</strong><span>${esc(kindLabel[s.kind]||'Coincidencia')} · ${esc(s.detail||s.value)}</span></button>`).join('');
+      box.classList.add('active');
+      box.querySelectorAll('.autocomplete-item').forEach(btn=>btn.addEventListener('click',()=>{
+        selectFilterSuggestion(btn.dataset.kind, btn.dataset.value);
+      }));
+    }
+    function selectFilterSuggestion(kind,value){
+      const input=$('filterSearch');
+      if(input) input.value=value||'';
+      hideFilterSuggestions();
+      applyFilters({refresh:true,render:false});
+      // Si la sugerencia coincide con un filtro estructurado, también lo selecciona.
+      const setIfOption=(id,val)=>{
+        const el=$(id); if(!el) return false;
+        const found=[...el.options].some(o=>String(o.value)===String(val));
+        if(found){el.value=val; return true;}
+        return false;
+      };
+      if(kind==='zona') setIfOption('filterZona',value);
+      if(kind==='tipoTerritorio') setIfOption('filterTipoTerritorio',value);
+      if(kind==='territorio') setIfOption('filterTerritorio',value);
+      if(kind==='barrio') setIfOption('filterBarrio',value);
+      if(kind==='nucleo') setIfOption('filterNucleo',value);
+      if(kind==='tipo') setIfOption('filterTipo',value);
+      if(kind==='codigo'){
+        const sede=APP.instituciones.find(s=>String(s.sede_id)===String(value));
+        if(sede){$('filterSearch').value=''; refreshDependentFilters({preserve:true}); setIfOption('filterSede',sede.sede_id);}
+      }
+      if(kind==='sede'){
+        const sede=APP.instituciones.find(s=>norm(s.nombre)===norm(value));
+        if(sede){$('filterSearch').value=''; refreshDependentFilters({preserve:true}); setIfOption('filterSede',sede.sede_id);}
+      }
+      applyFilters({refresh:true,render:true});
+    }
+    function handleFilterSuggestionKeys(ev){
+      const box=$('filterSuggestions');
+      if(!box || !box.classList.contains('active')) return;
+      const items=[...box.querySelectorAll('.autocomplete-item')];
+      if(!items.length) return;
+      const current=items.findIndex(i=>i.classList.contains('active'));
+      if(ev.key==='ArrowDown'){
+        ev.preventDefault();
+        const next=items[(current+1+items.length)%items.length];
+        items.forEach(i=>i.classList.remove('active')); next.classList.add('active'); next.scrollIntoView({block:'nearest'});
+      }
+      if(ev.key==='ArrowUp'){
+        ev.preventDefault();
+        const next=items[(current-1+items.length)%items.length];
+        items.forEach(i=>i.classList.remove('active')); next.classList.add('active'); next.scrollIntoView({block:'nearest'});
+      }
+      if(ev.key==='Enter' && current>=0){
+        ev.preventDefault();
+        items[current].click();
+      }
+      if(ev.key==='Escape') hideFilterSuggestions();
+    }
     function currentFilters(){return {q:norm(($('filterSearch')&&$('filterSearch').value)||''),zona:$('filterZona').value,tipoTerritorio:$('filterTipoTerritorio').value,territorio:$('filterTerritorio').value,barrio:$('filterBarrio').value,nucleo:$('filterNucleo').value,tipo:$('filterTipo').value,sedeId:$('filterSede').value};}
     function updateDashboardSyncMsg(message,badge){
       const msg=$('dashboardSyncMsg'), b=$('dashboardSyncBadge');
@@ -610,8 +736,11 @@
       document.querySelectorAll('[data-tab-link]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab(a.dataset.tabLink)}));
       ['filterZona','filterTipoTerritorio','filterTerritorio','filterBarrio','filterNucleo','filterTipo'].forEach(id=>$(id).addEventListener('change',()=>applyFilters({refresh:true,render:true})));
       ['filterSede','mapMode','mapMetric'].forEach(id=>$(id).addEventListener('change',()=>applyFilters({refresh:false,render:true})));
-      $('filterSearch').addEventListener('input',()=>applyFilters({refresh:true,render:true}));
-      $('clearFilterSearchBtn').addEventListener('click',()=>{$('filterSearch').value='';applyFilters({refresh:true,render:true});});
+      $('filterSearch').addEventListener('input',()=>{renderFilterSuggestions();applyFilters({refresh:true,render:true});});
+      $('filterSearch').addEventListener('focus',renderFilterSuggestions);
+      $('filterSearch').addEventListener('keydown',handleFilterSuggestionKeys);
+      document.addEventListener('click',e=>{if(!e.target.closest('.autocomplete-wrap'))hideFilterSuggestions();});
+      $('clearFilterSearchBtn').addEventListener('click',()=>{$('filterSearch').value='';hideFilterSuggestions();applyFilters({refresh:true,render:true});});
       $('searchSede').addEventListener('input',renderDirectorio);
       $('registroSede').addEventListener('change',()=>{updateSelectedSede(); renderSedeFicha(); if($('pinCheckMsg')){$('pinCheckMsg').textContent='Verifica que el PIN corresponda a la sede seleccionada.';$('pinCheckMsg').style.color='';}});
       if($('verifyPinBtn')) $('verifyPinBtn').addEventListener('click',verifyPinBeforeSubmit);
@@ -1345,7 +1474,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v7.2: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v7.3: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
