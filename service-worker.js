@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v6-5-alerta-confirmacion';
+const CACHE_NAME = 'red-pluviometros-medellin-v6-7-mapa-foto-punto';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];
