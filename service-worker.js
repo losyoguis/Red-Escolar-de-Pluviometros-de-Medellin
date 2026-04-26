@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v5-4-guardado-flexible-pin';
+const CACHE_NAME = 'red-pluviometros-medellin-v5-5-backend-normalizacion';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];
