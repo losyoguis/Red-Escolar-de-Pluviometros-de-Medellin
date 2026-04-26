@@ -343,7 +343,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v6.1</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v6.2</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -359,7 +359,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v6.1 · dashboard sincronizado · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v6.2 · hoja central fija · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -378,6 +378,8 @@
       registros: [],
       backendUrl: (BACKEND_PARAM && /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/i.test(BACKEND_PARAM)) ? BACKEND_PARAM : (localStorage.getItem('redPluvioMed.backendUrl') || DEFAULT_BACKEND_URL),
       backendVersion: '',
+      backendSpreadsheetId: '',
+      backendRows: 0,
       backendOk: false,
       adminToken: sessionStorage.getItem('redPluvioMed.adminToken') || '',
       adminUser: sessionStorage.getItem('redPluvioMed.adminUser') || '',
@@ -1048,7 +1050,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
     function updateBackendModeMsg(){
       const el=$('backendModeMsg'); if(!el) return;
       if(APP.backendUrl){
-        el.innerHTML=`Backend configurado: <strong>${esc(APP.backendUrl)}</strong><br>Estado: ${APP.backendOk?('conectado · '+esc(APP.backendVersion||'versión no informada')):'pendiente de prueba'}.`;
+        el.innerHTML=`Backend configurado: <strong>${esc(APP.backendUrl)}</strong><br>Estado: ${APP.backendOk?('conectado · '+esc(APP.backendVersion||'versión no informada')+' · hoja '+esc(APP.backendSpreadsheetId||'sin ID')+' · '+APP.backendRows+' filas en Registros'):'pendiente de prueba'}.`;
       }else{
         el.textContent='Modo sin backend: el registro queda solo en este navegador como prueba local y no se considera dato oficial.';
       }
@@ -1059,6 +1061,8 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         const ping=await apiJsonp('ping',{});
         APP.backendOk=!!(ping&&ping.ok);
         APP.backendVersion=String((ping&&ping.version)||'');
+        APP.backendSpreadsheetId=String((ping&&ping.spreadsheetId)||'');
+        APP.backendRows=Number((ping&&ping.filasRegistros)||0);
         updateBackendModeMsg();
         if(!APP.backendOk) return {ok:false,error:'El backend no respondió correctamente.'};
         if(!backendLooksCurrent()){
@@ -1083,7 +1087,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v6.1: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v6.2: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
@@ -1193,7 +1197,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
     }
     function apiJsonp(action,params={}){return new Promise((resolve,reject)=>{if(!APP.backendUrl)return reject(new Error('Sin URL de backend')); const cb='__redPluvioCb'+Date.now()+Math.floor(Math.random()*100000); const query=new URLSearchParams({action,callback:cb}); Object.entries(params).forEach(([k,v])=>{if(v!==undefined&&v!==null)query.set(k,String(v));}); const sep=APP.backendUrl.includes('?')?'&':'?'; const script=document.createElement('script'); const timer=setTimeout(()=>cleanup(new Error('Tiempo de espera agotado')),15000); function cleanup(err,data){clearTimeout(timer); delete window[cb]; if(script.parentNode)script.parentNode.removeChild(script); err?reject(err):resolve(data);} window[cb]=data=>cleanup(null,data); script.onerror=()=>cleanup(new Error('No se pudo cargar el backend')); script.src=APP.backendUrl+sep+query.toString(); document.body.appendChild(script);});}
     function saveBackend(){APP.backendUrl=$('backendUrl').value.trim() || DEFAULT_BACKEND_URL; $('backendUrl').value=APP.backendUrl; APP.backendOk=false; APP.backendVersion=''; localStorage.setItem('redPluvioMed.backendUrl',APP.backendUrl); updateBackendModeMsg(); setStatus(APP.backendUrl?'Configurable':'Local',APP.backendUrl?'URL de backend guardada. Pulsa Probar backend.':'Se eliminó la URL del backend.');}
-    async function testBackend(){saveBackend(); try{const res=await apiJsonp('ping'); if(res&&res.ok){APP.backendOk=true; APP.backendVersion=String(res.version||''); updateBackendModeMsg(); updateDashboardSyncMsg(`Backend conectado: ${APP.backendVersion||res.message||''}`,'Conectado'); setStatus('Conectado',`Backend activo. ${res.message||''} ${res.version||''}`);} else {updateDashboardSyncMsg('El backend respondió, pero no confirmó OK.','Error'); setStatus('Error','El backend respondió, pero no confirmó OK.');}}catch(e){APP.backendOk=false; updateBackendModeMsg(); updateDashboardSyncMsg('No se pudo conectar con el backend: '+(e.message||e),'Error'); setStatus('Error','No se pudo conectar con el backend.');}}
+    async function testBackend(){saveBackend(); try{const res=await apiJsonp('ping'); if(res&&res.ok){APP.backendOk=true; APP.backendVersion=String(res.version||''); APP.backendSpreadsheetId=String(res.spreadsheetId||''); APP.backendRows=Number(res.filasRegistros||0); updateBackendModeMsg(); updateDashboardSyncMsg(`Backend conectado: ${APP.backendVersion||res.message||''}. Hoja: ${APP.backendSpreadsheetId||'sin ID'} · filas Registros: ${APP.backendRows}`,'Conectado'); setStatus('Conectado',`Backend activo. ${res.message||''} ${res.version||''}`);} else {updateDashboardSyncMsg('El backend respondió, pero no confirmó OK.','Error'); setStatus('Error','El backend respondió, pero no confirmó OK.');}}catch(e){APP.backendOk=false; updateBackendModeMsg(); updateDashboardSyncMsg('No se pudo conectar con el backend: '+(e.message||e),'Error'); setStatus('Error','No se pudo conectar con el backend.');}}
     async function syncPublic(showMsg=true){
       if(!APP.backendUrl){
         updateDashboardSyncMsg('No hay backend configurado. Entra a Privado y pega la URL /exec.', 'Sin backend');
@@ -1205,6 +1209,8 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         const ping=await apiJsonp('ping',{});
         APP.backendOk=!!(ping&&ping.ok);
         APP.backendVersion=String((ping&&ping.version)||'');
+        APP.backendSpreadsheetId=String((ping&&ping.spreadsheetId)||'');
+        APP.backendRows=Number((ping&&ping.filasRegistros)||0);
         updateBackendModeMsg();
         const res=await apiJsonp('publicrecords',{limit:5000, t:Date.now()});
         if(!res||!res.ok)throw new Error(res&&res.error?res.error:'Respuesta inválida');
@@ -1218,7 +1224,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         updateDashboardSyncMsg(`Sincronización completa. Backend: ${APP.backendVersion||'activo'}. Registros públicos recibidos: ${remote.length}.`, `${remote.length} registros`);
         if(showMsg)setStatus('Sincronizado',`Se actualizaron ${remote.length} registros públicos.`);
         if(remote.length===0){
-          updateDashboardSyncMsg('El backend respondió correctamente, pero devolvió 0 registros. Revisa que estés usando el /exec del mismo Google Sheets donde aparecen los datos.', '0 registros');
+          updateDashboardSyncMsg('El backend respondió correctamente, pero devolvió 0 registros. Hoja conectada: '+(APP.backendSpreadsheetId||'sin ID')+'. Revisa si coincide con el Google Sheets donde aparecen los datos.', '0 registros');
         }
       }catch(e){
         const detail=e&&e.message?e.message:String(e);
