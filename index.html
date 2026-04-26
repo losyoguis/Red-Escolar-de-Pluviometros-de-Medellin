@@ -320,7 +320,7 @@
             <p>Esta zona administra la URL del backend, acceso privado y sincronización completa con datos internos. Las descargas públicas se realizan desde la sección Reportes sin autenticación.</p>
             <div id="adminLoggedBox" class="admin-bar admin-hidden"><strong>Sesión administradora activa</strong><button id="logoutAdminBtn" class="ghost" type="button" style="max-width:190px">Cerrar sesión</button></div>
             <div id="adminLoginBox" class="lock-card">
-              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbyVUhDkRKeHB-IEx3wIrFHL3-tK7z2kxqGmS5UihIt7jPyP6n2BSClYPoRrZwoyyPUv/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"><p class="help">Este backend ya queda preconfigurado. Solo cambia esta URL si publicas una nueva implementación de Apps Script.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
+              <label for="backendUrl">Backend Apps Script central</label><input id="backendUrl" type="url" value="https://script.google.com/macros/s/AKfycbweJUHWPw6eTE1sypnr3daEqCGtNTNxzxCb2tB5-txU0kuA1aW6Z_12z8wHWXVqD-4i/exec" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"><p class="help">Este backend ya queda preconfigurado. Solo cambia esta URL si publicas una nueva implementación de Apps Script.</p><p class="help"><strong>Para subir fotos a GitHub:</strong> configura en Apps Script las propiedades <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code>, <code>GITHUB_REPO</code>, <code>GITHUB_BRANCH</code> y <code>GITHUB_BASE_PATH</code>.</p>
               <div class="buttons two"><button id="saveBackendBtn" class="primary" type="button">Guardar URL</button><button id="testBackendBtn" class="ghost" type="button">Probar backend</button></div>
               <div class="form-grid"><div><label for="adminUser">Usuario administrador</label><input id="adminUser" type="text" placeholder="admin" autocomplete="username"></div><div><label for="adminPass">Contraseña</label><input id="adminPass" type="password" placeholder="Contraseña administradora" autocomplete="current-password"></div></div>
               <div class="buttons two"><button id="loginAdminBtn" class="gold" type="button">Ingresar como administrador</button><button id="syncPrivateBtn" class="secondary admin-protected" type="button">Sincronizar datos privados</button></div>
@@ -329,7 +329,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.9</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v6.0</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -345,7 +345,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.9 · backend oficial obligatorio · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v6.0 · foto ultraliviana · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -891,22 +891,51 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
       if(!file){clearSelectedPhoto(); return;}
       if(!/^image\//.test(file.type||'')){alert('Selecciona una imagen válida.'); clearSelectedPhoto(); return;}
       try{
-        const dataUrl=await compressImageFile(file,700,.52);
+        setStatus('Procesando foto','Comprimiendo evidencia para que pueda subirse desde celular...');
+        const result=await compressImageToBudget(file);
+        const dataUrl=result.dataUrl;
         const base64=dataUrl.split(',')[1]||'';
         const mime=(dataUrl.match(/^data:([^;]+);base64,/)||[])[1] || 'image/jpeg';
-        APP.pendingPhoto={dataUrl,base64,mime,name:file.name||'evidencia.jpg',size:base64.length};
+        APP.pendingPhoto={
+          dataUrl,
+          base64,
+          mime,
+          name:(file.name||'evidencia.jpg').replace(/\.[a-z0-9]+$/i,'')+'-ultraliviana.jpg',
+          size:base64.length,
+          kb:Math.round(base64.length*0.75/1024),
+          width:result.width,
+          height:result.height
+        };
         $('fotoPreview').src=dataUrl;
         $('fotoPreviewName').textContent=file.name || 'Foto tomada desde cámara';
-        $('fotoPreviewInfo').textContent=`Lista para enviar · ${mime} · ${Math.round(base64.length*0.75/1024)} KB aprox. · versión liviana`;
+        $('fotoPreviewInfo').textContent=`Lista para enviar · ${mime} · ${APP.pendingPhoto.kb} KB aprox. · ${result.width}×${result.height}px · ultraliviana`;
         $('fotoPreviewBox').classList.add('active');
-        setStatus('Foto lista','La evidencia fue comprimida y quedará asociada al registro.');
+        setStatus('Foto lista','La evidencia fue comprimida en modo ultraliviano para mejorar la subida a GitHub.');
       }catch(err){
         console.error(err);
-        alert('No fue posible procesar la foto. Intenta con otra imagen.');
+        alert('No fue posible procesar la foto. Intenta con otra imagen o toma una foto con menos zoom.');
         clearSelectedPhoto();
       }
     }
-    function compressImageFile(file,maxSide=1000,quality=.72){
+    function compressImageToBudget(file){
+      const attempts=[
+        {maxSide:560,quality:.42},
+        {maxSide:480,quality:.36},
+        {maxSide:400,quality:.32},
+        {maxSide:340,quality:.28}
+      ];
+      const maxBytes=120*1024;
+      let last=null;
+      return attempts.reduce((promise,cfg)=>promise.then(prev=>{
+        if(prev && prev.bytes<=maxBytes) return prev;
+        return compressImageFile(file,cfg.maxSide,cfg.quality).then(r=>{last=r; return r;});
+      }),Promise.resolve(null)).then(final=>{
+        const result=(final&&final.bytes<=maxBytes)?final:last;
+        if(!result) throw new Error('No se pudo comprimir la imagen.');
+        return result;
+      });
+    }
+    function compressImageFile(file,maxSide=560,quality=.42){
       return new Promise((resolve,reject)=>{
         const reader=new FileReader();
         reader.onerror=()=>reject(new Error('No se pudo leer la imagen.'));
@@ -918,14 +947,20 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
             const scale=Math.min(1,maxSide/Math.max(w,h));
             w=Math.max(1,Math.round(w*scale)); h=Math.max(1,Math.round(h*scale));
             const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h;
-            const ctx=canvas.getContext('2d'); ctx.drawImage(img,0,0,w,h);
-            resolve(canvas.toDataURL('image/jpeg',quality));
+            const ctx=canvas.getContext('2d',{alpha:false});
+            ctx.fillStyle='#ffffff';
+            ctx.fillRect(0,0,w,h);
+            ctx.drawImage(img,0,0,w,h);
+            const dataUrl=canvas.toDataURL('image/jpeg',quality);
+            const base64=dataUrl.split(',')[1]||'';
+            resolve({dataUrl,width:w,height:h,bytes:Math.round(base64.length*0.75),base64Length:base64.length});
           };
           img.src=reader.result;
         };
         reader.readAsDataURL(file);
       });
     }
+
     function apiPost(action,params={}){
       return new Promise((resolve,reject)=>{
         if(!APP.backendUrl) return reject(new Error('Sin URL de backend'));
@@ -938,7 +973,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         const add=(k,v)=>{const input=document.createElement('input'); input.type='hidden'; input.name=k; input.value=v==null?'':String(v); form.appendChild(input);};
         add('action',action); add('post_token',token);
         Object.entries(params).forEach(([k,v])=>add(k,v));
-        const timer=setTimeout(()=>cleanup(new Error('La foto tardó demasiado en subirse. El registro queda protegido y la evidencia se puede intentar nuevamente con una imagen más liviana.')),120000);
+        const timer=setTimeout(()=>cleanup(new Error('La foto tardó demasiado en subirse. El registro queda protegido; intenta nuevamente con una foto más pequeña o revisa token/permisos de GitHub.')),240000);
         function onMessage(ev){
           const msg=ev.data||{};
           if(!msg || msg.source!=='redPluvioAppsScript' || msg.token!==token) return;
@@ -1021,7 +1056,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v5.9: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v6.0: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
@@ -1065,7 +1100,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
           let photoMsg='Registro guardado en la base central.';
           if(APP.pendingPhoto){
             try{
-              setStatus('Registro guardado','Subiendo evidencia fotográfica liviana a GitHub...');
+              setStatus('Registro guardado','Subiendo evidencia fotográfica ultraliviana a GitHub...');
               const photoPayload={
                 registro_id:res.registro_id,
                 cliente_registro_id:res.registro_id,
@@ -1074,7 +1109,8 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
                 fecha:payload.fecha,
                 foto_base64:APP.pendingPhoto.base64,
                 foto_mime:APP.pendingPhoto.mime,
-                foto_nombre:APP.pendingPhoto.name
+                foto_nombre:APP.pendingPhoto.name,
+                foto_kb:APP.pendingPhoto.kb
               };
               const up=await apiPost('photo',photoPayload);
               if(up&&up.ok&&up.record){
@@ -1085,8 +1121,8 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
                 alert(photoMsg+'\n\nEl dato oficial quedó guardado. Puedes intentar nuevamente con una foto más liviana.');
               }
             }catch(photoErr){
-              photoMsg='Registro guardado. La foto no se pudo subir por tiempo de espera o conexión lenta.';
-              alert(photoMsg+'\n\nEl dato oficial quedó protegido en la base central. Intenta de nuevo con una foto más liviana o revisa la configuración de GitHub.');
+              photoMsg='Registro guardado. La foto no se pudo subir por tiempo de espera, permisos de GitHub o conexión lenta.';
+              alert(photoMsg+'\n\nEl dato oficial quedó protegido en la base central. Revisa en Apps Script las propiedades GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH y GITHUB_BASE_PATH. También puedes intentar con otra foto.');
             }
           }
           finishRegistroGuardado(finalRes,sede,photoMsg);

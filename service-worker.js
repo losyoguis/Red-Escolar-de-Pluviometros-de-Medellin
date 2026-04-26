@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v5-9-backend-oficial';
+const CACHE_NAME = 'red-pluviometros-medellin-v6-0-foto-ultraliviana';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];
