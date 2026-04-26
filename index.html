@@ -329,7 +329,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.5</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.6</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -345,7 +345,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.5 · backend normalización corregida · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.6 · backend funciones completas · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -1081,7 +1081,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
           finishRegistroGuardado(finalRes,sede,photoMsg);
         }catch(err){
           setStatus('Error',err.message||'No se pudo guardar. Verifica PIN, backend y permisos.');
-          alert('No se pudo guardar oficialmente: '+(err.message||'revisa el PIN o el backend.')+'\n\nRecomendación: verifica el PIN con el botón “Verificar PIN” y confirma que Apps Script fue reimplementado con la versión v5.5.');
+          alert('No se pudo guardar oficialmente: '+(err.message||'revisa el PIN o el backend.')+'\n\nRecomendación: verifica el PIN con el botón “Verificar PIN” y confirma que Apps Script fue reimplementado con la versión v5.6.');
         }
       } else {
         const rec=enrichRecord({
