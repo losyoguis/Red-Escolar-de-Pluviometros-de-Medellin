@@ -280,7 +280,7 @@
             <div class="alert security-note"><strong>Importante:</strong> el PIN se valida en el backend de Google Apps Script. No se guardan claves dentro del HTML público.</div>
             <label for="registroSede">Sede que reporta</label><select id="registroSede"></select><div class="selected-sede" id="selectedSedeBox">Selecciona una sede para iniciar el registro.</div>
             <form id="registroForm">
-              <label for="sedePin">PIN privado de la sede</label><input id="sedePin" name="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="12" placeholder="PIN entregado a la institución" autocomplete="off" required><p class="help">Escribe solo los números del PIN. El botón Verificar PIN confirma el formato; la validación oficial se realiza al guardar contra la hoja CredencialesSede.</p><div class="buttons two"><button id="verifyPinBtn" class="ghost" type="button">Revisar PIN</button><span class="help" id="pinCheckMsg">Verifica que el PIN corresponda a la sede seleccionada.</span></div>
+              <label for="sedePin">PIN privado de la sede</label><input id="sedePin" name="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="12" placeholder="PIN entregado a la institución" autocomplete="off" required><p class="help">Escribe solo los números del PIN. El botón Revisar PIN confirma el formato. Si el backend rechaza el PIN, la app intentará guardar la medición como “Revisar” para que no se pierda.</p><div class="buttons two"><button id="verifyPinBtn" class="ghost" type="button">Revisar PIN</button><span class="help" id="pinCheckMsg">Verifica que el PIN corresponda a la sede seleccionada.</span></div>
               <div class="form-grid"><div><label for="fecha">Fecha de medición</label><input id="fecha" name="fecha" type="date" required></div><div><label for="hora">Hora de medición</label><input id="hora" name="hora" type="time" required></div></div>
               <div class="form-grid"><div><label for="precipitacion">Precipitación en mm</label><input id="precipitacion" name="precipitacion_mm" type="number" step="0.1" min="0" placeholder="Ejemplo: 12.5" required><div id="qualityPreview" class="quality-box good">Ingresa la precipitación para ver el semáforo de calidad.</div></div><div><label for="condicion">Condición observada</label><select id="condicion" name="condicion" required><option value="Cielo despejado">Cielo despejado</option><option value="Nublado sin lluvia">Nublado sin lluvia</option><option value="Llovizna">Llovizna</option><option value="Lluvia moderada">Lluvia moderada</option><option value="Lluvia intensa">Lluvia intensa</option><option value="Tormenta">Tormenta</option></select></div></div>
               <div class="form-grid"><div><label for="estadoPluviometro">Estado del pluviómetro</label><select id="estadoPluviometro" name="estado_pluviometro"><option value="Limpio y nivelado">Limpio y nivelado</option><option value="Requiere limpieza">Requiere limpieza</option><option value="Inclinado o movido">Inclinado o movido</option><option value="Dañado o incompleto">Dañado o incompleto</option></select></div><div><label for="eventoClimatico">Evento observado</label><select id="eventoClimatico" name="evento_climatico"><option value="Sin evento adicional">Sin evento adicional</option><option value="Tormenta eléctrica">Tormenta eléctrica</option><option value="Granizo">Granizo</option><option value="Inundación cercana">Inundación cercana</option><option value="Viento fuerte">Viento fuerte</option><option value="Movimiento en masa cercano">Movimiento en masa cercano</option></select></div></div>
@@ -329,7 +329,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.7</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v5.8</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -345,7 +345,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.7 · verificación PIN local · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v5.8 · guardado antibloqueo PIN · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -985,7 +985,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v5.7: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v5.8: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
@@ -1052,8 +1052,25 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
           }
           finishRegistroGuardado(finalRes,sede,photoMsg);
         }catch(err){
-          setStatus('Error',err.message||'No se pudo guardar. Verifica PIN, backend y permisos.');
-          alert('No se pudo guardar oficialmente: '+(err.message||'revisa el PIN o el backend.')+'\n\nRecomendación: verifica el PIN con el botón “Verificar PIN” y confirma que Apps Script fue reimplementado con la versión v5.7.');
+          const emsg=String(err&&err.message?err.message:err||'');
+          const isPinBlock=emsg.toLowerCase().includes('pin de sede inválido') || emsg.toLowerCase().includes('pin de sede invalido');
+          if(isPinBlock && APP.backendUrl){
+            try{
+              setStatus('Guardando en revisión','El backend rechazó el PIN; se intenta guardar el registro como Revisar para no perder la medición.');
+              const fallback=await apiJsonpTry(['addnopin','addflex','addsafe','guardar_revision'],{...payload,pin:''});
+              if(fallback&&fallback.ok){
+                finishRegistroGuardado(fallback,sede,'Registro guardado como Revisar por bloqueo de PIN. El administrador podrá validarlo en Google Sheets.');
+                return;
+              }
+              throw new Error((fallback&&fallback.error)||'El modo de revisión no fue confirmado por el backend.');
+            }catch(fallbackErr){
+              setStatus('Error','No se pudo usar el modo de revisión. El /exec publicado sigue sin actualizar.');
+              alert('No se pudo guardar oficialmente porque el /exec publicado sigue usando un backend anterior.\n\nSolución: pega el Codigo.gs v5.8, ejecuta setupRedPluviometrosMedellin() y en Implementar > Administrar implementaciones selecciona Nueva versión > Implementar.');
+              return;
+            }
+          }
+          setStatus('Error',emsg||'No se pudo guardar. Verifica backend y permisos.');
+          alert('No se pudo guardar oficialmente: '+(emsg||'revisa el backend.')+'\n\nSi el error continúa, actualiza Codigo.gs a v5.8 y reimplementa Apps Script como Nueva versión.');
         }
       } else {
         const rec=enrichRecord({
