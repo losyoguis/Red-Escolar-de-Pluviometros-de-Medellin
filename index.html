@@ -200,18 +200,7 @@
           <button id="syncPublicBtn" class="primary" type="button">Actualizar datos públicos</button>
           <button id="demoBtn" class="gold" type="button">Cargar datos demo</button>
           <button id="clearLocalBtn" class="danger" type="button">Limpiar datos locales</button>
-        </div>
-        <div class="module" style="margin-top:14px;padding:14px 16px">
-          <h3 style="margin:0 0 10px">Ayuda rápida de esta sección</h3>
-          <p class="help" style="margin:0 0 10px">Estos botones sirven para gestionar la información que ves en pantalla. Están pensados para facilitar la consulta pública, las pruebas del sistema y el mantenimiento local del navegador.</p>
-          <ul class="help" style="margin:0;padding-left:18px;display:grid;gap:8px">
-            <li><strong>Actualizar datos públicos:</strong> consulta y refresca los registros públicos más recientes desde la base central para que el dashboard, el mapa y las fichas muestren información actualizada.</li>
-            <li><strong>Cargar datos demo:</strong> agrega datos de demostración solo en este navegador. Sirve para hacer pruebas pedagógicas, ensayar filtros, validar gráficas y mostrar el funcionamiento del sistema cuando aún no hay suficientes registros reales.</li>
-            <li><strong>Limpiar datos locales:</strong> borra únicamente los datos de prueba o temporales guardados en este navegador. No elimina la información oficial de la base central ni afecta los datos públicos del proyecto.</li>
-          </ul>
-        </div>
-        <div class="alert security-note" style="margin-top:14px"><strong>Acceso público:</strong> los datos ambientales consolidados pueden descargarse sin PIN, usuario ni contraseña. El PIN se conserva únicamente para registrar mediciones oficiales por sede y proteger la calidad de la información.</div>
-        <p class="help" id="systemMsg">Sistema listo.</p>
+        </div><p class="help" id="systemMsg">Sistema listo.</p>
       </aside>
 
       <section>
@@ -418,7 +407,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.7</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.8</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -434,7 +423,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.7 · registro sin avisos · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.8 · sin ayuda lateral · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -1647,7 +1636,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v7.7: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v7.8: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';

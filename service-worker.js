@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v7-7-registro-sin-avisos';
+const CACHE_NAME = 'red-pluviometros-medellin-v7-8-sin-ayuda-lateral';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];
