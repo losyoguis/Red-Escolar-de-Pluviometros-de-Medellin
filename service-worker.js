@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v8-3-cabecera-compacta';
+const CACHE_NAME = 'red-pluviometros-medellin-v8-4-botones-unificados';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];

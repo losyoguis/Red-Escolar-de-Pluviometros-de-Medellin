@@ -145,7 +145,7 @@
 
   
 
-    /* ===== v8.3 · Responsive avanzado, especialmente móvil ===== */
+    /* ===== v8.4 · Responsive avanzado, especialmente móvil ===== */
     .mobile-filter-toggle{display:none}
     html{scroll-behavior:smooth}
     *{box-sizing:border-box}
@@ -262,7 +262,7 @@
 
 
 
-    /* ===== v8.3 · cabecera limpia y compacta ===== */
+    /* ===== v8.4 · cabecera limpia y compacta ===== */
     .hero{padding:clamp(16px,2.2vw,30px)}
     .hero-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,.85fr);gap:clamp(14px,2vw,24px);align-items:center}
     .hero-actions{display:none!important}
@@ -294,6 +294,22 @@
       .top-status .stat-chip .value{grid-area:value;font-size:1.18rem;text-align:right}
       .top-status .stat-chip .label{grid-area:label}
       .top-status .stat-chip .small{grid-area:small}
+    }
+
+
+
+    /* ===== v8.4 · todos los botones en una sola zona de navegación ===== */
+    .all-section-tabs{margin-top:0;margin-bottom:18px;align-items:center}
+    .all-section-tabs .tab-btn[data-filter-use="yes"]{border-color:rgba(125,223,138,.30)}
+    .all-section-tabs .tab-btn[data-filter-use="own"]{border-color:rgba(255,216,23,.30)}
+    .bottom-section-nav{display:none!important}
+    @media(max-width:980px){
+      .all-section-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding:8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+      .all-section-tabs .tab-btn{flex:0 0 auto;scroll-snap-align:start}
+    }
+    @media(max-width:540px){
+      .all-section-tabs{margin-left:-2px;margin-right:-2px}
+      .all-section-tabs .tab-btn{font-size:.80rem;padding:9px 11px}
     }
 
 </style>
@@ -377,13 +393,20 @@
       </aside>
 
       <section>
-        <nav class="tabs top-filter-tabs" aria-label="Secciones con filtros territoriales">
+        <nav class="tabs top-filter-tabs all-section-tabs" aria-label="Secciones principales del sistema">
           <button class="tab-btn active" data-tab="dashboard" data-filter-use="yes" type="button">Dashboard</button>
           <button class="tab-btn" data-tab="mapa-territorial" data-filter-use="yes" type="button">Mapa territorial</button>
           <button class="tab-btn" data-tab="calidad-dato" data-filter-use="yes" type="button">Calidad del dato</button>
           <button class="tab-btn" data-tab="captacion" data-filter-use="yes" type="button">Agua lluvia</button>
           <button class="tab-btn" data-tab="directorio" data-filter-use="yes" type="button">Directorio</button>
           <button class="tab-btn" data-tab="reportes" data-filter-use="yes" type="button">Reportes</button>
+          <button class="tab-btn" data-tab="ficha-sede" data-filter-use="own" type="button">Ficha por sede</button>
+          <button class="tab-btn" data-tab="registro" data-filter-use="own" type="button">Registro por sede</button>
+          <button class="tab-btn" data-tab="proyecto-educativo" type="button">Proyecto educativo</button>
+          <button class="tab-btn" data-tab="aula-climatica" type="button">Aula climática</button>
+          <button class="tab-btn" data-tab="misiones" type="button">Misiones</button>
+          <button class="tab-btn" data-tab="admin" type="button">Privado</button>
+          <button class="tab-btn" data-tab="arquitectura" type="button">Arquitectura</button>
         </nav>
 
         <section id="dashboard" class="tab-section active">
@@ -573,7 +596,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v8.3</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v8.4</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -588,27 +611,9 @@
       </section>
     </section>
 
-    <section class="bottom-section-nav" aria-label="Secciones complementarias sin filtros territoriales">
-      <div class="section-nav-head">
-        <div>
-          <h2>Secciones complementarias y de gestión</h2>
-          <p>Estas secciones no requieren la columna de filtros territoriales. Algunas usan su propio selector de sede, por eso se ubican abajo, antes del footer.</p>
-        </div>
-        <span class="mini">Sin filtros laterales</span>
-      </div>
-      <nav class="tabs" aria-label="Secciones sin filtros laterales">
-        <button class="tab-btn" data-tab="ficha-sede" data-filter-use="own" type="button">Ficha por sede</button>
-        <button class="tab-btn" data-tab="registro" data-filter-use="own" type="button">Registro por sede</button>
-        <button class="tab-btn" data-tab="proyecto-educativo" type="button">Proyecto educativo</button>
-        <button class="tab-btn" data-tab="aula-climatica" type="button">Aula climática</button>
-        <button class="tab-btn" data-tab="misiones" type="button">Misiones</button>
-        <button class="tab-btn" data-tab="admin" type="button">Privado</button>
-        <button class="tab-btn" data-tab="arquitectura" type="button">Arquitectura</button>
-      </nav>
-    </section>
-
+    
     <div class="mobile-actionbar"><a class="btn primary" href="#dashboard" data-tab-link="dashboard">Inicio</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#registro" data-tab-link="registro">Ingresar</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v8.3 · cabecera compacta · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v8.4 · botones unificados · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -1103,9 +1108,9 @@
       if($('mobileFilterToggle')) $('mobileFilterToggle').addEventListener('click',toggleMobileFilters);
       document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{
         showTab(b.dataset.tab);
-        if(b.closest('.bottom-section-nav')){
+        if(window.innerWidth<=980){
           const target=document.querySelector('.tab-section.active') || $('mainLayout');
-          if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+          if(target) setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),30);
         }
       }));
       document.querySelectorAll('[data-tab-link]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showTab(a.dataset.tabLink)}));
@@ -1946,7 +1951,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v8.3: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v8.4: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
