@@ -145,7 +145,7 @@
 
   
 
-    /* ===== v8.2 · Responsive avanzado, especialmente móvil ===== */
+    /* ===== v8.3 · Responsive avanzado, especialmente móvil ===== */
     .mobile-filter-toggle{display:none}
     html{scroll-behavior:smooth}
     *{box-sizing:border-box}
@@ -260,6 +260,42 @@
       .marker-tooltip{top:72px!important;max-height:calc(100vh - 150px)}
     }
 
+
+
+    /* ===== v8.3 · cabecera limpia y compacta ===== */
+    .hero{padding:clamp(16px,2.2vw,30px)}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,.85fr);gap:clamp(14px,2vw,24px);align-items:center}
+    .hero-actions{display:none!important}
+    .top-status{display:grid;grid-template-columns:1fr;gap:8px;align-self:stretch}
+    .top-status .stat-chip{padding:10px 12px;border-radius:16px;display:grid;grid-template-columns:auto 1fr;grid-template-areas:"label value" "small value";column-gap:12px;align-items:center;min-height:72px}
+    .top-status .stat-chip .label{grid-area:label;font-size:.68rem;line-height:1.15}
+    .top-status .stat-chip .value{grid-area:value;font-size:clamp(1.2rem,2vw,1.75rem);margin:0;text-align:right;line-height:1}
+    .top-status .stat-chip .small{grid-area:small;font-size:.72rem;margin:3px 0 0}
+    .section-nav-label,.filter-relation-note{display:none!important}
+    .top-filter-tabs{margin-top:0}
+    @media (max-width:1280px){
+      .hero-grid{grid-template-columns:1fr}
+      .top-status{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .top-status .stat-chip{min-height:68px}
+    }
+    @media (max-width:820px){
+      .hero{padding:14px 12px 16px}
+      .hero-grid{gap:12px}
+      .top-status{grid-template-columns:1fr 1fr 1fr;gap:7px}
+      .top-status .stat-chip{display:block;min-height:auto;padding:9px 8px;border-radius:14px;text-align:left}
+      .top-status .stat-chip .label{font-size:.58rem}
+      .top-status .stat-chip .value{font-size:1.05rem;text-align:left;margin-top:4px}
+      .top-status .stat-chip .small{font-size:.62rem;line-height:1.15}
+      .brand{align-items:flex-start}
+    }
+    @media (max-width:540px){
+      .top-status{grid-template-columns:1fr;gap:7px}
+      .top-status .stat-chip{display:grid;grid-template-columns:1fr auto;grid-template-areas:"label value" "small value";column-gap:10px;align-items:center;padding:8px 10px}
+      .top-status .stat-chip .value{grid-area:value;font-size:1.18rem;text-align:right}
+      .top-status .stat-chip .label{grid-area:label}
+      .top-status .stat-chip .small{grid-area:small}
+    }
+
 </style>
 </head>
 <body>
@@ -276,11 +312,6 @@
               <p>Sistema de ciencia escolar ciudadana para medir lluvia, analizar patrones climáticos locales y activar proyectos educativos de adaptación ambiental.</p>
               <div class="project-meta"><strong>Propósito:</strong> convertir cada sede educativa en una estación de observación climática escolar: mide, aprende, analiza, reporta y propone acciones para el cuidado del agua y la adaptación climática de Medellín.</div>
             </div>
-          </div>
-          <div class="hero-actions">
-            <a class="btn primary" href="#registro" data-tab-link="registro">Ingresar datos</a>
-            <a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Ver mapa</a>
-            <a class="btn secondary" href="#admin" data-tab-link="admin">Acceso privado</a>
           </div>
         </div>
         <div class="top-status">
@@ -346,8 +377,6 @@
       </aside>
 
       <section>
-        <div class="section-nav-label">Secciones conectadas con filtros territoriales</div>
-        <p class="filter-relation-note">Estos botones usan directamente los filtros de zona, comuna/corregimiento, barrio/vereda, núcleo, sede y fechas para actualizar la información en pantalla.</p>
         <nav class="tabs top-filter-tabs" aria-label="Secciones con filtros territoriales">
           <button class="tab-btn active" data-tab="dashboard" data-filter-use="yes" type="button">Dashboard</button>
           <button class="tab-btn" data-tab="mapa-territorial" data-filter-use="yes" type="button">Mapa territorial</button>
@@ -544,7 +573,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v8.2</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v8.3</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -579,7 +608,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#dashboard" data-tab-link="dashboard">Inicio</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#registro" data-tab-link="registro">Ingresar</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v8.2 · responsive móvil optimizado · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v8.3 · cabecera compacta · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -1917,7 +1946,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v8.2: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v8.3: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
