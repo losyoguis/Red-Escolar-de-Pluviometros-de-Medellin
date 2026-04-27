@@ -1,4 +1,4 @@
-const CACHE_NAME = 'red-pluviometros-medellin-v8-1-nav-filtros-organizada';
+const CACHE_NAME = 'red-pluviometros-medellin-v8-2-responsive-movil';
 const ASSETS = [
   './', './index.html', './data/instituciones.js', './assets/logo_losyoguis.png', './assets/footer_losyoguis.png', './manifest.webmanifest'
 ];
