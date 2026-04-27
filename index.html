@@ -63,6 +63,16 @@
     @media (min-width:1280px){.panel .date-filter-row{grid-template-columns:1fr}.panel .date-actions{grid-template-columns:1fr 1fr}.panel .date-actions button:nth-child(3){grid-column:1/-1}}
     @media (max-width:760px){.date-filter-row{grid-template-columns:1fr}.date-actions{grid-template-columns:1fr}}
     .map-grid{display:grid;grid-template-columns:1fr;gap:16px}.map{height:clamp(720px,88vh,1120px);min-height:720px;border-radius:22px;position:relative;overflow:visible;background:radial-gradient(circle at 35% 45%,rgba(255,216,23,.14),transparent 22%),linear-gradient(180deg,#102315,#08110b);border:1px solid var(--line);isolation:isolate}.map::before{content:'';position:absolute;inset:0;border-radius:22px;box-shadow:inset 0 0 0 1px rgba(246,240,222,.04);pointer-events:none;z-index:1}.city-shape{position:absolute;left:8%;top:5%;width:84%;height:89%;opacity:.55}.city-shape:before{content:"";position:absolute;inset:0;background:rgba(0,102,54,.18);border:2px dashed rgba(255,216,23,.38);clip-path:polygon(42% 2%,53% 10%,59% 23%,76% 24%,87% 38%,82% 52%,91% 66%,80% 83%,61% 92%,43% 98%,26% 92%,13% 80%,18% 62%,7% 45%,18% 27%,33% 24%);filter:drop-shadow(0 0 22px rgba(255,216,23,.08))}.map-title{position:absolute;left:14px;top:14px;right:14px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;z-index:4}.map-note{position:absolute;left:14px;bottom:14px;right:14px;color:var(--muted);font-size:.82rem;background:rgba(7,17,11,.78);border:1px solid var(--line);border-radius:14px;padding:10px;z-index:4}.territory-marker{position:absolute;display:flex;flex-direction:column;align-items:center;gap:5px;transform:translate(-50%,-50%);cursor:pointer;z-index:8;transition:opacity .14s ease,filter .14s ease,transform .14s ease}.territory-marker:hover,.territory-marker.marker-active,.territory-marker:focus-within{z-index:5000;filter:brightness(1.08);transform:translate(-50%,-50%) scale(1.03)}.map:has(.territory-marker:hover) .territory-marker:not(:hover),.map:has(.territory-marker:focus-within) .territory-marker:not(:focus-within),.map.marker-open .territory-marker:not(.marker-active){opacity:.05;visibility:hidden;pointer-events:none}.pin{width:18px;height:18px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 8px rgba(255,216,23,.14);border:1px solid rgba(0,0,0,.35)}.pin.rain0{background:#f1f0df}.pin.rain1{background:var(--ok)}.pin.rain2{background:var(--warn)}.pin.rain3{background:var(--danger);box-shadow:0 0 0 10px rgba(255,135,135,.18)}.territory-marker span{white-space:nowrap;background:rgba(7,17,11,.92);border:1px solid var(--line);padding:5px 7px;border-radius:10px;font-size:.72rem}.marker-tooltip{position:absolute;left:50%;bottom:calc(100% + 16px);transform:translateX(-50%) translateY(8px);min-width:min(360px,86vw);max-width:min(430px,92vw);background:rgba(7,17,11,.985);border:1px solid rgba(255,216,23,.60);box-shadow:0 24px 58px rgba(0,0,0,.62),0 0 0 9999px rgba(0,0,0,.10);border-radius:18px;padding:13px 14px;opacity:0;visibility:hidden;pointer-events:auto;transition:.18s ease;z-index:10000;text-align:left}.territory-marker:hover .marker-tooltip,.territory-marker.marker-active .marker-tooltip,.territory-marker:focus-within .marker-tooltip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}.tooltip-title{font-weight:950;color:#fff0a7;margin-bottom:7px}.tooltip-row{display:flex;justify-content:space-between;gap:10px;border-top:1px solid rgba(246,240,222,.08);padding-top:6px;margin-top:6px;font-size:.86rem}.territory-list-wrap{padding:14px;border-radius:20px;background:rgba(15,28,19,.72);border:1px solid var(--line);box-shadow:var(--shadow)}.territory-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;max-height:none;overflow:visible;padding-right:0}.territory-card{padding:15px;border-radius:18px;cursor:pointer;transition:.18s}.territory-card:hover{transform:translateY(-1px);border-color:rgba(255,216,23,.35)}.territory-card b{color:#fff0a7}.territory-card small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}
+    .territory-detail{margin-top:12px;border:1px solid rgba(255,216,23,.26);border-radius:18px;background:linear-gradient(135deg,rgba(255,216,23,.055),rgba(0,102,54,.07));padding:13px;display:grid;gap:10px}
+    .territory-detail-empty{color:var(--muted);font-size:.9rem;line-height:1.35}
+    .territory-detail h3{margin:0;color:#fff0a7;font-size:1.08rem}
+    .territory-detail .zone-line{display:flex;flex-wrap:wrap;gap:8px;color:var(--paper);font-weight:850}
+    .sede-zone-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+    .sede-zone-card{border:1px solid rgba(246,240,222,.10);background:rgba(246,240,222,.045);border-radius:16px;padding:10px;display:grid;gap:7px}
+    .sede-zone-card b{color:#fff0a7}
+    .sede-zone-card small{color:var(--muted);line-height:1.28}
+    .sede-zone-card img{width:100%;height:98px;object-fit:cover;border-radius:12px;border:1px solid rgba(255,216,23,.25);background:rgba(246,240,222,.04)}
+    .map-filter-territory-btn{margin-top:4px;width:100%}
     .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.flow-step{padding:14px;border-radius:18px}.flow-step b{color:#fff0a7}.flow-step p{font-size:.86rem;margin:8px 0 0}.admin-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,216,23,.08);border:1px solid rgba(255,216,23,.22);border-radius:16px;padding:12px;margin:12px 0}.admin-hidden{display:none!important}.lock-card{background:rgba(5,8,6,.62);border-color:rgba(255,216,23,.24)}.footer{color:var(--muted);text-align:center;margin-top:26px;font-size:.9rem}.yoguis-footer{margin-top:28px;border:1px solid var(--line);background:#000;border-radius:24px;box-shadow:var(--shadow);overflow:hidden;text-align:center}.yoguis-footer img{display:block;width:100%;height:auto;max-height:360px;object-fit:contain;background:#000}.yoguis-footer-link{display:flex;justify-content:center;align-items:center;padding:14px 16px 18px;background:#000;border-top:1px solid rgba(246,240,222,.08)}.yoguis-footer-link a{color:#ffef3c;text-decoration:none;font-weight:950;letter-spacing:.02em;font-size:1rem}.print-only{display:none}.mobile-actionbar{display:none}
     @media print{body{background:#fff;color:#111}.container{width:100%;padding:0}.hero,.panel,.tabs,.mobile-actionbar,.yoguis-footer,.footer button,.buttons,.admin-hidden,#rainLayer{display:none!important}.main{display:block}.tab-section{display:block}.tab-section:not(#reportes){display:none}.module,.table-wrap,.card{box-shadow:none;border:1px solid #ccc;background:#fff;color:#111}.print-only{display:block}.card .k,.card .v,.card .s,p,.help{color:#111}}
     @media(max-width:1160px){.main{grid-template-columns:1fr}.cards{grid-template-columns:repeat(3,1fr)}.map-grid,.charts,.grid2,.sede-ficha{grid-template-columns:1fr}.territory-panel{max-height:none}.panel{position:relative}.impact-strip{grid-template-columns:1fr}}
@@ -275,11 +285,11 @@
           <div class="map-grid" style="margin-top:16px">
             <div class="map" id="mapa">
               <div class="city-shape"></div>
-              <div class="map-title"><span class="mini">Medellín · comunas/corregimientos</span><span class="mini" id="mapHint">Clic en un punto para filtrar</span></div>
+              <div class="map-title"><span class="mini">Medellín · comunas/corregimientos</span><span class="mini" id="mapHint">Clic en un punto para ver sedes</span></div>
             </div>
             <div class="territory-list-wrap">
               <div class="chart-head"><div><h3>Datos territoriales filtrados</h3></div><span class="mini">Resumen territorial</span></div>
-              <div class="territory-panel" id="territoryPanel"></div>
+              <div class="territory-panel" id="territoryPanel"></div><div class="territory-detail territory-detail-empty" id="territorySedesDetail">Haz clic en una comuna o corregimiento del mapa para ver la zona, las sedes asociadas y sus fotos recientes.</div>
             </div>
           </div>
           <div class="module" id="mapEvidencePanel" style="margin-top:16px">
@@ -407,7 +417,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.8</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v7.9</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -423,7 +433,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.8 · sin ayuda lateral · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v7.9 · mapa corregido con sedes · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -474,7 +484,11 @@
             barrio_vereda:String(s.barrio_vereda||'').trim(),
             caracter:String(s.caracter||'').trim(),
             confianza:String(s.confianza||'').trim(),
-            estado:String(s.estado||'ACTIVA').trim()
+            estado:String(s.estado||'ACTIVA').trim(),
+            map_x:(s.map_x!==undefined && s.map_x!==null && String(s.map_x).trim()!=='') ? s.map_x : (prev.map_x||''),
+            map_y:(s.map_y!==undefined && s.map_y!==null && String(s.map_y).trim()!=='') ? s.map_y : (prev.map_y||''),
+            enlace_registro:s.enlace_registro||prev.enlace_registro||'',
+            qr_url:s.qr_url||prev.qr_url||''
           };
         });
       APP.sedeMap = new Map(APP.instituciones.map(s => [s.sede_id, s]));
@@ -1131,11 +1145,70 @@ function tooltipHtmlFor(id,item){
       const link=container.querySelector('.map-tooltip-photo-link');
       if(link) link.addEventListener('click',ev=>ev.stopPropagation());
     }
+    function territoryCoordsFor(s){
+      const terr=(APP.territorios||[]).find(t=>String(t.territorio)===String(s.territorio) && (!s.tipo_territorio || String(t.tipo_territorio)===String(s.tipo_territorio)));
+      const x=Number(s.map_x)||Number(terr&&terr.x)||50;
+      const y=Number(s.map_y)||Number(terr&&terr.y)||50;
+      return {x:Math.min(94,Math.max(6,x)), y:Math.min(96,Math.max(5,y))};
+    }
+    function sedeLastRecord(sedeId, records=[]){
+      const pool=[...(records||[]),...APP.registros].map(enrichRecord).filter(r=>String(r.sede_id)===String(sedeId));
+      const seen=new Set();
+      return pool.filter(r=>{const k=r.registro_id||`${r.fecha}-${r.hora}-${r.sede_id}-${r.precipitacion_mm}`; if(seen.has(k))return false; seen.add(k); return true;})
+        .sort((a,b)=>recordSortKey(b).localeCompare(recordSortKey(a)))[0]||null;
+    }
+    function renderTerritorySedesDetail(g, scopedRecords=[]){
+      const box=$('territorySedesDetail');
+      if(!box) return;
+      if(!g){
+        box.className='territory-detail territory-detail-empty';
+        box.innerHTML='Haz clic en una comuna o corregimiento del mapa para ver la zona, las sedes asociadas y sus fotos recientes.';
+        return;
+      }
+      const sedes=APP.instituciones.filter(s=>g.sedes && g.sedes.has(s.sede_id)).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+      const photos=photosForSedeIds(g.sedes||new Set(), scopedRecords);
+      const cards=sedes.slice(0,30).map(s=>{
+        const last=sedeLastRecord(s.sede_id, scopedRecords);
+        const photo=last&&last.foto_url?String(last.foto_url).trim():'';
+        const lastTxt=last?`${esc(fechaHoraTexto(last)||'Sin fecha')} · ${nf.format(mm(last.precipitacion_mm))} mm`:'Sin registros cargados';
+        return `<div class="sede-zone-card">
+          ${photo?`<a href="${esc(photo)}" target="_blank" rel="noopener"><img src="${esc(photo)}" alt="Foto reciente de ${esc(s.nombre)}" loading="lazy" onerror="this.style.display='none'"></a>`:''}
+          <b>${esc(s.nombre)}</b>
+          <small>${esc(s.sede_id)} · Núcleo ${esc(s.nucleo)} · ${esc(s.barrio_vereda||'Sin barrio/vereda')}</small>
+          <small><strong>Último dato:</strong> ${lastTxt}</small>
+        </div>`;
+      }).join('');
+      box.className='territory-detail';
+      box.innerHTML=`
+        <h3>${esc(g.label||g.territorio||'Territorio seleccionado')}</h3>
+        <div class="zone-line">
+          <span class="tag">${esc(g.tipo_territorio||'Territorio')}</span>
+          <span class="tag">${esc(g.zona||'Sin zona')}</span>
+          <span class="tag">${sedes.length} sedes</span>
+          <span class="tag">${g.registros||0} registros</span>
+          <span class="tag">${nf.format(g.mm||0)} mm</span>
+          <span class="tag">${photos.length} fotos</span>
+        </div>
+        <button class="ghost map-filter-territory-btn" type="button" id="applyTerritoryMapFilter">Aplicar filtro a este territorio</button>
+        <div class="sede-zone-grid">${cards || '<div class="territory-detail-empty">No hay sedes visibles para este territorio en el filtro actual.</div>'}</div>`;
+      const btn=$('applyTerritoryMapFilter');
+      if(btn) btn.addEventListener('click',()=>{
+        if(g.territorio){$('filterTerritorio').value=g.territorio; refreshDependentFilters(); renderAll();}
+      });
+    }
+    function activateMapMarker(marker,map){
+      if(!marker || !map) return;
+      map.querySelectorAll('.territory-marker').forEach(x=>x.classList.remove('marker-active'));
+      setMapTooltipActive(true);
+      map.classList.add('marker-open');
+      marker.classList.add('marker-active');
+    }
     function renderMapEvidenceIntro(){
       if(!$('mapEvidenceBox')) return;
       $('mapEvidenceBadge').textContent='Sin selección';
       $('mapEvidenceBox').className='map-evidence-empty';
       $('mapEvidenceBox').innerHTML='Selecciona un punto del mapa para consultar la evidencia fotográfica más reciente en la tarjeta emergente y verla ampliada aquí.';
+      renderTerritorySedesDetail(null);
     }
     function renderMapEvidence(g, scopedRecords=[]){
       if(!$('mapEvidenceBox')||!g) return;
@@ -1199,32 +1272,63 @@ function tooltipHtmlFor(id,item){
       const groups=new Map();
       const sourceSedes=sedes.length?sedes:APP.instituciones;
       if(mode==='barrio'){
-        sourceSedes.forEach(s=>{const key=s.barrio_vereda||'Sin barrio/vereda'; if(!groups.has(key)){const h=hashNum(key), dx=((h%13)-6)*0.75, dy=(((h>>3)%13)-6)*0.75; groups.set(key,{key,label:key,territorio:s.territorio,tipo_territorio:s.tipo_territorio,zona:s.zona_territorial,x:Math.min(92,Math.max(8,Number(s.map_x)+dx)),y:Math.min(96,Math.max(6,Number(s.map_y)+dy)),sedes:new Set(),barrios:new Set(),registros:0,mm:0});} const g=groups.get(key); g.sedes.add(s.sede_id); g.barrios.add(s.barrio_vereda);});
+        sourceSedes.forEach(s=>{
+          const key=s.barrio_vereda||'Sin barrio/vereda';
+          const c=territoryCoordsFor(s);
+          if(!groups.has(key)){
+            const h=hashNum(key), dx=((h%13)-6)*0.75, dy=(((h>>3)%13)-6)*0.75;
+            groups.set(key,{key,label:key,territorio:s.territorio,tipo_territorio:s.tipo_territorio,zona:s.zona_territorial,x:Math.min(92,Math.max(8,c.x+dx)),y:Math.min(96,Math.max(6,c.y+dy)),sedes:new Set(),barrios:new Set(),registros:0,mm:0});
+          }
+          const g=groups.get(key); g.sedes.add(s.sede_id); g.barrios.add(s.barrio_vereda);
+        });
       } else {
-        sourceSedes.forEach(s=>{const key=s.territorio||'Sin territorio'; if(!groups.has(key))groups.set(key,{key,label:key,territorio:s.territorio,tipo_territorio:s.tipo_territorio,zona:s.zona_territorial,x:Number(s.map_x)||50,y:Number(s.map_y)||50,sedes:new Set(),barrios:new Set(),registros:0,mm:0}); const g=groups.get(key); g.sedes.add(s.sede_id); g.barrios.add(s.barrio_vereda);});
+        sourceSedes.forEach(s=>{
+          const key=s.territorio||'Sin territorio';
+          const c=territoryCoordsFor(s);
+          if(!groups.has(key))groups.set(key,{key,label:key,territorio:s.territorio,tipo_territorio:s.tipo_territorio,zona:s.zona_territorial,x:c.x,y:c.y,sedes:new Set(),barrios:new Set(),registros:0,mm:0});
+          const g=groups.get(key); g.sedes.add(s.sede_id); g.barrios.add(s.barrio_vereda);
+        });
       }
-      records.forEach(r=>{const key=mode==='barrio'?(r.barrio_vereda||'Sin barrio/vereda'):(r.territorio||'Sin territorio'); const g=groups.get(key); if(g){g.registros++; g.mm+=mm(r.precipitacion_mm);}});
+      records.forEach(r=>{
+        const key=mode==='barrio'?(r.barrio_vereda||'Sin barrio/vereda'):(r.territorio||'Sin territorio');
+        const g=groups.get(key);
+        if(g){g.registros++; g.mm+=mm(r.precipitacion_mm);}
+      });
       const arr=[...groups.values()].sort((a,b)=> metric==='lluvia'?b.mm-a.mm:metric==='registros'?b.registros-a.registros:b.sedes.size-a.sedes.size);
       $('mapCount').textContent=`${arr.length} ${mode==='barrio'?'barrios/veredas':'territorios'}`;
-      $('territoryPanel').innerHTML=arr.slice(0,30).map(g=>`<div class="territory-card" data-key="${esc(g.key)}" data-territorio="${esc(g.territorio)}" data-barrio="${esc(mode==='barrio'?g.key:'')}"><b>${esc(g.label)}</b><small>${esc(g.tipo_territorio||'Territorio')} · ${esc(g.zona||'Sin zona')}</small><small>${g.sedes.size} sedes · ${g.registros} registros · ${nf.format(g.mm)} mm</small></div>`).join('') || '<div class="territory-card">Sin territorios en el filtro actual.</div>';
-      $('territoryPanel').querySelectorAll('.territory-card').forEach(card=>card.addEventListener('click',()=>{const t=card.dataset.territorio,b=card.dataset.barrio,k=card.dataset.key; APP.mapEvidenceFocus={mode,key:k,territorio:t,barrio:b}; if(t){$('filterTerritorio').value=t; refreshDependentFilters(); if(b){$('filterBarrio').value=b;} renderAll(); setTimeout(()=>{const p=$('mapEvidencePanel'); if(p) p.scrollIntoView({behavior:'smooth',block:'nearest'});},80);}}));
+      $('territoryPanel').innerHTML=arr.slice(0,30).map((g,i)=>`<div class="territory-card" data-i="${i}"><b>${esc(g.label)}</b><small>${esc(g.tipo_territorio||'Territorio')} · ${esc(g.zona||'Sin zona')}</small><small>${g.sedes.size} sedes · ${g.registros} registros · ${nf.format(g.mm)} mm</small></div>`).join('') || '<div class="territory-card">Sin territorios en el filtro actual.</div>';
+      $('territoryPanel').querySelectorAll('.territory-card[data-i]').forEach(card=>card.addEventListener('click',()=>{
+        const g=arr[Number(card.dataset.i)];
+        APP.mapEvidenceFocus={mode,key:g.key,territorio:g.territorio,barrio:mode==='barrio'?g.key:''};
+        renderMapEvidence(g,records);
+        renderTerritorySedesDetail(g,records);
+        const p=$('territorySedesDetail'); if(p) p.scrollIntoView({behavior:'smooth',block:'nearest'});
+      }));
       arr.forEach(g=>{
         const m=document.createElement('div'); m.className='territory-marker'; m.tabIndex=0; m.setAttribute('role','button'); m.setAttribute('aria-label','Ver información de '+g.label); m.style.left=g.x+'%'; m.style.top=g.y+'%';
         const size=metric==='lluvia'?Math.min(34,18+g.mm/10):metric==='registros'?Math.min(34,18+g.registros):Math.min(34,16+g.sedes.size/2.5);
-        m.innerHTML=`<div class="marker-tooltip"><div class="tooltip-title">${esc(g.label)}</div><div class="tooltip-row"><span>Territorio</span><b>${esc(g.tipo_territorio||'')}</b></div><div class="tooltip-row"><span>Sedes</span><b>${g.sedes.size}</b></div><div class="tooltip-row"><span>Registros</span><b>${g.registros}</b></div><div class="tooltip-row"><span>Acumulado</span><b>${nf.format(g.mm)} mm</b></div><div class="tooltip-row"><span>Barrios/veredas</span><b>${g.barrios.size}</b></div>${mapTooltipPhotoHtml(g,records)}</div><div class="pin ${metricClass(g.mm)}" style="width:${size}px;height:${size}px"></div><span>${esc(g.label)}</span>`;
-        m.addEventListener('mouseenter',()=>{setMapTooltipActive(true);map.classList.add('marker-open');m.classList.add('marker-active');});
+        m.innerHTML=`<div class="marker-tooltip"><div class="tooltip-title">${esc(g.label)}</div><div class="tooltip-row"><span>Territorio</span><b>${esc(g.tipo_territorio||'')}</b></div><div class="tooltip-row"><span>Zona</span><b>${esc(g.zona||'')}</b></div><div class="tooltip-row"><span>Sedes</span><b>${g.sedes.size}</b></div><div class="tooltip-row"><span>Registros</span><b>${g.registros}</b></div><div class="tooltip-row"><span>Acumulado</span><b>${nf.format(g.mm)} mm</b></div><div class="tooltip-row"><span>Barrios/veredas</span><b>${g.barrios.size}</b></div>${mapTooltipPhotoHtml(g,records)}</div><div class="pin ${metricClass(g.mm)}" style="width:${size}px;height:${size}px"></div><span>${esc(g.label)}</span>`;
+        m.addEventListener('mouseenter',()=>activateMapMarker(m,map));
         m.addEventListener('mouseleave',()=>{m.classList.remove('marker-active');map.classList.remove('marker-open');setMapTooltipActive(false);});
-        m.addEventListener('focusin',()=>{setMapTooltipActive(true);map.classList.add('marker-open');m.classList.add('marker-active');});
+        m.addEventListener('focusin',()=>activateMapMarker(m,map));
         m.addEventListener('focusout',()=>{m.classList.remove('marker-active');map.classList.remove('marker-open');setMapTooltipActive(false);});
         const tip=m.querySelector('.marker-tooltip'); if(tip) tip.addEventListener('click',ev=>ev.stopPropagation());
         m.querySelectorAll('.map-tooltip-photo-link').forEach(a=>a.addEventListener('click',ev=>{ev.stopPropagation();}));
         initMapPhotoGallery(m,g,records);
-        m.addEventListener('click',ev=>{APP.mapEvidenceFocus={mode,key:g.key,territorio:g.territorio,barrio:mode==='barrio'?g.key:''}; if(mode==='barrio'){$('filterTerritorio').value=g.territorio; refreshDependentFilters(); $('filterBarrio').value=g.key;} else {$('filterTerritorio').value=g.territorio;} refreshDependentFilters(); renderAll(); setTimeout(()=>{const p=$('mapEvidencePanel'); if(p) p.scrollIntoView({behavior:'smooth',block:'nearest'});},80);});
+        m.addEventListener('click',ev=>{
+          ev.preventDefault(); ev.stopPropagation();
+          activateMapMarker(m,map);
+          APP.mapEvidenceFocus={mode,key:g.key,territorio:g.territorio,barrio:mode==='barrio'?g.key:''};
+          renderMapEvidence(g,records);
+          renderTerritorySedesDetail(g,records);
+          const p=$('territorySedesDetail'); if(p) p.scrollIntoView({behavior:'smooth',block:'nearest'});
+        });
         map.appendChild(m);
       });
       const focus=APP.mapEvidenceFocus;
       const focused=focus ? arr.find(g=>g.key===focus.key || (focus.territorio && g.territorio===focus.territorio) || (focus.barrio && g.key===focus.barrio)) : null;
-      if(focused) renderMapEvidence(focused,records); else renderMapEvidenceIntro();
+      if(focused){ renderMapEvidence(focused,records); renderTerritorySedesDetail(focused,records); }
+      else renderMapEvidenceIntro();
     }
 
     function renderLatest(records){
@@ -1636,7 +1740,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v7.8: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v7.9: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
