@@ -24,6 +24,11 @@
     .main{display:grid;grid-template-columns:390px 1fr;gap:22px;margin-top:24px;align-items:start}.main.filters-hidden{grid-template-columns:1fr}.main.filters-hidden>.panel{display:none}.main.filters-visible>.panel{display:block}.filter-context-note{margin-top:10px;padding:10px 12px;border-radius:14px;background:rgba(255,216,23,.07);border:1px solid rgba(255,216,23,.22);color:#fff0a7;font-size:.82rem;font-weight:850;line-height:1.35}.panel,.module,.lock-card{padding:20px}label{display:block;margin:12px 0 7px;font-weight:850;color:var(--paper)}select,input,textarea,button,a.btn{width:100%;background:rgba(246,240,222,.06);color:var(--ink);border:1px solid rgba(246,240,222,.16);border-radius:14px;padding:12px 13px;text-decoration:none;display:flex;justify-content:center;align-items:center;font-weight:850;font-family:inherit;min-height:46px}textarea{display:block;min-height:90px;resize:vertical;font-weight:650}select option{background:#0d1e12;color:#fff}button,.btn{cursor:pointer;transition:.18s}button:hover,.btn:hover{transform:translateY(-1px);filter:brightness(1.06)}button:disabled{cursor:not-allowed;opacity:.45;transform:none}.primary{background:linear-gradient(135deg,var(--green),#1f7a49)!important}.secondary{background:linear-gradient(135deg,var(--red),#7b0909)!important}.gold{background:linear-gradient(135deg,#ffcf19,#d4af37)!important;color:#101405!important}.ghost{background:rgba(246,240,222,.07)!important}.danger{background:linear-gradient(135deg,#8b1616,#c83737)!important}.buttons{display:grid;gap:10px;margin-top:14px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.four{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
     .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
     .top-filter-tabs{border:1px solid rgba(246,240,222,.08);background:rgba(7,17,11,.38);border-radius:26px;padding:10px}
+    .section-nav-label{margin:0 0 8px;color:#fff0a7;font-size:.82rem;font-weight:950;text-transform:uppercase;letter-spacing:.04em}
+    .filter-relation-note{margin:0 0 12px;color:var(--muted);font-size:.86rem;line-height:1.35}
+    .tab-btn[data-filter-use="yes"]::after{content:' · filtro';font-size:.68rem;color:#fff0a7;opacity:.82;font-weight:900}
+    .tab-btn[data-filter-use="own"]::after{content:' · selector propio';font-size:.68rem;color:#fff0a7;opacity:.82;font-weight:900}
+    @media(max-width:820px){.tab-btn[data-filter-use="yes"]::after,.tab-btn[data-filter-use="own"]::after{content:''}}
     .bottom-section-nav{margin-top:28px;padding:18px;border-radius:24px;border:1px solid rgba(255,216,23,.25);background:linear-gradient(135deg,rgba(255,216,23,.07),rgba(0,102,54,.10));box-shadow:var(--shadow)}
     .bottom-section-nav .section-nav-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px}
     .bottom-section-nav h2{margin:0;color:#fff0a7;font-size:1.25rem}
@@ -223,14 +228,15 @@
       </aside>
 
       <section>
+        <div class="section-nav-label">Secciones conectadas con filtros territoriales</div>
+        <p class="filter-relation-note">Estos botones usan directamente los filtros de zona, comuna/corregimiento, barrio/vereda, núcleo, sede y fechas para actualizar la información en pantalla.</p>
         <nav class="tabs top-filter-tabs" aria-label="Secciones con filtros territoriales">
-          <button class="tab-btn active" data-tab="dashboard" type="button">Dashboard</button>
-          <button class="tab-btn" data-tab="mapa-territorial" type="button">Mapa territorial</button>
-          <button class="tab-btn" data-tab="calidad-dato" type="button">Calidad del dato</button>
-          <button class="tab-btn" data-tab="captacion" type="button">Agua lluvia</button>
-          <button class="tab-btn" data-tab="ficha-sede" type="button">Ficha por sede</button>
-          <button class="tab-btn" data-tab="directorio" type="button">Directorio</button>
-          <button class="tab-btn" data-tab="reportes" type="button">Reportes</button>
+          <button class="tab-btn active" data-tab="dashboard" data-filter-use="yes" type="button">Dashboard</button>
+          <button class="tab-btn" data-tab="mapa-territorial" data-filter-use="yes" type="button">Mapa territorial</button>
+          <button class="tab-btn" data-tab="calidad-dato" data-filter-use="yes" type="button">Calidad del dato</button>
+          <button class="tab-btn" data-tab="captacion" data-filter-use="yes" type="button">Agua lluvia</button>
+          <button class="tab-btn" data-tab="directorio" data-filter-use="yes" type="button">Directorio</button>
+          <button class="tab-btn" data-tab="reportes" data-filter-use="yes" type="button">Reportes</button>
         </nav>
 
         <section id="dashboard" class="tab-section active">
@@ -420,7 +426,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v8.0</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v8.1</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -438,13 +444,14 @@
     <section class="bottom-section-nav" aria-label="Secciones complementarias sin filtros territoriales">
       <div class="section-nav-head">
         <div>
-          <h2>Secciones complementarias</h2>
-          <p>Estas secciones no dependen de los filtros territoriales. Por eso quedan organizadas al final, antes del footer.</p>
+          <h2>Secciones complementarias y de gestión</h2>
+          <p>Estas secciones no requieren la columna de filtros territoriales. Algunas usan su propio selector de sede, por eso se ubican abajo, antes del footer.</p>
         </div>
-        <span class="mini">Sin filtros</span>
+        <span class="mini">Sin filtros laterales</span>
       </div>
-      <nav class="tabs" aria-label="Secciones sin filtros">
-        <button class="tab-btn" data-tab="registro" type="button">Registro por sede</button>
+      <nav class="tabs" aria-label="Secciones sin filtros laterales">
+        <button class="tab-btn" data-tab="ficha-sede" data-filter-use="own" type="button">Ficha por sede</button>
+        <button class="tab-btn" data-tab="registro" data-filter-use="own" type="button">Registro por sede</button>
         <button class="tab-btn" data-tab="proyecto-educativo" type="button">Proyecto educativo</button>
         <button class="tab-btn" data-tab="aula-climatica" type="button">Aula climática</button>
         <button class="tab-btn" data-tab="misiones" type="button">Misiones</button>
@@ -454,7 +461,7 @@
     </section>
 
     <div class="mobile-actionbar"><a class="btn primary" href="#registro" data-tab-link="registro">Ingresar</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#captacion" data-tab-link="captacion">Agua</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v8.0 · secciones sin filtro abajo · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v8.1 · navegación organizada por filtros · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -601,11 +608,10 @@
     function setStatus(title, msg){$('heroStatus').textContent = title; $('heroStatusSmall').textContent = msg; $('systemMsg').textContent = msg;}
     function isAdmin(){return !!APP.adminToken;}
     function goHomeFromLogo(ev){if(ev)ev.preventDefault();showTab('dashboard');window.scrollTo({top:0,behavior:'smooth'});}
-    const FILTER_USEFUL_TABS=new Set(['dashboard','mapa-territorial','ficha-sede','directorio','reportes','calidad-dato','captacion']);
+    const FILTER_USEFUL_TABS=new Set(['dashboard','mapa-territorial','directorio','reportes','calidad-dato','captacion']);
     const FILTER_CONTEXT_TEXT={
       'dashboard':'Filtros activos para el dashboard, gráficas e indicadores.',
       'mapa-territorial':'Filtros activos para el mapa territorial.',
-      'ficha-sede':'Filtros activos para seleccionar y analizar sedes.',
       'directorio':'Filtros activos para el directorio de sedes.',
       'reportes':'Filtros activos para reportes y descargas.',
       'calidad-dato':'Filtros activos para calidad del dato.',
@@ -925,7 +931,7 @@
       document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{
         showTab(b.dataset.tab);
         if(b.closest('.bottom-section-nav')){
-          const target=$('mainLayout') || document.querySelector('.top-filter-tabs') || document.querySelector('.tab-section.active');
+          const target=document.querySelector('.tab-section.active') || $('mainLayout');
           if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
         }
       }));
@@ -1767,7 +1773,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v8.0: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v8.1: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
