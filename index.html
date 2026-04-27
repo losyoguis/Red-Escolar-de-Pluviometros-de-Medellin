@@ -145,7 +145,7 @@
 
   
 
-    /* ===== v8.6 · Responsive avanzado, especialmente móvil ===== */
+    /* ===== v8.7 · Responsive avanzado, especialmente móvil ===== */
     .mobile-filter-toggle{display:none}
     html{scroll-behavior:smooth}
     *{box-sizing:border-box}
@@ -262,7 +262,7 @@
 
 
 
-    /* ===== v8.6 · cabecera limpia y compacta ===== */
+    /* ===== v8.7 · cabecera limpia y compacta ===== */
     .hero{padding:clamp(16px,2.2vw,30px)}
     .hero-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,.85fr);gap:clamp(14px,2vw,24px);align-items:center}
     .hero-actions{display:none!important}
@@ -298,7 +298,7 @@
 
 
 
-    /* ===== v8.6 · todos los botones en una sola zona de navegación ===== */
+    /* ===== v8.7 · todos los botones en una sola zona de navegación ===== */
     .all-section-tabs{margin-top:0;margin-bottom:18px;align-items:center}
     .all-section-tabs .tab-btn[data-filter-use="yes"]{border-color:rgba(125,223,138,.30)}
     .all-section-tabs .tab-btn[data-filter-use="own"]{border-color:rgba(255,216,23,.30)}
@@ -314,7 +314,7 @@
 
 
 
-    /* ===== v8.6 · botones superiores de proyectos ambientales ===== */
+    /* ===== v8.7 · botones superiores de proyectos ambientales ===== */
     .top-project-links{
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -372,7 +372,7 @@
 
 
 
-    /* ===== v8.6 · botones superiores sin numeración ===== */
+    /* ===== v8.7 · botones superiores sin numeración ===== */
     .top-project-btn{
       gap:0;
       justify-content:center;
@@ -387,6 +387,42 @@
         text-align:center;
       }
     }
+
+
+
+    /* ===== v8.7 · Patrones y prevención ===== */
+    .risk-hero{background:linear-gradient(135deg,rgba(0,102,54,.18),rgba(255,216,23,.06),rgba(149,0,0,.10));border-color:rgba(255,216,23,.24)}
+    .risk-status-grid{display:grid;grid-template-columns:1.45fr .55fr .75fr .75fr;gap:12px;margin-top:12px}
+    .risk-semaphore{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:rgba(246,240,222,.055);border:1px solid rgba(246,240,222,.10)}
+    .risk-semaphore strong{display:block;color:#fff;font-size:1.35rem;line-height:1.1}
+    .risk-semaphore small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}
+    .risk-dot{width:34px;height:34px;border-radius:999px;flex:0 0 34px;border:2px solid rgba(255,255,255,.45);box-shadow:0 0 0 8px rgba(246,240,222,.06)}
+    .risk-green{background:#2fd66f}.risk-yellow{background:#ffd54a}.risk-orange{background:#ff9f32}.risk-red{background:#ff4d4d}
+    .risk-score-box{padding:14px;border-radius:18px;background:rgba(246,240,222,.055);border:1px solid rgba(246,240,222,.10);display:grid;align-content:center}
+    .risk-score-box span{color:#fff0a7;font-size:.75rem;font-weight:950;text-transform:uppercase;letter-spacing:.025em}
+    .risk-score-box strong{font-size:1.55rem;line-height:1.1;margin-top:5px}
+    .risk-score-box small{color:var(--muted);font-size:.78rem;margin-top:4px}
+    .risk-advice-list{display:grid;gap:10px}
+    .risk-advice-item{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:12px;border-radius:16px;background:rgba(246,240,222,.055);border:1px solid rgba(246,240,222,.09)}
+    .risk-advice-item b{color:#fff0a7}
+    .risk-advice-icon{width:30px;height:30px;border-radius:999px;background:rgba(255,216,23,.14);display:inline-flex;align-items:center;justify-content:center}
+    .pattern-list{display:grid;gap:10px}
+    .pattern-row{display:grid;grid-template-columns:minmax(105px,.8fr) 1.6fr auto;gap:10px;align-items:center;padding:10px;border-radius:14px;background:rgba(246,240,222,.05);border:1px solid rgba(246,240,222,.08)}
+    .pattern-row .bar{height:10px;border-radius:999px;background:rgba(246,240,222,.08);overflow:hidden}
+    .pattern-row .bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#006636,#ffd817)}
+    .pattern-row small{color:var(--muted)}
+    .risk-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;font-weight:950;font-size:.74rem}
+    .risk-badge.verde{background:rgba(47,214,111,.14);color:#7dff9e}.risk-badge.amarillo{background:rgba(255,213,74,.15);color:#ffe77e}.risk-badge.naranja{background:rgba(255,159,50,.16);color:#ffc47c}.risk-badge.rojo{background:rgba(255,77,77,.16);color:#ff9b9b}
+    .prevention-matrix{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .prevent-card{padding:13px;border-radius:18px;border:1px solid rgba(246,240,222,.10);background:rgba(246,240,222,.045)}
+    .prevent-card h4{margin:0 0 8px;color:#fff0a7}
+    .prevent-card ul{margin:0;padding-left:18px;color:var(--muted);line-height:1.4}
+    .risk-photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+    .risk-photo-card{border:1px solid rgba(246,240,222,.10);background:rgba(246,240,222,.045);border-radius:18px;overflow:hidden}
+    .risk-photo-card img{width:100%;height:150px;object-fit:cover;display:block;background:rgba(246,240,222,.04)}
+    .risk-photo-card div{padding:10px}.risk-photo-card b{color:#fff0a7}.risk-photo-card small{display:block;color:var(--muted);line-height:1.3;margin-top:4px}
+    @media(max-width:1180px){.risk-status-grid{grid-template-columns:1fr 1fr}.prevention-matrix{grid-template-columns:1fr 1fr}}
+    @media(max-width:760px){.risk-status-grid{grid-template-columns:1fr}.prevention-matrix{grid-template-columns:1fr}.pattern-row{grid-template-columns:1fr}.risk-photo-card img{height:180px}}
 
 </style>
 </head>
@@ -481,6 +517,7 @@
         <nav class="tabs top-filter-tabs all-section-tabs" aria-label="Secciones principales del sistema">
           <button class="tab-btn active" data-tab="dashboard" data-filter-use="yes" type="button">Dashboard</button>
           <button class="tab-btn" data-tab="mapa-territorial" data-filter-use="yes" type="button">Mapa territorial</button>
+          <button class="tab-btn" data-tab="patrones-prevencion" data-filter-use="yes" type="button">Patrones y prevención</button>
           <button class="tab-btn" data-tab="calidad-dato" data-filter-use="yes" type="button">Calidad del dato</button>
           <button class="tab-btn" data-tab="captacion" data-filter-use="yes" type="button">Agua lluvia</button>
           <button class="tab-btn" data-tab="directorio" data-filter-use="yes" type="button">Directorio</button>
@@ -528,6 +565,86 @@
               <div class="chart"><div class="chart-head"><h3>Sedes con mayor acumulado</h3><span class="mini">Top 8</span></div><canvas id="sedeChart" height="260"></canvas></div>
             </div>
             <div class="table-wrap"><div class="chart-head"><h3>Últimos registros públicos</h3><span class="mini" id="lastUpdated">Sin actualización</span></div><table><thead><tr><th>Fecha</th><th>Hora</th><th>Territorio</th><th>Barrio/vereda</th><th>Núcleo</th><th>Sede</th><th>mm</th><th>Intensidad</th><th>Estado</th><th>Foto</th></tr></thead><tbody id="latestRows"></tbody></table></div>
+          </div>
+        
+</section>
+
+        <section id="patrones-prevencion" class="tab-section">
+          <div class="dashboard">
+            <div class="module risk-hero">
+              <div class="chart-head">
+                <div>
+                  <h2>Patrones y prevención por lluvia</h2>
+                  <p>Analítica territorial para identificar acumulados, repetición de lluvia, sedes con seguimiento prioritario y recomendaciones preventivas. Es una alerta pedagógica y comunitaria; las alertas oficiales corresponden al SIATA, DAGRD y autoridades competentes.</p>
+                </div>
+                <span class="mini" id="riskScope">Filtro actual</span>
+              </div>
+              <div class="risk-status-grid">
+                <div class="risk-semaphore" id="riskSemaphore">
+                  <span class="risk-dot risk-green"></span>
+                  <div>
+                    <strong id="riskLevel">Sin datos</strong>
+                    <small id="riskLevelText">Actualiza datos públicos para iniciar el análisis.</small>
+                  </div>
+                </div>
+                <div class="risk-score-box">
+                  <span>Índice pedagógico</span>
+                  <strong id="riskScore">0</strong>
+                  <small>0 a 100</small>
+                </div>
+                <div class="risk-score-box">
+                  <span>Territorios a vigilar</span>
+                  <strong id="riskTerritoriesWatch">0</strong>
+                  <small>comunas/corregimientos</small>
+                </div>
+                <div class="risk-score-box">
+                  <span>Sedes a vigilar</span>
+                  <strong id="riskSedesWatch">0</strong>
+                  <small>con acumulados o eventos</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="cards">
+              <div class="card"><div class="k">Acumulado 24 h</div><div class="v" id="risk24h">0 mm</div><div class="s">Última fecha con datos</div></div>
+              <div class="card"><div class="k">Acumulado 3 días</div><div class="v" id="risk3d">0 mm</div><div class="s">Seguimiento cercano</div></div>
+              <div class="card"><div class="k">Acumulado 7 días</div><div class="v" id="risk7d">0 mm</div><div class="s">Tendencia semanal</div></div>
+              <div class="card"><div class="k">Máximo registro</div><div class="v" id="riskMax">0 mm</div><div class="s" id="riskMaxWhere">Sin datos</div></div>
+              <div class="card"><div class="k">Días con lluvia</div><div class="v" id="riskRainDays">0</div><div class="s">Fechas distintas</div></div>
+              <div class="card"><div class="k">Fotos/evidencias</div><div class="v" id="riskPhotos">0</div><div class="s">Registros con foto</div></div>
+            </div>
+
+            <div class="grid2">
+              <div class="module">
+                <div class="chart-head"><div><h3>Lectura preventiva automática</h3><p>Recomendaciones generadas con los datos filtrados.</p></div><span class="mini" id="riskAdviceBadge">Pedagógica</span></div>
+                <div id="riskAdvice" class="risk-advice-list"></div>
+              </div>
+              <div class="module">
+                <div class="chart-head"><div><h3>Patrones temporales detectados</h3><p>Horas, días y meses que concentran más precipitación.</p></div><span class="mini">Tendencia</span></div>
+                <div id="timePatterns" class="pattern-list"></div>
+              </div>
+            </div>
+
+            <div class="grid2">
+              <div class="table-wrap">
+                <div class="chart-head"><h3>Territorios con prioridad de seguimiento</h3><span class="mini">Top 10</span></div>
+                <table><thead><tr><th>Nivel</th><th>Territorio</th><th>24 h</th><th>3 días</th><th>7 días</th><th>Máximo</th><th>Recomendación</th></tr></thead><tbody id="territoryRiskRows"></tbody></table>
+              </div>
+              <div class="table-wrap">
+                <div class="chart-head"><h3>Sedes con prioridad de seguimiento</h3><span class="mini">Top 12</span></div>
+                <table><thead><tr><th>Nivel</th><th>Sede</th><th>Territorio</th><th>3 días</th><th>Máximo</th><th>Último dato</th></tr></thead><tbody id="sedeRiskRows"></tbody></table>
+              </div>
+            </div>
+
+            <div class="module">
+              <div class="chart-head"><div><h3>Mapa de decisión preventiva escolar</h3><p>Convierte el análisis en acciones concretas para la comunidad educativa.</p></div><span class="mini">Acciones sugeridas</span></div>
+              <div class="prevention-matrix" id="preventionMatrix"></div>
+            </div>
+
+            <div class="module">
+              <div class="chart-head"><div><h3>Evidencias recientes asociadas a seguimiento</h3><p>Fotos que ayudan a interpretar el estado real del clima y del entorno escolar.</p></div><span class="mini" id="riskPhotoBadge">0 fotos</span></div>
+              <div id="riskPhotoGrid" class="risk-photo-grid"></div>
+            </div>
           </div>
         </section>
 
@@ -681,7 +798,7 @@
           </div>
           <div class="grid2" style="margin-top:16px">
             <div class="card"><div class="k">Seguridad de sedes</div><div class="v">PIN</div><div class="s">Cada sede tiene PIN privado creado en la hoja CredencialesSede.</div></div>
-            <div class="card"><div class="k">Datos territoriales</div><div class="v">v8.6</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
+            <div class="card"><div class="k">Datos territoriales</div><div class="v">v8.7</div><div class="s">Incluye aula climática, misiones ambientales, ficha por sede con múltiples gráficas, calidad del dato y calculadora de agua lluvia.</div></div>
           </div>
         </section>
 
@@ -698,7 +815,7 @@
 
     
     <div class="mobile-actionbar"><a class="btn primary" href="#dashboard" data-tab-link="dashboard">Inicio</a><a class="btn gold" href="#mapa-territorial" data-tab-link="mapa-territorial">Mapa</a><a class="btn secondary" href="#registro" data-tab-link="registro">Ingresar</a></div>
-    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v8.6 · botones superiores sin números · ciencia escolar y gestión climática</div>
+    <div class="footer"><strong>Red Escolar de Pluviómetros de Medellín</strong> · Sistema educativo ambiental · Versión v8.7 · patrones y prevención · ciencia escolar y gestión climática</div>
     <footer class="yoguis-footer"><img src="assets/footer_losyoguis.png" alt="Footer Los Yoguis" onerror="this.style.display='none'"><div class="yoguis-footer-link"><a href="https://www.losyoguis.com" target="_blank" rel="noopener">www.losyoguis.com</a></div></footer>
   </main>
 
@@ -845,10 +962,11 @@
     function setStatus(title, msg){$('heroStatus').textContent = title; $('heroStatusSmall').textContent = msg; $('systemMsg').textContent = msg;}
     function isAdmin(){return !!APP.adminToken;}
     function goHomeFromLogo(ev){if(ev)ev.preventDefault();showTab('dashboard');window.scrollTo({top:0,behavior:'smooth'});}
-    const FILTER_USEFUL_TABS=new Set(['dashboard','mapa-territorial','directorio','reportes','calidad-dato','captacion']);
+    const FILTER_USEFUL_TABS=new Set(['dashboard','mapa-territorial','patrones-prevencion','directorio','reportes','calidad-dato','captacion']);
     const FILTER_CONTEXT_TEXT={
       'dashboard':'Filtros activos para el dashboard, gráficas e indicadores.',
       'mapa-territorial':'Filtros activos para el mapa territorial.',
+      'patrones-prevencion':'Filtros activos para patrones, semáforo preventivo y alertas pedagógicas.',
       'directorio':'Filtros activos para el directorio de sedes.',
       'reportes':'Filtros activos para reportes y descargas.',
       'calidad-dato':'Filtros activos para calidad del dato.',
@@ -882,7 +1000,7 @@
         if(panel) setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),40);
       }
     }
-    function setMapTooltipActive(active){document.body.classList.toggle('map-tooltip-active',!!active);} function showTab(tab){setMapTooltipActive(false);updateFilterSidebar(tab);document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.tab-section').forEach(s=>s.classList.toggle('active',s.id===tab));history.replaceState(null,'','#'+tab); if(tab==='dashboard') setTimeout(()=>renderCharts(getFilteredRecords()),60); if(tab==='reportes') renderReport(getFilteredRecords()); if(tab==='mapa-territorial') setTimeout(()=>renderMap(getFilteredRecords()),60); if(tab==='calidad-dato') renderQualityPanel(getFilteredRecords()); if(tab==='captacion') renderWaterCalc(); if(tab==='ficha-sede') renderSedeFicha(); if(tab==='misiones') renderMissions();}
+    function setMapTooltipActive(active){document.body.classList.toggle('map-tooltip-active',!!active);} function showTab(tab){setMapTooltipActive(false);updateFilterSidebar(tab);document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.tab-section').forEach(s=>s.classList.toggle('active',s.id===tab));history.replaceState(null,'','#'+tab); if(tab==='dashboard') setTimeout(()=>renderCharts(getFilteredRecords()),60); if(tab==='reportes') renderReport(getFilteredRecords()); if(tab==='mapa-territorial') setTimeout(()=>renderMap(getFilteredRecords()),60); if(tab==='patrones-prevencion') renderPatronesPrevencion(getFilteredRecords()); if(tab==='calidad-dato') renderQualityPanel(getFilteredRecords()); if(tab==='captacion') renderWaterCalc(); if(tab==='ficha-sede') renderSedeFicha(); if(tab==='misiones') renderMissions();}
     function saveLocalRecords(){localStorage.setItem('redPluvioMed.localRecordsV3', JSON.stringify(APP.registros.filter(r => r.fuente !== 'backend')));}
     function loadLocalRecords(){try{APP.registros = JSON.parse(localStorage.getItem('redPluvioMed.localRecordsV3') || localStorage.getItem('redPluvioMed.localRecordsV2') || '[]').map(enrichRecord);}catch(e){APP.registros=[];}}
     function makeRain(){const layer=$('rainLayer'); for(let i=0;i<44;i++){const d=document.createElement('span');d.className='drop';d.style.left=Math.random()*100+'vw';d.style.animationDuration=(1.6+Math.random()*2.8)+'s';d.style.animationDelay=(-Math.random()*5)+'s';layer.appendChild(d);}}
@@ -1255,7 +1373,115 @@
     function enrichRecord(r){const s=sedeById(r.sede_id)||{}; const hora=formatHora(r.hora); return {...r,hora,nucleo:r.nucleo||s.nucleo||'',tipo:r.tipo||s.tipo||'',tipo_sigla:r.tipo_sigla||s.tipo_sigla||'',sede:r.sede||s.nombre||'',zona_territorial:r.zona_territorial||s.zona_territorial||'',tipo_territorio:r.tipo_territorio||s.tipo_territorio||'',codigo_territorio:r.codigo_territorio||s.codigo_territorio||'',territorio:r.territorio||s.territorio||'',barrio_vereda:r.barrio_vereda||s.barrio_vereda||'',caracter:r.caracter||s.caracter||'',confianza:r.confianza||s.confianza||''};}
     function getFilteredRecords(){const f=currentFilters(),from=$('dateFrom').value,to=$('dateTo').value; return APP.registros.map(enrichRecord).filter(r=>filterSearchMatchesRecord(r,f.q)&&(!f.zona||r.zona_territorial===f.zona)&&(!f.tipoTerritorio||r.tipo_territorio===f.tipoTerritorio)&&(!f.territorio||r.territorio===f.territorio)&&(!f.barrio||r.barrio_vereda===f.barrio)&&(!f.nucleo||r.nucleo===f.nucleo)&&(!f.tipo||r.tipo===f.tipo)&&(!f.sedeId||r.sede_id===f.sedeId)&&(!from||String(r.fecha)>=from)&&(!to||String(r.fecha)<=to)).sort((a,b)=>recordSortKey(b).localeCompare(recordSortKey(a)));}
     function getFilteredSedes(){const q=norm($('searchSede').value); return APP.instituciones.filter(s=>matchSedeFilters(s,true)&&(!q||norm(`${s.sede_id} ${s.nucleo} ${s.tipo} ${s.nombre} ${s.zona_territorial} ${s.territorio} ${s.barrio_vereda}`).includes(q))).sort((a,b)=>a.territorio.localeCompare(b.territorio,'es')||a.nombre.localeCompare(b.nombre,'es'));}
-    function renderAll(){const rec=getFilteredRecords(); renderKpis(rec); renderCharts(rec); renderMap(rec); renderLatest(rec); renderDirectorio(); renderReport(rec); renderQualityPanel(rec); renderSedeFicha(); renderWaterCalc(false); updateAdminUi(false);}
+    function renderAll(){const rec=getFilteredRecords(); renderKpis(rec); renderCharts(rec); renderMap(rec); renderPatronesPrevencion(rec); renderLatest(rec); renderDirectorio(); renderReport(rec); renderQualityPanel(rec); renderSedeFicha(); renderWaterCalc(false); updateAdminUi(false);}
+    function dateKey(r){return String(r&&r.fecha||'').slice(0,10);}
+    function dateDays(key){const d=new Date(String(key||'')+'T12:00:00'); return isNaN(d)?null:Math.floor(d.getTime()/86400000);}
+    function riskLevelFromScore(score){
+      if(score>=75) return {key:'rojo',label:'Rojo · seguimiento prioritario',cls:'risk-red',text:'Acumulados o eventos altos. Activar revisión preventiva institucional y contrastar con fuentes oficiales.'};
+      if(score>=52) return {key:'naranja',label:'Naranja · vigilancia preventiva',cls:'risk-orange',text:'Hay señales de acumulación o repetición. Revisar entorno escolar y evidencias.'};
+      if(score>=28) return {key:'amarillo',label:'Amarillo · seguimiento',cls:'risk-yellow',text:'Lluvia moderada o tendencia creciente. Continuar monitoreo y observación.'};
+      return {key:'verde',label:'Verde · condición estable',cls:'risk-green',text:'No se observan señales críticas en los datos filtrados.'};
+    }
+    function riskRecommendation(score){
+      if(score>=75) return 'Revisar canales, patios, taludes, quebradas cercanas y reportar novedades a directivos y gestión del riesgo escolar.';
+      if(score>=52) return 'Hacer inspección visual, verificar desagües, tomar evidencia fotográfica y aumentar frecuencia de observación.';
+      if(score>=28) return 'Mantener medición diaria, comparar con días anteriores y sensibilizar a estudiantes sobre señales de riesgo.';
+      return 'Continuar medición regular, mantenimiento del pluviómetro y cultura de prevención.';
+    }
+    function groupRisk(records,keyFn,labelFn){
+      const globalLastDay=Math.max(...records.map(r=>dateDays(dateKey(r))).filter(n=>n!==null),-Infinity);
+      const groups=new Map();
+      records.forEach(r=>{
+        const key=keyFn(r)||'Sin dato', label=labelFn?labelFn(r):key;
+        if(!groups.has(key)) groups.set(key,{key,label,records:[],dates:new Map(),sedes:new Set(),territorios:new Set(),photos:0,eventos:0,total:0,max:0,maxRecord:null});
+        const g=groups.get(key), val=mm(r.precipitacion_mm), d=dateKey(r), day=dateDays(d);
+        g.records.push(r); g.total+=val; if(r.sede_id)g.sedes.add(r.sede_id); if(r.territorio)g.territorios.add(r.territorio);
+        if(String(r.foto_url||'').trim()) g.photos++;
+        const ev=norm(`${r.evento_climatico||''} ${r.condicion||''} ${r.observaciones||''}`);
+        if(/inund|enchar|granizo|desliz|quebrada|arbol|árbol|torment|fuerte|creciente|canal|tapad/.test(ev)) g.eventos++;
+        if(day!==null) g.dates.set(day,(g.dates.get(day)||0)+val);
+        if(val>=g.max){g.max=val; g.maxRecord=r;}
+      });
+      return [...groups.values()].map(g=>{
+        const accum24=g.dates.get(globalLastDay)||0;
+        let accum3=0, accum7=0, consecutive=0;
+        for(let d=globalLastDay; d>=globalLastDay-6; d--){
+          const v=g.dates.get(d)||0;
+          if(d>=globalLastDay-2) accum3+=v;
+          accum7+=v;
+          if(d<=globalLastDay && v>0 && consecutive===globalLastDay-d) consecutive++;
+        }
+        const score=Math.min(100, Math.round((accum24*.9)+(accum3*.38)+(accum7*.16)+(g.max*.85)+(consecutive*7)+(g.eventos*6)+Math.min(8,g.photos)));
+        const lvl=riskLevelFromScore(score);
+        return {...g,accum24,accum3,accum7,consecutive,score,level:lvl, recommendation:riskRecommendation(score)};
+      }).sort((a,b)=>b.score-a.score || b.accum7-a.accum7 || b.max-a.max);
+    }
+    function riskBadge(level){return `<span class="risk-badge ${level.key}"><span class="risk-dot ${level.cls}" style="width:10px;height:10px;flex-basis:10px;border:0;box-shadow:none"></span>${esc(level.label.split(' · ')[0])}</span>`;}
+    function topPatternRows(items){
+      const max=Math.max(1,...items.map(x=>x.value));
+      return items.slice(0,6).map(x=>`<div class="pattern-row"><b>${esc(x.label)}</b><div class="bar"><i style="width:${Math.max(3,(x.value/max)*100)}%"></i></div><small>${nf.format(x.value)} mm · ${x.registros||0} registros</small></div>`).join('') || '<div class="alert">Sin datos temporales para el filtro actual.</div>';
+    }
+    function hourStats(records){
+      const map=new Map();
+      records.forEach(r=>{const h=formatHora(r.hora).slice(0,2); if(!/^\d{2}$/.test(h))return; if(!map.has(h))map.set(h,{label:h+':00',value:0,registros:0}); const g=map.get(h); g.value+=mm(r.precipitacion_mm); g.registros++;});
+      return [...map.values()].sort((a,b)=>b.value-a.value);
+    }
+    function weekdayPatternStats(records){
+      return byWeekdayStats(records).filter(x=>x.value>0).sort((a,b)=>b.value-a.value);
+    }
+    function monthPatternStats(records){
+      return byMonthStats(records).filter(x=>x.value>0).sort((a,b)=>b.value-a.value);
+    }
+    function renderPatronesPrevencion(records){
+      if(!$('riskLevel')) return;
+      const rec=records||[];
+      const days=[...new Set(rec.map(r=>dateKey(r)).filter(Boolean))].sort();
+      const lastDay=Math.max(...rec.map(r=>dateDays(dateKey(r))).filter(n=>n!==null),-Infinity);
+      const total24=rec.reduce((a,r)=>a+(dateDays(dateKey(r))===lastDay?mm(r.precipitacion_mm):0),0);
+      const total3=rec.reduce((a,r)=>{const d=dateDays(dateKey(r)); return a+(d!==null&&d>=lastDay-2?mm(r.precipitacion_mm):0);},0);
+      const total7=rec.reduce((a,r)=>{const d=dateDays(dateKey(r)); return a+(d!==null&&d>=lastDay-6?mm(r.precipitacion_mm):0);},0);
+      const maxRec=rec.reduce((m,r)=>mm(r.precipitacion_mm)>mm(m.precipitacion_mm||0)?r:m,{});
+      const photos=rec.filter(r=>String(r.foto_url||'').trim()).length;
+      const territoryRisks=groupRisk(rec,r=>r.territorio||'Sin territorio',r=>r.territorio||'Sin territorio');
+      const sedeRisks=groupRisk(rec,r=>r.sede_id||r.sede||'Sin sede',r=>r.sede||r.sede_id||'Sin sede');
+      const overallScore=territoryRisks.length?Math.min(100,Math.round((territoryRisks[0].score*.62)+(Math.min(100,total7)*.22)+(Math.min(100,mm(maxRec.precipitacion_mm))*0.16))):0;
+      const level=riskLevelFromScore(overallScore);
+      $('riskScope').textContent=`${rec.length} registros filtrados`;
+      $('riskLevel').textContent=level.label;
+      $('riskLevelText').textContent=level.text;
+      $('riskScore').textContent=overallScore;
+      $('riskSemaphore').querySelector('.risk-dot').className='risk-dot '+level.cls;
+      $('riskTerritoriesWatch').textContent=territoryRisks.filter(x=>x.score>=28).length;
+      $('riskSedesWatch').textContent=sedeRisks.filter(x=>x.score>=28).length;
+      $('risk24h').textContent=nf.format(total24)+' mm';
+      $('risk3d').textContent=nf.format(total3)+' mm';
+      $('risk7d').textContent=nf.format(total7)+' mm';
+      $('riskMax').textContent=nf.format(mm(maxRec.precipitacion_mm))+' mm';
+      $('riskMaxWhere').textContent=maxRec.sede||maxRec.territorio||'Sin datos';
+      $('riskRainDays').textContent=days.length;
+      $('riskPhotos').textContent=photos;
+      const topTerr=territoryRisks[0];
+      const advice=[
+        {i:'☔',t:'Lectura general',d:rec.length?`El filtro actual acumula ${nf.format(rec.reduce((a,r)=>a+mm(r.precipitacion_mm),0))} mm. Nivel sugerido: ${level.label}.`:'No hay registros para calcular patrones. Actualiza datos públicos o ajusta filtros.'},
+        {i:'📍',t:'Territorio prioritario',d:topTerr?`${topTerr.label}: ${nf.format(topTerr.accum7)} mm en 7 días, máximo ${nf.format(topTerr.max)} mm. ${topTerr.recommendation}`:'Sin territorio prioritario.'},
+        {i:'🛠️',t:'Acción preventiva',d:riskRecommendation(overallScore)},
+        {i:'📸',t:'Evidencia',d:photos?`Hay ${photos} registros con fotografía. Revisar las fotos de mayor acumulado para interpretar condiciones reales.`:'Aún no hay fotografías asociadas al filtro. Incentivar evidencia visual cuando sea pertinente.'}
+      ];
+      $('riskAdvice').innerHTML=advice.map(a=>`<div class="risk-advice-item"><span class="risk-advice-icon">${a.i}</span><div><b>${esc(a.t)}</b><p class="help" style="margin:3px 0 0">${esc(a.d)}</p></div></div>`).join('');
+      $('timePatterns').innerHTML=`<h4 style="margin:0;color:#fff0a7">Horas con más lluvia</h4>${topPatternRows(hourStats(rec))}<h4 style="margin:6px 0 0;color:#fff0a7">Días de la semana</h4>${topPatternRows(weekdayPatternStats(rec))}<h4 style="margin:6px 0 0;color:#fff0a7">Meses más lluviosos</h4>${topPatternRows(monthPatternStats(rec))}`;
+      $('territoryRiskRows').innerHTML=territoryRisks.slice(0,10).map(g=>`<tr><td>${riskBadge(g.level)}</td><td><strong>${esc(g.label)}</strong><br><small>${g.sedes.size} sedes · ${g.records.length} registros</small></td><td>${nf.format(g.accum24)} mm</td><td>${nf.format(g.accum3)} mm</td><td>${nf.format(g.accum7)} mm</td><td>${nf.format(g.max)} mm</td><td>${esc(g.recommendation)}</td></tr>`).join('') || '<tr><td colspan="7">Sin registros para analizar.</td></tr>';
+      $('sedeRiskRows').innerHTML=sedeRisks.slice(0,12).map(g=>{const r=g.maxRecord||{}; return `<tr><td>${riskBadge(g.level)}</td><td><strong>${esc(g.label)}</strong><br><small>${esc(g.key)}</small></td><td>${esc(r.territorio||'')}</td><td>${nf.format(g.accum3)} mm</td><td>${nf.format(g.max)} mm</td><td>${esc(fechaHoraTexto(r)||'Sin fecha')}</td></tr>`;}).join('') || '<tr><td colspan="6">Sin sedes para analizar.</td></tr>';
+      const matrix=[
+        ['Antes de la lluvia',['Limpiar canales, bajantes y patios.','Verificar ubicación y nivel del pluviómetro.','Identificar zonas de encharcamiento recurrente.']],
+        ['Durante lluvia fuerte',['Evitar tránsito por zonas inundadas.','Tomar foto solo si no hay riesgo.','Reportar novedades a coordinación.']],
+        ['Después del evento',['Comparar dato con fotos y observaciones.','Revisar daños en cubiertas, taludes o desagües.','Registrar acciones correctivas.']],
+        ['Escalamiento',['Consultar SIATA y autoridades oficiales.','Informar al comité escolar de gestión del riesgo.','Documentar evidencias y decisiones.']]
+      ];
+      $('preventionMatrix').innerHTML=matrix.map(m=>`<div class="prevent-card"><h4>${esc(m[0])}</h4><ul>${m[1].map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
+      const riskPhotos=rec.filter(r=>String(r.foto_url||'').trim()).sort((a,b)=>mm(b.precipitacion_mm)-mm(a.precipitacion_mm)||recordSortKey(b).localeCompare(recordSortKey(a))).slice(0,8);
+      $('riskPhotoBadge').textContent=`${riskPhotos.length} fotos`;
+      $('riskPhotoGrid').innerHTML=riskPhotos.map(r=>`<a class="risk-photo-card" href="${esc(r.foto_url)}" target="_blank" rel="noopener"><img src="${esc(r.foto_url)}" alt="Evidencia de ${esc(r.sede||'sede')}" loading="lazy" onerror="this.style.display='none'"><div><b>${esc(r.sede||r.sede_id||'Sede')}</b><small>${esc(r.territorio||'')} · ${esc(fechaHoraTexto(r))}</small><small>${nf.format(mm(r.precipitacion_mm))} mm · ${esc(r.condicion||r.intensidad||'Sin condición')}</small></div></a>`).join('') || '<div class="alert">No hay fotografías disponibles en el filtro actual.</div>';
+    }
     function renderKpis(records){const total=records.reduce((a,r)=>a+mm(r.precipitacion_mm),0); const avg=records.length?total/records.length:0; const max=records.reduce((m,r)=>mm(r.precipitacion_mm)>mm(m.precipitacion_mm||0)?r:m,{}); $('kpiRegistros').textContent=records.length; $('kpiAcumulado').textContent=nf.format(total)+' mm'; $('kpiPromedio').textContent=nf.format(avg)+' mm'; $('kpiMaximo').textContent=nf.format(mm(max.precipitacion_mm))+' mm'; $('kpiMaximoSede').textContent=max.sede||'Sin datos'; $('kpiSedesActivas').textContent=new Set(records.map(r=>r.sede_id)).size; $('kpiTerritoriosActivos').textContent=new Set(records.map(r=>r.territorio).filter(Boolean)).size; const alert=$('alertBox'); alert.className='alert '+(total>200?'bad':total>80?'warn':'ok'); alert.innerHTML=records.length?`<strong>Lectura pedagógica:</strong> ${records.length} registros filtrados acumulan ${nf.format(total)} mm en ${new Set(records.map(r=>r.territorio).filter(Boolean)).size} territorios. ${total>200?'Se recomienda revisar posibles alertas por lluvias acumuladas.':total>80?'Conviene hacer seguimiento por comuna/corregimiento y sede.':'Condición estable para continuar medición.'}`:'<strong>Lectura pedagógica:</strong> aún no hay datos para el filtro seleccionado.'; $('lastUpdated').textContent=records[0]?`Último registro: ${fechaHoraTexto(records[0])}`:'Sin actualización';}
     const CHART_STATE={};
     let chartTooltipEl=null;
@@ -2036,7 +2262,7 @@ function missionSet(){try{return new Set(JSON.parse(localStorage.getItem('redPlu
         setStatus('PIN por revisar','El PIN parece demasiado corto.');
         return;
       }
-      // v8.6: esta verificación es local para evitar errores de backend "Acción no reconocida".
+      // v8.7: esta verificación es local para evitar errores de backend "Acción no reconocida".
       // La validación oficial se hace al guardar, directamente en Apps Script contra CredencialesSede.
       msg.textContent='PIN recibido. Continúa con el formulario y presiona Guardar registro. La validación oficial se realizará al guardar.';
       msg.style.color='var(--ok)';
