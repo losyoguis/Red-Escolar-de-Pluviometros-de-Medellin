@@ -1,4 +1,4 @@
-/* SiMeCO2 Servicios Públicos - v36 filtros territoriales dependientes */
+/* SiMeCO2 Servicios Públicos - v37 secuencia inicial guiada */
 let FACTOR_CO2_KG_KWH = 0.126; // kg CO2e/kWh. Ajustable desde el dashboard.
 let TREE_CO2_KG_YEAR = 22; // kg CO2e capturados por árbol al año. Ajustable desde el dashboard.
 const FACTOR_KEY = 'simeco2_factores_ambientales_v8';
@@ -23,28 +23,63 @@ window.addEventListener('load', () => {
   log('Sistema listo. Actualiza la información del sistema o carga un PDF local para iniciar el análisis.');
 });
 
+const INTRO_STAGE_DURATION = 4200;
+let introSequenceTimer = null;
+
+function clearIntroSequenceTimer(){
+  if(introSequenceTimer){
+    clearTimeout(introSequenceTimer);
+    introSequenceTimer = null;
+  }
+}
+
 function activateDataGate(){
+  clearIntroSequenceTimer();
+  document.body.classList.remove('intro-ranking', 'intro-impact', 'app-ready');
   document.body.classList.add('data-gate');
   document.documentElement.classList.add('data-gate-active');
   history.replaceState(null, '', location.pathname + location.search + '#importacion');
   requestAnimationFrame(() => $('importacion')?.scrollIntoView({block:'start'}));
 }
 
-function unlockDataView(message='Datos cargados correctamente. Abriendo primero el informe de ranking...'){
+function showIntroStage(stage){
+  document.body.classList.remove('data-gate', 'data-gate-opening', 'intro-ranking', 'intro-impact', 'app-ready');
+  document.documentElement.classList.remove('data-gate-active');
+  document.body.classList.add(stage);
+  const target = stage === 'intro-ranking' ? $('ranking-sedes') : $('impacto-proyecto');
+  const hash = stage === 'intro-ranking' ? '#ranking-sedes' : '#impacto-proyecto';
+  history.replaceState(null, '', location.pathname + location.search + hash);
+  target?.scrollIntoView({block:'start', behavior:'auto'});
+  target?.classList.add('intro-stage-focus');
+  setTimeout(() => target?.classList.remove('intro-stage-focus'), 1100);
+}
+
+function finishIntroSequence(){
+  clearIntroSequenceTimer();
+  document.body.classList.remove('data-gate', 'data-gate-opening', 'intro-ranking', 'intro-impact');
+  document.body.classList.add('app-ready');
+  document.documentElement.classList.remove('data-gate-active');
+  history.replaceState(null, '', location.pathname + location.search + '#inicio');
+  window.scrollTo({top:0, behavior:'auto'});
+  log('Presentación inicial finalizada. Plataforma completa disponible.');
+}
+
+function unlockDataView(message='Datos cargados correctamente. Iniciando presentación de resultados...'){
   if(!state.records.length){
     log('La plataforma permanecerá en la pantalla de carga porque todavía no hay registros válidos.');
     return false;
   }
+  clearIntroSequenceTimer();
   log(message);
   document.body.classList.add('data-gate-opening');
-  setTimeout(() => {
-    document.body.classList.remove('data-gate', 'data-gate-opening');
-    document.documentElement.classList.remove('data-gate-active');
-    history.replaceState(null, '', location.pathname + location.search + '#ranking-sedes');
-    const ranking=$('ranking-sedes');
-    ranking?.classList.add('post-load-focus');
-    ranking?.scrollIntoView({block:'start', behavior:'smooth'});
-    setTimeout(()=>ranking?.classList.remove('post-load-focus'), 2400);
+  introSequenceTimer = setTimeout(() => {
+    log('Etapa 2 de 3: mostrando el ranking de sedes por consumo eléctrico total.');
+    showIntroStage('intro-ranking');
+    introSequenceTimer = setTimeout(() => {
+      log('Etapa 3 de 3: mostrando los indicadores de avance y alertas inteligentes.');
+      showIntroStage('intro-impact');
+      introSequenceTimer = setTimeout(finishIntroSequence, INTRO_STAGE_DURATION);
+    }, INTRO_STAGE_DURATION);
   }, 450);
   return true;
 }

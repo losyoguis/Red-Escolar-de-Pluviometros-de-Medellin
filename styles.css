@@ -1002,3 +1002,110 @@ body.is-processing-data #logBox{border-color:#10b58d;box-shadow:0 0 0 4px rgba(1
 @media(max-width:1250px){.territorial-filter-grid{grid-template-columns:repeat(3,minmax(180px,1fr))}}
 @media(max-width:900px){.territorial-filter-grid{grid-template-columns:repeat(2,minmax(160px,1fr))}.territorial-filter-grid .filter-search-wide{grid-column:1/-1}}
 @media(max-width:620px){.territorial-filter-grid{grid-template-columns:1fr}.territorial-filter-grid .filter-search-wide{grid-column:auto}}
+
+/* =========================================================
+   V37 · Secuencia inicial: carga → ranking → impacto → app
+   ========================================================= */
+html:has(body.intro-ranking),
+html:has(body.intro-impact){
+  scroll-behavior:auto;
+}
+
+body.intro-ranking,
+body.intro-impact{
+  min-height:100vh;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 10% 14%,rgba(28,196,153,.10),transparent 31%),
+    radial-gradient(circle at 90% 12%,rgba(240,209,91,.09),transparent 28%),
+    #eef9f6;
+}
+
+body.intro-ranking > header,
+body.intro-ranking > .sticky-nav,
+body.intro-ranking > footer,
+body.intro-ranking .mobile-bottom-nav,
+body.intro-impact > header,
+body.intro-impact > .sticky-nav,
+body.intro-impact > footer,
+body.intro-impact .mobile-bottom-nav{
+  display:none!important;
+}
+
+body.intro-ranking main,
+body.intro-impact main{
+  width:100%;
+  max-width:none;
+  min-height:100vh;
+  margin:0;
+  padding:clamp(10px,1.8vw,32px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+body.intro-ranking main > :not(#ranking-sedes),
+body.intro-impact main > :not(#impacto-proyecto){
+  display:none!important;
+}
+
+body.intro-ranking #ranking-sedes,
+body.intro-impact #impacto-proyecto{
+  display:block!important;
+  width:min(1840px,100%);
+  min-height:calc(100vh - clamp(20px,3.6vw,64px));
+  margin:0;
+  padding:clamp(28px,3vw,58px);
+  border-radius:34px;
+  box-shadow:0 28px 74px rgba(13,80,66,.14);
+  animation:introPanelEnter .75s cubic-bezier(.2,.8,.2,1) both;
+}
+
+body.intro-ranking #ranking-sedes{
+  display:flex!important;
+  flex-direction:column;
+  justify-content:center;
+}
+
+body.intro-impact #impacto-proyecto{
+  display:flex!important;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.intro-stage-focus{animation:introStageFocus 1.05s ease both!important}
+
+@keyframes introPanelEnter{
+  from{opacity:0;transform:translateY(22px) scale(.985)}
+  to{opacity:1;transform:none}
+}
+@keyframes introStageFocus{
+  0%{box-shadow:0 0 0 0 rgba(12,178,137,0),0 28px 74px rgba(13,80,66,.14)}
+  55%{box-shadow:0 0 0 7px rgba(12,178,137,.17),0 32px 82px rgba(13,80,66,.18)}
+  100%{box-shadow:0 28px 74px rgba(13,80,66,.14)}
+}
+
+/* En la navegación normal no se repiten las tres pantallas introductorias. */
+body.app-ready #importacion,
+body.app-ready #ranking-sedes,
+body.app-ready #impacto-proyecto,
+body.app-ready .sticky-nav a[href="#ranking-sedes"]{
+  display:none!important;
+}
+
+@media(max-width:800px){
+  body.intro-ranking main,
+  body.intro-impact main{align-items:flex-start;padding:8px}
+  body.intro-ranking #ranking-sedes,
+  body.intro-impact #impacto-proyecto{
+    min-height:calc(100vh - 16px);
+    padding:24px 16px;
+    border-radius:24px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.intro-ranking #ranking-sedes,
+  body.intro-impact #impacto-proyecto,
+  .intro-stage-focus{animation:none!important}
+}
