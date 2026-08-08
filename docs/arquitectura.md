@@ -1,4 +1,4 @@
-# Arquitectura del sistema
+# Arquitectura · Red Escolar de Pluviómetros de Medellín v9.0
 
 ```text
 Pluviómetro de la sede
@@ -7,31 +7,42 @@ QR o enlace único
         ↓
 Formulario web con código de sede
         ↓
-PIN privado de sede
-        ↓
-Apps Script valida y guarda
+PIN privado
+        ↓ POST
+Google Apps Script valida PIN
         ↓
 Google Sheets central
         ↓
-Dashboard público sanitizado
+GET público sanitizado
         ↓
-Zona privada administradora
+Dashboard / mapa / reportes
 ```
 
 ## Componentes
 
-- Frontend: HTML, CSS y JavaScript en GitHub Pages.
+- Frontend: `index.html` + `data/instituciones.js` + assets.
+- Hosting recomendado del frontend: GitHub Pages o servidor HTTPS.
 - Backend: Google Apps Script.
-- Base central inicial: Google Sheets.
-- Seguridad de sede: código + PIN.
-- Seguridad administrativa: usuario + contraseña + token temporal.
+- Persistencia: Google Sheets.
+- Seguridad por sede: `sede_id + PIN`, validado solo en servidor.
+- Seguridad administrativa: usuario + contraseña + token temporal de sesión.
+- Fotografías: subida opcional desde Apps Script hacia un repositorio GitHub configurado mediante Script Properties.
 
-## Escalamiento futuro
+## Flujo público
 
-Para una operación municipal más robusta se recomienda migrar a:
+`ping`, `sedes` y `publicrecords` pueden consultarse sin credenciales. Los registros públicos son sanitizados y excluyen observador, observaciones internas y cualquier secreto.
 
-- Firebase Authentication o Supabase Auth.
-- Firestore o PostgreSQL.
-- Mapa georreferenciado con coordenadas reales.
-- Módulo de auditoría de registros.
-- Historial de cambios y validación científica de datos.
+## Flujo sensible
+
+`add`, `adminlogin`, `records` y las operaciones de fotografía usan POST. El frontend v9 bloquea el envío de campos sensibles mediante JSONP.
+
+## Agregación territorial
+
+Los datos se normalizan por `sede + fecha`. Los acumulados territoriales se construyen con la suma de medianas diarias de las sedes que reportaron en cada fecha.
+
+## Evolución recomendada
+
+- incorporar latitud/longitud reales de cada sede;
+- auditoría de cambios y validación de registros;
+- integración comparativa con estaciones oficiales;
+- modelo hidrometeorológico validado antes de convertir el índice pedagógico en cualquier clase de sistema de alerta.
