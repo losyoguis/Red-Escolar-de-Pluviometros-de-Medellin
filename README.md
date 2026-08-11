@@ -83,3 +83,13 @@ Los reportes públicos no deben incluir PIN, contraseña, observador ni observac
 ## Backend oficial v9.0.1
 
 La compilación distribuida usa por defecto el Apps Script `/exec` indicado en `docs/BACKEND_OFICIAL_V9_0_1.md`.
+
+## Videotutorial integrado · v9.0.3
+
+- Al abrir el sistema se muestra automáticamente un modal responsive con el videotutorial oficial.
+- El video comienza desde 0:00 al abrir el modal.
+- La navegación principal incorpora el botón **Videotutorial** para reabrirlo en cualquier momento.
+- El modal no incluye un botón externo de “Abrir en YouTube”; la reproducción se realiza dentro del sistema.
+- El modal puede cerrarse con la X, el botón Cerrar, la tecla Esc o un clic en el fondo.
+- Al cerrar el modal se detiene la reproducción del video.
+- El backend seguro v9.0, el `/exec` oficial y las credenciales de sede no se modifican.
